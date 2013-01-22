@@ -12,3 +12,11 @@ logs
 results
 
 npm-debug.log
+
+*.iml
+*.ipr
+*.iws
+.idea/
+build/
+
+node_modules

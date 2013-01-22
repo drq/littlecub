@@ -1,0 +1,47 @@
+<html>
+<head>
+    <script id="field_label" type="text/x-handlebars-template">
+        {{# options}}
+        {{# label}}
+        <div {{# ../labelClass}}class="{{.}}"{{/../labelClass}}>
+        <div>{{.}}</div>
+        </div>
+        {{/label}}
+        {{/options}}
+    </script>
+    <script id="field_helper" type="text/x-handlebars-template">
+        {{# options}}
+        {{# helper}}
+        <div {{# ../helperClass}}class="{{.}}"{{/../helperClass}}>
+        <span>{{.}}</span>
+        </div>
+        {{/helper}}
+        {{/options}}
+    </script>
+    <script id="control_text" type="text/x-handlebars-template">
+        <input id="{{id}}-field" type="text" name="test1" value="{{#if data}}{{data}}{{/if}}"
+               size="{{# options}}{{#if size}}{{size}}{{else}}40{{/if}}{{/options}}"/>
+    </script>
+    <script id="control_textarea" type="text/x-handlebars-template">
+        <textarea id="{{id}}-field" name="test2">{{#if data}}{{data}}{{/if}}</textarea>
+    </script>
+    <script id="control_object" type="text/x-handlebars-template">
+        {{#if fields}}
+            <fieldset>
+                <legend>{{label}}</legend>
+                <div>{{helper}}</div>
+                {{#key_value fields}}
+                    <div>{{include 'field'}}</div>
+                {{/key_value}}
+            </fieldset>
+        {{/if}}
+    </script>
+    <script id="field" type="text/x-handlebars-template">
+        {{include 'field_label'}}
+        {{#injectField}}
+        <b>Ho Ho</b>
+        {{/injectField}}
+        {{include 'field_helper'}}
+    </script>
+</head>
+</html>

@@ -1,0 +1,22 @@
+<html>
+<head>
+    <script id="field_label" type="text/x-handlebars-template">
+        {{# options}}
+        {{# label}}
+        <span {{# ../labelClass}}class="{{.}}"{{/../labelClass}}>
+        {{.}}
+        </span>
+        {{/label}}
+        {{/options}}
+    </script>
+    <script id="field_helper" type="text/x-handlebars-template">
+        {{# options}}
+        {{# helper}}
+        <span {{# ../helperClass}}class="{{.}}"{{/../helperClass}}>
+        {{.}}
+        </span>
+        {{/helper}}
+        {{/options}}
+    </script>
+</head>
+</html>
