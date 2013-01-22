@@ -14,8 +14,17 @@ module.exports = function(grunt) {
                     wrapped: true
                 },
                 files: {
-                    "dist/templates.js": ["build/templates/*.hbs"]
+                    "build/templates.js": ["build/templates/*.hbs"]
                 }
+            }
+        },
+        concat: {
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: ['js/littlecub.js', 'js/themes/themes.js', 'js/handlebars/helpers.js','build/templates.js'],
+                dest: 'dist/<%= pkg.name %>.js'
             }
         },
         uglify: {
@@ -23,8 +32,8 @@ module.exports = function(grunt) {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             dist: {
-                src: 'dist/templates.js',
-                dest: 'dist/templates.min.js'
+                src: 'dist/<%= pkg.name %>.js',
+                dest: 'dist/<%= pkg.name %>.min.js'
             }
         }
     });
@@ -78,7 +87,10 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "handlebars" task.
     grunt.loadNpmTasks('grunt-contrib-handlebars');
 
+    // Load the plugin that provides the "concat" task.
+    grunt.loadNpmTasks('grunt-contrib-concat');
+
     // Default task(s).
-    grunt.registerTask('default', ['clean', 'splitTemplates', 'handlebars' , 'uglify']);
+    grunt.registerTask('default', ['clean', 'splitTemplates', 'handlebars' , 'concat', 'uglify']);
 
 };
