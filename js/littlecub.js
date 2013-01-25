@@ -2,15 +2,23 @@
     "use strict";
 
     var LittleCub = {
-        "version" : "0.1.0",
+        "version": "0.1.0",
 
-        "defaults" : {
-            "templateEngine" : "handlebars"
+        "defaults": {
+            "templateEngine": "handlebars",
+            "schemaToControl": {
+                "string": "text",
+                "boolean": "checkbox",
+                "number": "number",
+                "integer": "integer",
+                "array": "array",
+                "object": "object"
+            }
         },
 
-        "themes" : {},
+        "themes": {},
 
-        "logger" : {
+        "logger": {
             DEBUG: 0, INFO: 1, WARN: 2, ERROR: 3, level: 3,
 
             methodMap: {0: 'debug', 1: 'info', 2: 'warn', 3: 'error'},
@@ -34,80 +42,86 @@
             };
         })(),
 
-        "typeFieldClass": (function() {
-            var _typeFieldClass = {};
+        "typeControlClass": (function() {
+            var _typeControlClass = {};
             return function() {
                 var len = arguments.length;
                 if (len === 1) {
-                    return _typeFieldClass[arguments[0]];
+                    return _typeControlClass[arguments[0]];
                 } else if (len === 2){
                     if ( _.isString(arguments[0]) && !_.isNull(arguments[0])) {
-                        _typeFieldClass[arguments[0]] = arguments[1];
+                        _typeControlClass[arguments[0]] = arguments[1];
                         return arguments[1];
                     }
                 }
             };
         })(),
         
-        "formatFieldClass": (function() {
-            var _formatFieldClass = {};
+        "formatControlClass": (function() {
+            var _formatControlClass = {};
             return function() {
                 var len = arguments.length;
                 if (len === 1) {
-                    return _formatFieldClass[arguments[0]];
+                    return _formatControlClass[arguments[0]];
                 } else if (len === 2){
                     if (_.isString(arguments[0]) && !_.isNull(arguments[0])) {
-                        _formatFieldClass[arguments[0]] = arguments[1];
+                        _formatControlClass[arguments[0]] = arguments[1];
                         return arguments[1];
                     }
                 }
             };
         })(),
 
-        "fieldClass": (function() {
-            var _fieldClassRegistry = {};
+        "controlClass": (function() {
+            var _controlClassRegistry = {};
             return function() {
                 var len = arguments.length;
                 if (len === 1) {
-                    return _fieldClassRegistry[arguments[0]];
+                    return _controlClassRegistry[arguments[0]];
                 } else if (len === 2){
                     if (_.isString(arguments[0]) && !_.isNull(arguments[0])) {
-                        _fieldClassRegistry[arguments[0]] = arguments[1];
+                        _controlClassRegistry[arguments[0]] = arguments[1];
                         return arguments[1];
                     }
                 }
             };
         })(),
 
-        "log" : function(level, obj) {
-            LittleCub.Utils.logger.log(level, obj);
+        "log": function(level, obj) {
+            LittleCub.logger.log(level, obj);
         },
 
-        "cloneJSON" : function(json) {
+        "cloneJSON": function(json) {
             return JSON.parse(JSON.stringify(json));
         },
 
-        "registerTheme" : function(theme, themeId) {
+        "prettyTitle": function(str) {
+            return str.replace(/\w\S*/g, function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1);
+            });
+        },
+
+        "registerTheme": function(theme, themeId) {
             themeId = themeId || theme["id"];
             if (themeId) {
                 LittleCub.themes[themeId] = theme;
             }
         },
 
-        "renderTemplate" : function(template, data) {
+        "renderTemplate": function(template, data) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
                 var template = Handlebars.compile(template);
                 return template(data);
             }
         },
 
-        "registerTemplate" : function(id, template) {
+        "registerTemplate": function(id, template) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
                 Handlebars.registerPartial(id, Handlebars.compile(template));
             }
         },
 
-        "loadTemplate" : function (themeId, path, callback) {
+        "loadTemplate": function (themeId, path, callback) {
             $.ajax({
                 "url":path,
                 "type": "get",
@@ -126,7 +140,7 @@
             });
         },
 
-        "loadThemes" : function (themes, callback) {
+        "loadThemes": function (themes, callback) {
 
             var loadTheme = function(id, path) {
                 console.log("Loading ... " + id);

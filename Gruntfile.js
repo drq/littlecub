@@ -7,6 +7,14 @@ module.exports = function(grunt) {
             dist: ['dist']
         },
         pkg: grunt.file.readJSON('package.json'),
+        connect: {
+            server: {
+                options: {
+                    port: 9001,
+                    keepalive: true
+                }
+            }
+        },
         handlebars: {
             compile: {
                 options: {
@@ -35,6 +43,9 @@ module.exports = function(grunt) {
                 src: 'dist/<%= pkg.name %>.js',
                 dest: 'dist/<%= pkg.name %>.min.js'
             }
+        },
+        qunit: {
+            all: ['test/**/*.html']
         }
     });
 
@@ -89,6 +100,12 @@ module.exports = function(grunt) {
 
     // Load the plugin that provides the "concat" task.
     grunt.loadNpmTasks('grunt-contrib-concat');
+
+    // Load the plugin that provides the "connect" task.
+    grunt.loadNpmTasks('grunt-contrib-connect');
+
+    // Load the plugin that provides the "connect" task.
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
     // Default task(s).
     grunt.registerTask('default', ['clean', 'splitTemplates', 'handlebars' , 'concat', 'uglify']);

@@ -8,15 +8,15 @@
      *
      * Iterate over an object, setting 'key' and 'value' for each property in the object.
      */
-    Handlebars.registerHelper("key_value", function(obj, options) {
-        if (!options) {
-            options = obj;
+    Handlebars.registerHelper("key_value", function(obj, configs) {
+        if (!configs) {
+            configs = obj;
             obj = this;
         }
-        var buffer = "", key;
+        var buffer = "";
         for (key in obj) {
             if (obj.hasOwnProperty(key)) {
-                buffer += options.fn({key: key, value: obj[key]});
+                buffer += configs.fn({key: key, value: obj[key]});
             }
         }
         return buffer;
@@ -31,15 +31,15 @@
      * inner object will be used in turn, with an added key ("myKey")
      * set to the value of the inner object's key in the container.
      */
-    Handlebars.registerHelper("each_with_key", function(obj, options) {
-        var context, buffer = "", key, keyName = options.hash.key;
+    Handlebars.registerHelper("each_with_key", function(obj, configs) {
+        var context, buffer = "", keyName = configs.hash.key;
         for (key in obj) {
             if (obj.hasOwnProperty(key)) {
                 context = obj[key];
                 if (keyName) {
                     context[keyName] = key;
                 }
-                buffer += options.fn(context);
+                buffer += configs.fn(context);
             }
         }
         return buffer;
@@ -48,7 +48,7 @@
     /**
      *
      */
-    Handlebars.registerHelper('include', function (context, options) {
+    Handlebars.registerHelper('include', function (context, configs) {
         var val = this["value"] || this;
         var themeId = val["theme"] || "default";
         var template = Handlebars.partials[themeId + "__" + context];
@@ -66,15 +66,16 @@
     /**
      *
      */
-    Handlebars.registerHelper('injectField', function (context, options) {
+    Handlebars.registerHelper('injectControl', function (context, configs) {
         var themeId = this["theme"] || "default";
-        var template = Handlebars.partials[themeId + "__" + "control_" + this.type];
+        var templateId = this["template"] || "control_" + this.type;
+        var template = Handlebars.partials[themeId + "__" + templateId];
 
         // check parent theme
         var theme = LittleCub.themes[themeId];
         var parentThemeId = theme["parent"];
         if (!template) {
-            template = Handlebars.partials[parentThemeId + "__" + "control_" + this.type];
+            template = Handlebars.partials[parentThemeId + "__" + templateId];
         }
 
         return new Handlebars.SafeString(template(this)) + context.fn();
