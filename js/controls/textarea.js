@@ -11,16 +11,12 @@
              * @param configs
              * @param schema
              */
-            constructor: function(container, data, configs, schema) {
-                this.base(container, data, configs, schema);
+            constructor: function(data, configs, schema) {
+                this.base(data, configs, schema);
             },
 
             init: function() {
                 this.base();
-            },
-
-            bind: function() {
-
             }
         }, {
             TYPE : "textarea"

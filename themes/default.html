@@ -1,36 +1,33 @@
 <html>
 <head>
+    <!-- Partials -->
     <script id="control_label" type="text/x-handlebars-template">
-        {{#if configs}}
-            {{#if configs.label}}
-                <div {{#if configs.labelClass}}class="{{.}}"{{/if}}>
-                    <label {{#if name}}for="{{name}}"{{/if}}>{{configs.label}}</label>
-                </div>
-            {{/if}}
+        {{#if label}}
+            <div {{#if labelClass}}class="{{labelClass}}"{{/if}}>
+                <label {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
+            </div>
         {{/if}}
     </script>
     <script id="control_helper" type="text/x-handlebars-template">
-        {{#if configs}}
-            {{#if configs.helper}}
-                <div {{#if configs.helperClass}}class="{{configs.helperClass}}"{{/if}}>
-                    <span>{{configs.helper}}</span>
-                </div>
-            {{/if}}
+        {{#if helper}}
+            <div {{#if helperClass}}class="{{helperClass}}"{{/if}}>
+                <span>{{helper}}</span>
+            </div>
         {{/if}}
     </script>
     <script id="control_text" type="text/x-handlebars-template">
-        <input id="{{id}}-field" type="text" name="{{#if name}}{{name}}{{/if}}" value="{{#if data}}{{data}}{{/if}}"
+        <input data-lcid="{{id}}-field" type="text" name="{{#if name}}{{name}}{{/if}}" value="{{#if data}}{{data}}{{/if}}"
                size="{{# configs}}{{#if size}}{{size}}{{else}}40{{/if}}{{/configs}}"/>
     </script>
     <script id="control_textarea" type="text/x-handlebars-template">
-        <textarea id="{{id}}-field" name="{{#if name}}{{name}}{{/if}}">{{#if data}}{{data}}{{/if}}</textarea>
+        <textarea data-lcid="{{id}}-field" name="{{#if name}}{{name}}{{/if}}">{{#if data}}{{data}}{{/if}}</textarea>
     </script>
     <script id="control_textarea_large" type="text/x-handlebars-template">
-        <textarea id="{{id}}-field" name="{{#if name}}{{name}}{{/if}}" cols="70" rows="15">{{#if data}}{{data}}{{/if}}</textarea>
+        <textarea data-lcid="{{id}}-field" name="{{#if name}}{{name}}{{/if}}" cols="70" rows="15">{{#if data}}{{data}}{{/if}}</textarea>
     </script>
     <script id="control_object" type="text/x-handlebars-template">
         {{#if controls}}
-            <fieldset name="{{#if name}}{{name}}{{/if}}" id="{{id}}">
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}">
                 <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
                 <div>{{helper}}</div>
                 {{#key_value controls}}
@@ -40,11 +37,19 @@
         {{/if}}
     </script>
     <script id="control" type="text/x-handlebars-template">
-        {{include 'control_label'}}
-        {{#injectControl}}
-        <b>Ho Ho</b>
-        {{/injectControl}}
-        {{include 'control_helper'}}
+        {{#isContainer type}}
+            {{injectControl}}
+        {{else}}
+            <span data-lcid="{{id}}">
+                {{include 'control_label'}}
+                {{injectControl}}
+                {{include 'control_helper'}}
+            </span>
+        {{/isContainer}}
+    </script>
+    <!-- Templates -->
+    <script id="template-control" type="text/x-handlebars-template">
+        {{include 'control'}}
     </script>
 </head>
 </html>

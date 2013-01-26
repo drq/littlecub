@@ -18,6 +18,8 @@
 
         "themes": {},
 
+        "templates": {},
+
         "logger": {
             DEBUG: 0, INFO: 1, WARN: 2, ERROR: 3, level: 3,
 
@@ -101,6 +103,52 @@
             });
         },
 
+        "isEmpty": function(val) {
+            return _.isNull(val) || _.isUndefined(val);
+        },
+
+        "isValEmpty": function(val) {
+            if (LittleCub.isEmpty(val)) {
+                return true;
+            }
+            if (_.isString(val) && val == "") {
+                return true;
+            }
+            if (_.isObject(val) && _.isEmpty(val)) {
+                return true;
+            }
+            if (_.isArray(val) && val.length == 0) {
+                return true;
+            }
+            if (_.isNumber(val) && _.isNaN(val)) {
+                return true;
+            }
+            return false;
+        },
+
+        /**
+         * Finds if an string ends with a given suffix.
+         *
+         * @param {String} text The string being evaluated.
+         * @param {String} suffix Suffix.
+         * @returns {Boolean} True if the string ends with the given suffix, false otherwise.
+         */
+        endsWith : function(text, suffix) {
+            return text.indexOf(suffix, text.length - suffix.length) !== -1;
+        },
+
+        /**
+         * Finds if an string starts with a given prefix.
+         *
+         * @param {String} text The string being evaluated.
+         * @param {String} prefix Prefix
+         * @returns {Boolean} True if the string starts with the given prefix, false otherwise.
+         */
+        startsWith : function(text, prefix) {
+            //return (text.match("^" + prefix) == prefix);
+            return text.substr(0, prefix.length) === prefix;
+        },
+
         "registerTheme": function(theme, themeId) {
             themeId = themeId || theme["id"];
             if (themeId) {
@@ -110,14 +158,18 @@
 
         "renderTemplate": function(template, data) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
-                var template = Handlebars.compile(template);
+                var template = LittleCub["templates"][template] || Handlebars.compile(template);
                 return template(data);
             }
         },
 
-        "registerTemplate": function(id, template) {
+        "registerTemplate": function(id, template, isTemplate) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
-                Handlebars.registerPartial(id, Handlebars.compile(template));
+                if (isTemplate) {
+                    LittleCub["templates"][id] = Handlebars.compile(template);
+                } else {
+                    Handlebars.registerPartial(id, Handlebars.compile(template));
+                }
             }
         },
 
@@ -140,6 +192,7 @@
             });
         },
 
+        /*
         "loadThemes": function (themes, callback) {
 
             var loadTheme = function(id, path) {
@@ -168,6 +221,55 @@
                 if (callback) {
                     callback();
                 }
+            });
+        }
+        */
+        "loadThemes": function (themes, callback) {
+            var nbThemes = _.size(themes);
+            var nbResponses = 0;
+            var startTag = "<script";
+            var endTag = "</script>";
+
+            _.each(themes, function(path,id) {
+                var xmlHttpRequest = new XMLHttpRequest();
+                xmlHttpRequest.open("GET", path, true);
+                xmlHttpRequest.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var fileContent = this.responseText;
+                        var startIndex = 0, endIndex = 0;
+                        while (startIndex != -1 && endIndex != -1) {
+                            startIndex = fileContent.indexOf(startTag,startIndex);
+                            if (startIndex != -1) {
+                                endIndex = fileContent.indexOf(endTag,startIndex);
+                                if (endIndex != -1) {
+                                    var closingIndex = fileContent.indexOf(">",startIndex);
+                                    if (closingIndex != -1) {
+                                        var scriptTag = fileContent.substring(startIndex + startTag.length, closingIndex);
+                                        var idMatch = scriptTag.match(/id(\s*)=(\s*)(.*?)['"]+(.*?)['"]+/);
+                                        if (idMatch != null) {
+                                            var templateId = idMatch[idMatch.length - 1];
+                                            var isTemplate = templateId.indexOf("template-") == 0;
+                                            if (isTemplate) {
+                                                templateId = templateId.substring(9);
+                                            }
+                                            var templateContent = fileContent.substring(closingIndex + 1, endIndex);
+                                            LittleCub.registerTemplate(id + "__" + templateId, templateContent.trim(), isTemplate);
+                                        }
+                                    }
+                                    startIndex = endIndex + endTag.length;
+                                }
+                            }
+                        }
+                        // continue execution in the callback
+                        nbResponses++;
+                        if (nbResponses == nbThemes) {
+                            if (callback) {
+                                callback();
+                            }
+                        }
+                    }
+                };
+                xmlHttpRequest.send();
             });
         }
     };

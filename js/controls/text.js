@@ -11,16 +11,24 @@
              * @param configs
              * @param schema
              */
-            constructor: function(container, data, configs, schema) {
-                this.base(container, data, configs, schema);
+            constructor: function(data, configs, schema) {
+                this.base(data, configs, schema);
             },
 
             init: function() {
                 this.base();
             },
 
-            bind: function() {
-
+            val: function() {
+                if (this.field) {
+                    var len = arguments.length;
+                    if (len == 0) {
+                        return this.field.value;
+                    } else if (len == 1) {
+                        this.field.value = arguments[0] || "";
+                        return this.field.value;
+                    }
+                }
             }
         }, {
             TYPE : "text"

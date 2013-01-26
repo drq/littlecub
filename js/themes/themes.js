@@ -7,19 +7,13 @@
         "description" : "Default theme for rendering basic forms.",
         "templateEngine":"handlebars",
         "platform":["web"],
-        "style":"jquery-ui",
-        "templates":{
-
-        }
+        "style":"jquery-ui"
     });
 
     LittleCub.registerTheme({
         "id" : "default-inline",
         "parent" : "default",
         "title" : "Default Inline Style Theme",
-        "description" : "Default theme for rendering basic forms with inline styles.",
-        "templates":{
-
-        }
+        "description" : "Default theme for rendering basic forms with inline styles."
     });
 }());

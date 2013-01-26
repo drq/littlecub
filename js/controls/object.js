@@ -11,8 +11,8 @@
              * @param configs
              * @param schema
              */
-            constructor: function(container, data, configs, schema) {
-                this.base(container, data, configs, schema);
+            constructor: function(data, configs, schema) {
+                this.base(data, configs, schema);
             },
 
             init: function() {
@@ -48,7 +48,7 @@
                     v["configs"]["type"] = that.controlType(v["schema"], v["configs"]);
                     var controlClass = LittleCub.controlClass(v["configs"]["type"]);
                     // Start to construct child controls
-                    that.children[k] = new controlClass("", v["data"], v["configs"], v["schema"]);
+                    that.children[k] = new controlClass(v["data"], v["configs"], v["schema"]);
                     that.children[k].parent = that;
                     that.children[k].key = k;
                     that.children[k].path = that.path == "/" ? that.path + k  : that.path + "/" + k;
@@ -59,6 +59,39 @@
                     configs["controls"] = configs["controls"] || {};
                     configs["controls"][k] = that.children[k].configs;
                 });
+            },
+
+            bindData: function(data) {
+                this.base(data);
+                _.each(this.children, function(v, k) {
+                    var d = LittleCub.isEmpty(data) ? null : data[k];
+                    v.bindData(d);
+                });
+            },
+
+            bindDOM: function() {
+                this.base();
+                _.each(this.children, function(v) {
+                    v.bindDOM();
+                });
+            },
+
+            val: function() {
+                var len = arguments.length;
+                if (len == 0) {
+                    var value = {};
+                    _.each(this.children, function(v) {
+                        value[v.key] = v.val();
+                    });
+                    return value;
+                } else if (len == 1) {
+                    var value = arguments[0];
+                    _.each(this.children, function(v) {
+                        var _val = LittleCub.isEmpty(value) ? null : value[v.key];
+                        v.val(_val);
+                    });
+                    return value;
+                }
             }
         }, {
             TYPE : "object"

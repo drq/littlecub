@@ -11,8 +11,7 @@
          * @param configs
          * @param schema
          */
-        constructor: function(container, data, configs, schema) {
-            this.container = container;
+        constructor: function(data, configs, schema) {
             this.data = data;
             this.dataBackup = _.isObject(data) || _.isArray(data) ? LittleCub.cloneJSON(data) : data;
             this.configs = configs || {};
@@ -63,6 +62,7 @@
                     }
                     return "string";
                 },
+
                 controlType: function(schema, configs) {
                     var schema = schema || this.schema;
                     var configs = configs || this.configs;
@@ -84,10 +84,53 @@
         init: function() {
             this.schema["type"] = this.schemaType();
             this.configs["type"] = this.controlType();
+
             // Sync configs and schema
             this.configs["label"] = this.configs["label"] || this.schema["title"] || LittleCub.prettyTitle(this.key) || "";
             this.schema["title"] = this.schema["title"] || this.configs["label"];
-            this.configs["name"] = this.configs["name"] || this.path.substring(1).replace(/\//g,"_");
+
+            this.configs["helper"] = this.configs["helper"] || this.schema["description"];
+            this.schema["description"] = this.schema["description"] || this.configs["helper"];
+
+            this.configs["name"] = this.configs["name"] || this.path.substring(1).replace(/\//g, "_");
+
+            this.configs["id"] = this.id;
+            // Sync data
+            this.configs["data"] = this.configs["data"] || this.data;
+            this.data = this.data || this.configs["data"];
+
+
+        },
+
+        bindData: function(data) {
+            this.data = data;
+            this.configs["data"] = this.data;
+        },
+
+        bindDOM: function() {
+            var container = this.container;
+            var parent = this.parent;
+            while (!container && parent) {
+                container = parent.container;
+                parent = parent.parent;
+            }
+            if (container) {
+                this.outerEl = container.querySelector('[data-lcid=' + this.id +']');
+                this.field = container.querySelector('[data-lcid=' + this.id +'-field]');
+            }
+        },
+
+        render: function(container, data) {
+            this.container = container;
+            var theme = this.configs["theme"] || "default";
+            var template = this.configs["template"] ? theme + "__" + this.configs["template"] : theme + "__" + "control";
+            if (LittleCub.isEmpty(data)) {
+                container.innerHTML = LittleCub.renderTemplate(template,this.configs);
+            } else {
+                this.bindData(data);
+                container.innerHTML = LittleCub.renderTemplate(template,this.configs);
+            }
+            this.bindDOM();
         }
     });
 })();

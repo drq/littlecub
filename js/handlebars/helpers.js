@@ -14,7 +14,7 @@
             obj = this;
         }
         var buffer = "";
-        for (key in obj) {
+        for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 buffer += configs.fn({key: key, value: obj[key]});
             }
@@ -33,7 +33,7 @@
      */
     Handlebars.registerHelper("each_with_key", function(obj, configs) {
         var context, buffer = "", keyName = configs.hash.key;
-        for (key in obj) {
+        for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 context = obj[key];
                 if (keyName) {
@@ -78,6 +78,16 @@
             template = Handlebars.partials[parentThemeId + "__" + templateId];
         }
 
-        return new Handlebars.SafeString(template(this)) + context.fn();
+        return new Handlebars.SafeString(template(this));
+    });
+
+    /**
+     *
+     */
+    Handlebars.registerHelper('isContainer', function(v, options) {
+        if (v == 'object' || v == 'array') {
+            return options.fn(this);
+        }
+        return options.inverse(this);
     });
 }());

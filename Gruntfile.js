@@ -18,8 +18,16 @@ module.exports = function(grunt) {
         handlebars: {
             compile: {
                 options: {
-                    namespace: "JST",
-                    wrapped: true
+                    namespace: "LittleCub.templates",
+                    wrapped: true,
+                    processName: function(filePath) {
+                        var pieces = filePath.split("/");
+                        var fileName = pieces[pieces.length - 1];
+                        if (fileName.indexOf(".hbs") != -1) {
+                            fileName = fileName.substring(0,fileName.indexOf(".hbs"));
+                        }
+                        return fileName;
+                    }
                 },
                 files: {
                     "build/templates.js": ["build/templates/*.hbs"]
@@ -31,7 +39,17 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['js/littlecub.js', 'js/themes/themes.js', 'js/handlebars/helpers.js','build/templates.js'],
+                src: [
+                    'js/littlecub.js',
+                    'js/themes/themes.js',
+                    'js/handlebars/helpers.js',
+                    'build/templates.js',
+                    'js/controls/base.js',
+                    'js/controls/container.js',
+                    'js/controls/object.js',
+                    'js/controls/text.js',
+                    'js/controls/textarea.js'
+                ],
                 dest: 'dist/<%= pkg.name %>.js'
             }
         },
@@ -75,9 +93,13 @@ module.exports = function(grunt) {
                                 var idMatch = scriptTag.match(/id(\s*)=(\s*)(.*?)['"]+(.*?)['"]+/);
                                 if (idMatch != null) {
                                     var id = idMatch[idMatch.length - 1];
+                                    var isTemplate = id.indexOf("template-") == 0;
+                                    if (isTemplate) {
+                                        id = id.substring(9);
+                                    }
                                     grunt.log.writeln("-->id:" + id);
                                     var templateContent = fileContent.substring(closingIndex + 1, endIndex);
-                                    grunt.file.write("build/templates/_" + theme + "__" + id + ".hbs", templateContent);
+                                    grunt.file.write("build/templates/" + (isTemplate ? "" : "_") + theme + "__" + id + ".hbs", templateContent);
                                     grunt.log.writeln(templateContent);
                                 }
                             }
