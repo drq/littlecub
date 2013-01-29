@@ -45,40 +45,33 @@
         return buffer;
     });
 
+    Handlebars.registerHelper("object_with_key", function(context, configs) {
+        var keyName = configs.hash.key;
+        if (context.hasOwnProperty(keyName)) {
+            return configs.fn(context[keyName]);
+        } else {
+            return "";
+        }
+    });
+
     /**
      *
      */
     Handlebars.registerHelper('include', function (context, configs) {
         var val = this["value"] || this;
-        var themeId = val["theme"] || "default";
-        var template = Handlebars.partials[themeId + "__" + context];
-
-        // check parent theme
-        var theme = LittleCub.themes[themeId];
-        var parentThemeId = theme["parent"];
-        if (!template) {
-            template = Handlebars.partials[parentThemeId + "__" + context];
-        }
-
-        return new Handlebars.SafeString(template(val));
+        var themeId = val["theme"];
+        var template = LittleCub.findTemplate(themeId,context,true);
+        return template ? new Handlebars.SafeString(template(val)) : "";
     });
 
     /**
      *
      */
     Handlebars.registerHelper('injectControl', function (context, configs) {
-        var themeId = this["theme"] || "default";
+        var themeId = this["theme"];
         var templateId = this["template"] || "control_" + this.type;
-        var template = Handlebars.partials[themeId + "__" + templateId];
-
-        // check parent theme
-        var theme = LittleCub.themes[themeId];
-        var parentThemeId = theme["parent"];
-        if (!template) {
-            template = Handlebars.partials[parentThemeId + "__" + templateId];
-        }
-
-        return new Handlebars.SafeString(template(this));
+        var template = LittleCub.findTemplate(themeId,templateId,true);
+        return template ? new Handlebars.SafeString(template(this)) : "";
     });
 
     /**

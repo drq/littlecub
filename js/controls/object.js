@@ -46,6 +46,7 @@
                     v["configs"] = v["configs"] || {};
                     v["schema"]["type"] = that.schemaType(v["schema"], v["configs"], v["data"]);
                     v["configs"]["type"] = that.controlType(v["schema"], v["configs"]);
+                    v["configs"]["theme"] = v["configs"]["theme"] || that.configs["theme"];
                     var controlClass = LittleCub.controlClass(v["configs"]["type"]);
                     // Start to construct child controls
                     that.children[k] = new controlClass(v["data"], v["configs"], v["schema"]);
@@ -91,6 +92,21 @@
                         v.val(_val);
                     });
                     return value;
+                }
+            },
+
+            isValidate: function() {
+                if (!this.validate()) {
+                    return false;
+                } else {
+                   var valid = true;
+                    _.every(this.children, function(v) {
+                        if (!v.isValidate()) {
+                            valid = false;
+                            return false;
+                        }
+                    });
+                    return valid;
                 }
             }
         }, {

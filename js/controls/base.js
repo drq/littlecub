@@ -23,6 +23,8 @@
             this.parent = null;
             this.field = null;
 
+            this.validation = {};
+
             // Private methods
             this.extend({
                 schemaType: function(schema, configs, data) {
@@ -93,18 +95,65 @@
             this.schema["description"] = this.schema["description"] || this.configs["helper"];
 
             this.configs["name"] = this.configs["name"] || this.path.substring(1).replace(/\//g, "_");
+            this.configs["theme"] = this.configs["theme"] || "default";
 
             this.configs["id"] = this.id;
             // Sync data
             this.configs["data"] = this.configs["data"] || this.data;
             this.data = this.data || this.configs["data"];
-
-
         },
 
         bindData: function(data) {
             this.data = data;
             this.configs["data"] = this.data;
+        },
+        
+        isValidate: function() {
+            this.validate();
+            var valid = true;
+            _.every(this.validation, function(v) {
+                if (!v["status"]) {
+                    valid = false;
+                    return false;
+                }
+            });
+            return valid;
+        },
+
+        _validateRequired: function() {
+            if (this.configs.required && LittleCub.isValEmpty(this.val())) {
+                return false;
+            } else {
+                return true;
+            }
+        },
+
+        validate: function() {
+            this.validation["required"] = {
+                "status" : this._validateRequired()
+            };
+            if (! this.validation["required"]["status"]) {
+                this.validation["required"]["message"] = LittleCub.findMessage("required",this.configs["theme"]);
+            }
+            var template = LittleCub.findTemplate(this.configs["theme"],"control_messages",true);
+            if (template && this.messagesContainer) {
+                this.messagesContainer.innerHTML = template({"validation" : this.validation}).trim();
+            }
+        },
+
+        bindEventListeners: function() {
+            var that = this;
+            var validationTrigger = this.configs['validationEvent'] || LittleCub.defaults["validationEvent"];
+            this.field.addEventListener(validationTrigger, this.validate.bind(this),false);
+            // register general event handlers through configs
+            _.each(this.configs, function(func, key) {
+                if (LittleCub.startsWith(key,'onControl') && _.isFunction(func)) {
+                    var event = key.substring(9).toLowerCase();
+                    that.field.addEventListener(event, function(e) {
+                        func.call(that,e);
+                    }, false);
+                }
+            })
         },
 
         bindDOM: function() {
@@ -117,18 +166,22 @@
             if (container) {
                 this.outerEl = container.querySelector('[data-lcid=' + this.id +']');
                 this.field = container.querySelector('[data-lcid=' + this.id +'-field]');
+                this.messagesContainer = container.querySelector('[data-lcid=' + this.id +'-messages]');
+                if (this.field) {
+                    this.bindEventListeners();
+                }
             }
         },
 
         render: function(container, data) {
             this.container = container;
-            var theme = this.configs["theme"] || "default";
-            var template = this.configs["template"] ? theme + "__" + this.configs["template"] : theme + "__" + "control";
+            var theme = this.configs["theme"];
+            var template = this.configs["template"] ? this.configs["template"] : "control";
             if (LittleCub.isEmpty(data)) {
-                container.innerHTML = LittleCub.renderTemplate(template,this.configs);
+                container.innerHTML = LittleCub.renderTemplate(theme,template,this.configs);
             } else {
                 this.bindData(data);
-                container.innerHTML = LittleCub.renderTemplate(template,this.configs);
+                container.innerHTML = LittleCub.renderTemplate(theme,template,this.configs);
             }
             this.bindDOM();
         }

@@ -15,15 +15,27 @@
             </div>
         {{/if}}
     </script>
-    <script id="control_text" type="text/x-handlebars-template">
-        <input data-lcid="{{id}}-field" type="text" name="{{#if name}}{{name}}{{/if}}" value="{{#if data}}{{data}}{{/if}}"
-               size="{{# configs}}{{#if size}}{{size}}{{else}}40{{/if}}{{/configs}}"/>
+    <script id="control_messages" type="text/x-handlebars-template">
+        {{#each validation}}
+            {{#if message}}
+                <div>{{message}}</div>
+            {{/if}}
+        {{/each}}
+    </script>
+    <script id="control_checkbox" type="text/x-handlebars-template">
+        <input data-lcid="{{id}}-field" type="checkbox" {{#if name}}name="{{name}}"{{/if}}
+            {{#if data}}checked{{/if}} {{#if fieldClass}}class="{{fieldClass}}"{{/if}}/>
+        {{#if rightLabel}}<span><label {{#if name}}for="{{name}}"{{/if}}>{{rightLabel}}</label></span>{{/if}}
+    </script>
+    <script id="control_text,control_number,control_integer" type="text/x-handlebars-template">
+        <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
+            value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}}
+            {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
     </script>
     <script id="control_textarea" type="text/x-handlebars-template">
-        <textarea data-lcid="{{id}}-field" name="{{#if name}}{{name}}{{/if}}">{{#if data}}{{data}}{{/if}}</textarea>
-    </script>
-    <script id="control_textarea_large" type="text/x-handlebars-template">
-        <textarea data-lcid="{{id}}-field" name="{{#if name}}{{name}}{{/if}}" cols="70" rows="15">{{#if data}}{{data}}{{/if}}</textarea>
+        <textarea data-lcid="{{id}}-field" {{#if name}}name="{{name}}"{{/if}}
+            {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
+            {{#if rows}}rows="{{rows}}"{{/if}} {{#if cols}}cols="{{cols}}"{{/if}}>{{#if data}}{{data}}{{/if}}</textarea>
     </script>
     <script id="control_object" type="text/x-handlebars-template">
         {{#if controls}}
@@ -33,6 +45,33 @@
                 {{#key_value controls}}
                     <div>{{include 'control'}}</div>
                 {{/key_value}}
+                <span data-lcid="{{id}}-messages" {{#if messageClass}}class="{{messageClass}}"{{/if}}></span>
+            </fieldset>
+        {{/if}}
+    </script>
+    <script id="control_object_table" type="text/x-handlebars-template">
+        {{#if controls}}
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}">
+                <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
+                <div>{{helper}}</div>
+                {{#if table}}
+                <table>
+                    {{#key_value table}}
+                    <tr>
+                        {{#key_value value}}
+                            <td data-licid="{{../key}}-{{key}}">
+                                {{#each value}}
+                                    {{#object_with_key ../../../controls key=this}}
+                                        <div>{{include 'control'}}</div>
+                                    {{/object_with_key}}
+                                {{/each}}
+                            </td>
+                        {{/key_value}}
+                    </tr>
+                    {{/key_value}}
+                </table>
+                {{/if}}
+                <span data-lcid="{{id}}-message"></span>
             </fieldset>
         {{/if}}
     </script>
@@ -44,6 +83,7 @@
                 {{include 'control_label'}}
                 {{injectControl}}
                 {{include 'control_helper'}}
+                <span data-lcid="{{id}}-messages"></span>
             </span>
         {{/isContainer}}
     </script>

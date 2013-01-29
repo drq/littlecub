@@ -13,10 +13,6 @@
              */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
-            },
-
-            init: function() {
-                this.base();
             }
         }, {
             TYPE : "textarea"

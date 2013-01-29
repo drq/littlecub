@@ -93,14 +93,20 @@ module.exports = function(grunt) {
                                 var idMatch = scriptTag.match(/id(\s*)=(\s*)(.*?)['"]+(.*?)['"]+/);
                                 if (idMatch != null) {
                                     var id = idMatch[idMatch.length - 1];
-                                    var isTemplate = id.indexOf("template-") == 0;
-                                    if (isTemplate) {
-                                        id = id.substring(9);
-                                    }
-                                    grunt.log.writeln("-->id:" + id);
-                                    var templateContent = fileContent.substring(closingIndex + 1, endIndex);
-                                    grunt.file.write("build/templates/" + (isTemplate ? "" : "_") + theme + "__" + id + ".hbs", templateContent);
-                                    grunt.log.writeln(templateContent);
+                                    var templateIdList = id.split(",");
+                                    for (var i = 0 ; i < templateIdList.length ; i++) {
+                                        var _id = templateIdList[i].trim();
+                                        if (_id) {
+                                            var isTemplate = _id.indexOf("template-") == 0;
+                                            if (isTemplate) {
+                                                _id = _id.substring(9);
+                                            }
+                                            grunt.log.writeln("-->id:" + _id);
+                                            var templateContent = fileContent.substring(closingIndex + 1, endIndex);
+                                            grunt.file.write("build/templates/" + (isTemplate ? "" : "_") + theme + "__" + _id + ".hbs", templateContent);
+                                            grunt.log.writeln(templateContent);
+                                        }
+                                    };
                                 }
                             }
                             startIndex = endIndex + endTag.length;

@@ -5,7 +5,9 @@
         "version": "0.1.0",
 
         "defaults": {
+            "locale": "en_US",
             "templateEngine": "handlebars",
+            "validationEvent": "blur",
             "schemaToControl": {
                 "string": "text",
                 "boolean": "checkbox",
@@ -145,8 +147,30 @@
          * @returns {Boolean} True if the string starts with the given prefix, false otherwise.
          */
         startsWith : function(text, prefix) {
-            //return (text.match("^" + prefix) == prefix);
             return text.substr(0, prefix.length) === prefix;
+        },
+
+        /**
+         * Substitutes a string with a list of tokens.
+         *
+         * @param text Source string.
+         * @param args List of tokens.
+         *
+         * @returns Substituted string.
+         */
+        substituteTokens : function(text, args) {
+            if (!LittleCub.isEmpty(text)) {
+                for (var i = 0, len = args.length; i < len; i++) {
+                    var token = "{" + i + "}";
+
+                    var x = text.indexOf(token);
+                    if (x != -1) {
+                        var nt = text.substring(0, x) + args[i] + text.substring(x + 3);
+                        text = nt;
+                    }
+                }
+            }
+            return text;
         },
 
         "registerTheme": function(theme, themeId) {
@@ -156,9 +180,40 @@
             }
         },
 
-        "renderTemplate": function(template, data) {
+        "findMessage" : function(messageId, themeId, locale) {
+            var theme = LittleCub.themes[themeId];
+            locale = locale || LittleCub.defaults.locale;
+            var message = theme["messages"][locale] ? theme["messages"][locale][messageId] : null;
+            var parentThemeId = theme["parent"];
+            while (!message && parentThemeId) {
+                theme = LittleCub.themes[parentThemeId];
+                message = theme["messages"][locale] ? theme["messages"][locale][messageId] : null;
+                parentThemeId = theme["parent"];
+            }
+            if (message) {
+                return message;
+            } else if (locale != LittleCub.defaults.locale) {
+                return this.findMessage(messageId, themeId, LittleCub.defaults.locale);
+            }
+        },
+
+        "findTemplate" : function(themeId, partialId , isPartial) {
+            var fullId = themeId + "__" + partialId;
+            var template = isPartial ? Handlebars.partials[fullId] : LittleCub["templates"][fullId];
+            // check parent theme
+            var theme = LittleCub.themes[themeId];
+            var parentThemeId = theme["parent"];
+            while (!template && parentThemeId) {
+                fullId = parentThemeId + "__" + partialId;
+                template = isPartial ? Handlebars.partials[fullId] : LittleCub["templates"][fullId];
+                parentThemeId = theme["parent"];
+            }
+            return template;
+        },
+
+        "renderTemplate": function(themeId, templateId, data) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
-                var template = LittleCub["templates"][template] || Handlebars.compile(template);
+                var template = this.findTemplate(themeId, templateId) || Handlebars.compile(template);
                 return template(data);
             }
         },
@@ -248,12 +303,18 @@
                                         var idMatch = scriptTag.match(/id(\s*)=(\s*)(.*?)['"]+(.*?)['"]+/);
                                         if (idMatch != null) {
                                             var templateId = idMatch[idMatch.length - 1];
-                                            var isTemplate = templateId.indexOf("template-") == 0;
-                                            if (isTemplate) {
-                                                templateId = templateId.substring(9);
-                                            }
-                                            var templateContent = fileContent.substring(closingIndex + 1, endIndex);
-                                            LittleCub.registerTemplate(id + "__" + templateId, templateContent.trim(), isTemplate);
+                                            var templateIdList = templateId.split(",");
+                                            _.each(templateIdList, function (v) {
+                                                var _id = v.trim();
+                                                if (_id) {
+                                                    var isTemplate = _id.indexOf("template-") == 0;
+                                                    if (isTemplate) {
+                                                        _id = _id.substring(9);
+                                                    }
+                                                    var templateContent = fileContent.substring(closingIndex + 1, endIndex);
+                                                    LittleCub.registerTemplate(id + "__" + _id, templateContent.trim(), isTemplate);
+                                                }
+                                            });
                                         }
                                     }
                                     startIndex = endIndex + endTag.length;
