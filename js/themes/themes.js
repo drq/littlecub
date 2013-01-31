@@ -19,7 +19,10 @@
                 "maximumExclusive": "Value of this field must be less than {0}.",
                 "multipleOf": "The value must be multiple of {0}.",
                 "isNumber": "Field value must be a number.",
-                "isInteger": "Field value must be an integer."
+                "isInteger": "Field value must be an integer.",
+                "minItems": "The minimum number of items is {0}.",
+                "maxItems": "The maximum number of items is {0}.",
+                "uniqueItems": "Array items are not unique."
             }
         }
     });

@@ -173,6 +173,26 @@
             return text;
         },
 
+        compare : function(obj1, obj2) {
+            if (_.isObject(obj1) && _.isObject(obj2)) {
+                return _.isEqual(obj1, obj2);
+            } else if (_.isArray(obj1) && _.isArray(obj2)) {
+                if (obj1.length != obj2.length) {
+                    return false;
+                } else {
+                    var isSame = true;
+                    for (var i = 0, len = obj1.length; i < len && isSame; i++) {
+                        for (var j = 0, len2 = obj2.length; j < len2 && isSame; j++) {
+                            isSame = this.compare(obj1[i], obj2[j]);
+                        }
+                    }
+                    return isSame;
+                }
+            } else {
+                return obj1 == obj2;
+            }
+        },
+
         "registerTheme": function(theme, themeId) {
             themeId = themeId || theme["id"];
             if (themeId) {
@@ -211,10 +231,10 @@
             return template;
         },
 
-        "renderTemplate": function(themeId, templateId, data) {
+        "renderTemplate": function(themeId, templateId, data, isPartial) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
-                var template = this.findTemplate(themeId, templateId) || Handlebars.compile(template);
-                return template(data);
+                var template = this.findTemplate(themeId, templateId , isPartial) || Handlebars.compile(template);
+                return template(data).trim();
             }
         },
 

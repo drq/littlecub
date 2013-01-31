@@ -13,6 +13,8 @@
              */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
+
+                this.children = {};
             },
 
             init: function() {
@@ -49,10 +51,13 @@
                     v["configs"]["theme"] = v["configs"]["theme"] || that.configs["theme"];
                     var controlClass = LittleCub.controlClass(v["configs"]["type"]);
                     // Start to construct child controls
+                    if (that.schema["required"] && _.indexOf(that.schema["required"], k) != -1) {
+                        v["configs"]["required"] = true;
+                    }
                     that.children[k] = new controlClass(v["data"], v["configs"], v["schema"]);
                     that.children[k].parent = that;
                     that.children[k].key = k;
-                    that.children[k].path = that.path == "/" ? that.path + k  : that.path + "/" + k;
+                    that.children[k].path = that.path == "/" ? that.path + k : that.path + "/" + k;
                     that.children[k].init();
                     // Link them back to its parent
                     schema["properties"] = schema["properties"] || {};
@@ -62,19 +67,13 @@
                 });
             },
 
-            bindData: function(data) {
-                this.base(data);
-                _.each(this.children, function(v, k) {
-                    var d = LittleCub.isEmpty(data) ? null : data[k];
-                    v.bindData(d);
-                });
-            },
-
-            bindDOM: function() {
-                this.base();
-                _.each(this.children, function(v) {
-                    v.bindDOM();
-                });
+            _updateKeyPath: function(v, k) {
+                if (v.parent) {
+                    var pPath = v.parent.path;
+                    v.path = pPath == "/" ? pPath + k : pPath + "/" + k;
+                } else {
+                    v.path = k;
+                }
             },
 
             val: function() {
@@ -95,19 +94,12 @@
                 }
             },
 
-            isValidate: function() {
-                if (!this.validate()) {
-                    return false;
-                } else {
-                   var valid = true;
-                    _.every(this.children, function(v) {
-                        if (!v.isValidate()) {
-                            valid = false;
-                            return false;
-                        }
-                    });
-                    return valid;
-                }
+            bindData: function(data) {
+                this.base(data);
+                _.each(this.children, function(v, k) {
+                    var d = LittleCub.isEmpty(data) ? null : data[k];
+                    v.bindData(d);
+                });
             }
         }, {
             TYPE : "object"

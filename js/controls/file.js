@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    LittleCub.TextareaControl = LittleCub.TextControl.extend({
+    LittleCub.FileControl = LittleCub.TextControl.extend({
             /**
              *
              * @param container
@@ -13,9 +13,9 @@
                 this.base(data, configs, schema);
             }
         }, {
-            TYPE : "textarea"
+            TYPE : "file"
         }
     );
 
-    LittleCub.controlClass(LittleCub.TextareaControl.TYPE, LittleCub.TextareaControl);
+    LittleCub.controlClass(LittleCub.FileControl.TYPE, LittleCub.FileControl);
 })();

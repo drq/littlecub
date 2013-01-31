@@ -13,6 +13,11 @@
                 this.base(data, configs, schema);
             },
 
+            init: function() {
+                this.base();
+                this.configs["template"] = this.configs["template"] || "control_text";
+            },
+
             val: function() {
                 if (this.field) {
                     var len = arguments.length;

@@ -43,12 +43,21 @@ module.exports = function(grunt) {
                     'js/littlecub.js',
                     'js/themes/themes.js',
                     'js/handlebars/helpers.js',
-                    'build/templates.js',
                     'js/controls/base.js',
                     'js/controls/container.js',
                     'js/controls/object.js',
                     'js/controls/text.js',
-                    'js/controls/textarea.js'
+                    'js/controls/textarea.js',
+                    'js/controls/number.js',
+                    'js/controls/integer.js',
+                    'js/controls/checkbox.js',
+                    'js/controls/list.js',
+                    'js/controls/radio.js',
+                    'js/controls/select.js',
+                    'js/controls/file.js',
+                    'js/controls/hidden.js',
+                    'js/controls/array.js',
+                    'build/templates.js'
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
             }
@@ -102,7 +111,7 @@ module.exports = function(grunt) {
                                                 _id = _id.substring(9);
                                             }
                                             grunt.log.writeln("-->id:" + _id);
-                                            var templateContent = fileContent.substring(closingIndex + 1, endIndex);
+                                            var templateContent = fileContent.substring(closingIndex + 1, endIndex).trim();
                                             grunt.file.write("build/templates/" + (isTemplate ? "" : "_") + theme + "__" + _id + ".hbs", templateContent);
                                             grunt.log.writeln(templateContent);
                                         }

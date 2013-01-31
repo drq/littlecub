@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    LittleCub.TextareaControl = LittleCub.TextControl.extend({
+    LittleCub.HiddenControl = LittleCub.TextControl.extend({
             /**
              *
              * @param container
@@ -11,11 +11,17 @@
              */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
+            },
+
+            init: function() {
+                this.base();
+                this.configs["helper"] = "";
+                this.configs["label"] = "";
             }
         }, {
-            TYPE : "textarea"
+            TYPE : "hidden"
         }
     );
 
-    LittleCub.controlClass(LittleCub.TextareaControl.TYPE, LittleCub.TextareaControl);
+    LittleCub.controlClass(LittleCub.HiddenControl.TYPE, LittleCub.HiddenControl);
 })();

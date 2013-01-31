@@ -38,6 +38,8 @@
                         _.every(LittleCub["defaults"]["schemaToControl"], function(v, k) {
                             if (v === configs["type"]) {
                                 return schema["type"] = k;
+                            } else {
+                                return true;
                             }
                         });
                         if (schema["type"]) {
@@ -107,17 +109,16 @@
             this.data = data;
             this.configs["data"] = this.data;
         },
-        
+
+        isContainer: function() {
+            return false;
+        },
+
         isValidate: function() {
             this.validate();
-            var valid = true;
-            _.every(this.validation, function(v) {
-                if (!v["status"]) {
-                    valid = false;
-                    return false;
-                }
+            return _.every(this.validation, function(v) {
+                return v["status"];
             });
-            return valid;
         },
 
         _validateRequired: function() {
@@ -133,27 +134,35 @@
                 "status" : this._validateRequired()
             };
             if (! this.validation["required"]["status"]) {
-                this.validation["required"]["message"] = LittleCub.findMessage("required",this.configs["theme"]);
+                this.validation["required"]["message"] = LittleCub.findMessage("required", this.configs["theme"]);
             }
-            var template = LittleCub.findTemplate(this.configs["theme"],"control_messages",true);
+            var template = LittleCub.findTemplate(this.configs["theme"], "control_messages", true);
             if (template && this.messagesContainer) {
                 this.messagesContainer.innerHTML = template({"validation" : this.validation}).trim();
             }
         },
 
-        bindEventListeners: function() {
+        validationEvent: function() {
+            return this.configs['validationEvent'] || LittleCub.defaults["validationEvent"];
+        },
+
+        bindCustomEventHandlers : function() {
             var that = this;
-            var validationTrigger = this.configs['validationEvent'] || LittleCub.defaults["validationEvent"];
-            this.field.addEventListener(validationTrigger, this.validate.bind(this),false);
             // register general event handlers through configs
             _.each(this.configs, function(func, key) {
-                if (LittleCub.startsWith(key,'onControl') && _.isFunction(func)) {
+                if (LittleCub.startsWith(key, 'onControl') && _.isFunction(func)) {
                     var event = key.substring(9).toLowerCase();
                     that.field.addEventListener(event, function(e) {
-                        func.call(that,e);
+                        func.call(that, e);
                     }, false);
                 }
             })
+        },
+
+        bindEventListeners: function() {
+            var validationTrigger = this.validationEvent();
+            this.field.addEventListener(validationTrigger, this.validate.bind(this), false);
+            this.bindCustomEventHandlers();
         },
 
         bindDOM: function() {
@@ -164,24 +173,35 @@
                 parent = parent.parent;
             }
             if (container) {
-                this.outerEl = container.querySelector('[data-lcid=' + this.id +']');
-                this.field = container.querySelector('[data-lcid=' + this.id +'-field]');
-                this.messagesContainer = container.querySelector('[data-lcid=' + this.id +'-messages]');
+                this.outerEl = container.querySelector('[data-lcid=' + this.id + ']');
+                this.field = container.querySelector('[data-lcid=' + this.id + '-field]');
+                this.messagesContainer = container.querySelector('[data-lcid=' + this.id + '-messages]');
                 if (this.field) {
                     this.bindEventListeners();
+                }
+                if (!LittleCub.isEmpty(this.configs["form"])) {
+                    this.form = container.querySelector('form[data-lcid=' + this.id + '-form]');
                 }
             }
         },
 
-        render: function(container, data) {
+        render: function(container, data, mode) {
+            mode = mode || "fill";
             this.container = container;
             var theme = this.configs["theme"];
-            var template = this.configs["template"] ? this.configs["template"] : "control";
-            if (LittleCub.isEmpty(data)) {
-                container.innerHTML = LittleCub.renderTemplate(theme,template,this.configs);
-            } else {
+            var defaultTemplate = LittleCub.isEmpty(this.configs["form"]) ? "control" : "form";
+            var template = this.configs["template"] ? this.configs["template"] : defaultTemplate;
+            if (!LittleCub.isEmpty(data)) {
                 this.bindData(data);
-                container.innerHTML = LittleCub.renderTemplate(theme,template,this.configs);
+            }
+            if (mode == "fill") {
+                container.innerHTML = LittleCub.renderTemplate(theme, template, this.configs);
+            } else if (mode == "insertAfter") {
+                var elem = document.createElement("span");
+                elem.innerHTML = LittleCub.renderTemplate(theme, template, this.configs);
+                container.parentNode.insertBefore(elem.firstChild, container.nextSibling);
+            } else if (mode == "appendTo") {
+
             }
             this.bindDOM();
         }

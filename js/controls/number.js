@@ -24,6 +24,11 @@
                     }
                 }
             },
+
+            init: function() {
+                this.base();
+                this.configs["template"] = this.configs["template"] || "control_text";
+            },
             
             /**
              * Validates if it is a float number.
