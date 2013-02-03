@@ -15,6 +15,14 @@
                 "integer": "integer",
                 "array": "array",
                 "object": "object"
+            },
+            "formatToControl": {
+                "date-time": "datetime",
+                "email": "email",
+                "hostname": "hostname",
+                "ipv4": "ipv4",
+                "ipv6": "ipv6",
+                "uri": "uri"
             }
         },
 
@@ -217,23 +225,23 @@
             }
         },
 
-        "findTemplate" : function(themeId, partialId , isPartial) {
+        "findTemplate" : function(themeId, partialId) {
             var fullId = themeId + "__" + partialId;
-            var template = isPartial ? Handlebars.partials[fullId] : LittleCub["templates"][fullId];
+            var template = Handlebars.partials[fullId] || LittleCub["templates"][fullId];
             // check parent theme
             var theme = LittleCub.themes[themeId];
             var parentThemeId = theme["parent"];
             while (!template && parentThemeId) {
                 fullId = parentThemeId + "__" + partialId;
-                template = isPartial ? Handlebars.partials[fullId] : LittleCub["templates"][fullId];
+                template = Handlebars.partials[fullId] || LittleCub["templates"][fullId];
                 parentThemeId = theme["parent"];
             }
             return template;
         },
 
-        "renderTemplate": function(themeId, templateId, data, isPartial) {
+        "renderTemplate": function(themeId, templateId, data) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
-                var template = this.findTemplate(themeId, templateId , isPartial) || Handlebars.compile(template);
+                var template = this.findTemplate(themeId, templateId) || Handlebars.compile(template);
                 return template(data).trim();
             }
         },

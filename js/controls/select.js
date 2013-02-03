@@ -55,12 +55,13 @@
              * @returns {Boolean} true if number of items has been less than minItems
              */
             _validateMinItems: function() {
-                if (this.schema.items && this.schema.items.minItems) {
-                    if (this.field.value.length < this.schema.items.minItems) {
-                        return false;
-                    }
+                var validation = {
+                    "status" : LittleCub.isEmpty(this.schema.items) || LittleCub.isEmpty(this.schema.items.minItems) || this.field.value.length >= this.schema.items.minItems
+                };
+                if (! validation["status"]) {
+                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]]);
                 }
-                return true;
+                return validation;
             },
 
             /**
@@ -68,27 +69,18 @@
              * @returns {Boolean} true if number of items has been over maxItems
              */
             _validateMaxItems: function() {
-                if (this.schema.items && this.schema.items.maxItems) {
-                    if (this.field.value.length > this.schema.items.maxItems) {
-                        return false;
-                    }
+                var validation = {
+                    "status" : LittleCub.isEmpty(this.schema.items) || LittleCub.isEmpty(this.schema.items.maxItems) || this.field.value.length <= this.schema.items.minItems
+                };
+                if (! validation["status"]) {
+                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]]);
                 }
-                return true;
+                return validation;
             },
 
             validate: function() {
-                this.validation["minItems"] = {
-                    "status" : this._validateMinItems()
-                };
-                if (! this.validation["minItems"]["status"]) {
-                    this.validation["minItems"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]]);
-                }
-                this.validation["maxItems"] = {
-                    "status" : this._validateMaxItems()
-                };
-                if (! this.validation["maxItems"]["status"]) {
-                    this.validation["maxItems"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]]);
-                }
+                this.validation["minItems"] = this._validateMinItems();
+                this.validation["maxItems"] = this._validateMaxItems();
                 this.base();
             },
 

@@ -25,16 +25,16 @@
                 var that = this;
 
                 var params = {};
-                if (configs && configs["controls"]) {
-                    _.each(configs["controls"], function(v, k) {
-                        params[k] = params[k] || {};
-                        params[k]["configs"] = v;
-                    });
-                }
                 if (schema && schema["properties"]) {
                     _.each(schema["properties"], function(v, k) {
                         params[k] = params[k] || {};
                         params[k]["schema"] = v;
+                    });
+                }
+                if (configs && configs["controls"]) {
+                    _.each(configs["controls"], function(v, k) {
+                        params[k] = params[k] || {};
+                        params[k]["configs"] = v;
                     });
                 }
                 if (_.isObject(data)) {
@@ -54,7 +54,7 @@
                     if (that.schema["required"] && _.indexOf(that.schema["required"], k) != -1) {
                         v["configs"]["required"] = true;
                     }
-                    that.children[k] = new controlClass(v["data"], v["configs"], v["schema"]);
+                    that.children[k] = new controlClass(v["data"], LittleCub.cloneJSON(v["configs"]), LittleCub.cloneJSON(v["schema"]));
                     that.children[k].parent = that;
                     that.children[k].key = k;
                     that.children[k].path = that.path == "/" ? that.path + k : that.path + "/" + k;
@@ -65,6 +65,13 @@
                     configs["controls"] = configs["controls"] || {};
                     configs["controls"][k] = that.children[k].configs;
                 });
+
+                // Make sure the sequence is what we would expect.
+                var controls = {}
+                _.each(params, function(v, k) {
+                    controls[k] = configs["controls"][k];
+                });
+                configs["controls"] = controls;
             },
 
             _updateKeyPath: function(v, k) {

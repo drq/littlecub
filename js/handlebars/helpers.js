@@ -60,7 +60,7 @@
     Handlebars.registerHelper('include', function (context, configs) {
         var val = this["value"] || this;
         var themeId = val["theme"];
-        var template = LittleCub.findTemplate(themeId,context,true);
+        var template = LittleCub.findTemplate(themeId,context);
         return template ? new Handlebars.SafeString(template(val)) : "";
     });
 
@@ -70,7 +70,7 @@
     Handlebars.registerHelper('injectControl', function (context, configs) {
         var themeId = this["theme"];
         var templateId = this["template"] || "control_" + this.type;
-        var template = LittleCub.findTemplate(themeId,templateId,true);
+        var template = LittleCub.findTemplate(themeId,templateId);
         return template ? new Handlebars.SafeString(template(this)) : "";
     });
 
@@ -78,7 +78,7 @@
      *
      */
     Handlebars.registerHelper('isContainer', function(v, options) {
-        if (v == 'object' || v == 'array') {
+        if (this.isContainer) {
             return options.fn(this);
         }
         return options.inverse(this);

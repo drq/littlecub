@@ -37,6 +37,11 @@
                 return child;
             },
 
+            removeChild : function(k) {
+                this.children.splice(k, 1);
+                this.configs["controls"].splice(k, 1);
+            },
+
             init: function() {
                 this.base();
                 var configs = this.configs;
@@ -59,30 +64,112 @@
                 this.base();
                 this.validate();
                 var that = this;
-                _.each(this.outerEl.querySelectorAll('button[class=lc-array-item-add]'), function(v, k) {
-                    v.addEventListener('click', function(e) {
-                        var lcId = v.getAttribute("data-lcid");
-                        lcId = lcId.substring(0, lcId.length - 4);
-                        var insertAtIndex = that.children.length - 1;
-                        _.every(that.children, function(v, k) {
-                            if (v.id == lcId) {
-                                insertAtIndex = k;
-                                return false;
-                            } else {
-                                return true;
-                            }
-                        });
-                        var insertAt = that.children[insertAtIndex];
-                        var child = that.addChild(null, insertAtIndex + 1);
-                        // Add array item toolbar
-                        var elem = document.createElement("span");
-                        elem.innerHTML = LittleCub.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs, true);
-                        insertAt.outerEl.parentNode.insertBefore(elem.firstChild, insertAt.outerEl.nextSibling);
-                        // Render the child
-                        child.render(insertAt.outerEl.nextSibling, null, "insertAfter");
-                        that.updateKeyPath();
-                        return false;
+
+                var addElementToolbar = function(child) {
+                    // Add array item toolbar
+                    var elem = document.createElement("span");
+                    elem.innerHTML = LittleCub.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs, true);
+                    _.each(elem.querySelectorAll('button[class=lc-array-item-add]'), function(v) {
+                        v.addEventListener('click', addEventHandler);
                     });
+                    _.each(elem.querySelectorAll('button[class=lc-array-item-remove]'), function(v) {
+                        v.addEventListener('click', removeEventHandler);
+                    });
+                    return elem;
+                };
+
+                var addFirstEventHandler = function(e) {
+                    var child = that.addChild(null, 1);
+                    // Add array item toolbar
+                    var elem = addElementToolbar(child);
+                    var arrayToolbarElem = that.outerEl.querySelector('[class=lc-array-toolbar]');
+                    arrayToolbarElem.parentNode.insertBefore(elem.firstChild, arrayToolbarElem.nextSibling);
+                    // Render the child
+                    child.render(arrayToolbarElem.nextSibling, null, "insertAfter");
+                    arrayToolbarElem.parentNode.removeChild(arrayToolbarElem);
+                    // Trigger validation
+                    that.validate();
+                    return false;
+                };
+
+                var addEventHandler = function(e) {
+                    var v = this;
+                    var lcId = v.getAttribute("data-lcid");
+                    lcId = lcId.substring(0, lcId.length - 4);
+                    var insertAtIndex = that.children.length - 1;
+                    _.every(that.children, function(v, k) {
+                        if (v.id == lcId) {
+                            insertAtIndex = k;
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+                    var insertAt = that.children[insertAtIndex];
+                    var child = that.addChild(null, insertAtIndex + 1);
+                    // Add array item toolbar
+                    var elem = addElementToolbar(child);
+                    insertAt.outerEl.parentNode.insertBefore(elem.firstChild, insertAt.outerEl.nextSibling);
+                    // Render the child
+                    child.render(insertAt.outerEl.nextSibling, null, "insertAfter");
+                    that.updateKeyPath();
+                    // Trigger validation
+                    that.validate();
+                    return false;
+                };
+
+                var removeEventHandler = function(e) {
+                    var v = this;
+                    var lcId = v.getAttribute("data-lcid");
+                    lcId = lcId.substring(0, lcId.length - 7);
+                    var removeAtIndex;
+                    _.every(that.children, function(v, k) {
+                        if (v.id == lcId) {
+                            removeAtIndex = k;
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+                    if (! LittleCub.isEmpty(removeAtIndex)) {
+                        var child = that.children[removeAtIndex];
+                        var outerEl = child.outerEl;
+                        outerEl.parentNode.removeChild(outerEl);
+                        var toolbarElem = that.outerEl.querySelector('[data-lcid="' + lcId + '-toolbar"]');
+                        toolbarElem.parentNode.removeChild(toolbarElem);
+                        that.removeChild(removeAtIndex);
+                        that.updateKeyPath();
+                        // Trigger validation
+                        that.validate();
+                        // Add the array toolbar for empty array
+                        if (that.children.length == 0) {
+                            var elem = document.createElement("span");
+                            elem.innerHTML = LittleCub.renderTemplate(child.configs["theme"], "array_toolbar", child.configs, true);
+                            _.each(elem.querySelectorAll('button[class=lc-array-add]'), function(v) {
+                                v.addEventListener('click', addFirstEventHandler);
+                            });
+                            lcId = that.outerEl.getAttribute("data-lcid");
+                            var itemsElem = that.outerEl.querySelector("[data-lcid='" + lcId + "-items']");
+                            if (itemsElem) {
+                                itemsElem.appendChild(elem.firstChild);
+                            } else {
+                                that.outerEl.appendChild(elem.firstChild);
+                            }
+                        }
+                    }
+                    return false;
+                };
+
+                _.each(this.outerEl.querySelectorAll('button[class=lc-array-add]'), function(v) {
+                    v.addEventListener('click', addFirstEventHandler);
+                });
+
+                _.each(this.outerEl.querySelectorAll('button[class=lc-array-item-add]'), function(v) {
+                    v.addEventListener('click', addEventHandler);
+                });
+
+                _.each(this.outerEl.querySelectorAll('button[class=lc-array-item-remove]'), function(v) {
+                    v.addEventListener('click', removeEventHandler);
                 })
             },
 
@@ -139,7 +226,13 @@
              * @returns {Boolean} true if number of items has been less than minItems
              */
             _validateMinItems: function() {
-                return ! ( _.isNumber(this.schema.minItems) && _.size(this.children) < this.schema.minItems);
+                var validation = {
+                    "status" : LittleCub.isEmpty(this.schema.minItems) ||! _.isNumber(this.schema.minItems) ||  _.size(this.children) >= this.schema.minItems
+                };
+                if (!validation["status"]) {
+                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]])
+                }
+                return validation;
             },
 
             /**
@@ -147,7 +240,13 @@
              * @returns {Boolean} true if number of items has been over maxItems
              */
             _validateMaxItems: function() {
-                return ! (_.isNumber(this.schema.maxItems) && _.size(this.children) > this.schema.maxItems);
+                var validation = {
+                    "status" : LittleCub.isEmpty(this.schema.minItems) ||! _.isNumber(this.schema.maxItems) || _.size(this.children) <= this.schema.maxItems
+                };
+                if (!validation["status"]) {
+                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]])
+                }
+                return validation;
             },
 
             /**
@@ -155,40 +254,31 @@
              * @returns {Boolean} true if all items are unique.
              */
             _validateUniqueItems: function() {
-                if (this.schema.uniqueItems && _.isArray(this.data)) {
-                    var isSame = true;
-                    var data = this.data;
-                    var len = this.data.length
-                    for (var i = 0; i < len && isSame; i++) {
-                        for (var j = i + 1; j < len && isSame; j++) {
-                            isSame = LittleCub.compare(data[i], data[j]);
+                var status = true;
+                var val = this.val();
+                if (this.schema.uniqueItems && _.isArray(val)) {
+                    var isSame = false;
+                    var len = val.length;
+                    for (var i = 0; i < len && !isSame; i++) {
+                        for (var j = i + 1; j < len && !isSame; j++) {
+                            isSame = LittleCub.compare(val[i], val[j]);
                         }
                     }
-                    return isSame;
-                } else {
-                    return true;
+                    status = !isSame;
                 }
+                var validation = {
+                    "status" : status
+                };
+                if (! status) {
+                    validation["message"] = LittleCub.findMessage("uniqueItems", this.configs["theme"]);
+                }
+                return validation;
             },
 
             validate: function() {
-                this.validation["minItems"] = {
-                    "status" : this._validateMinItems()
-                };
-                if (! this.validation["minItems"]["status"]) {
-                    this.validation["minItems"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]]);
-                }
-                this.validation["maxItems"] = {
-                    "status" : this._validateMaxItems()
-                };
-                if (! this.validation["maxItems"]["status"]) {
-                    this.validation["maxItems"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]]);
-                }
-                this.validation["uniqueItems"] = {
-                    "status" : this._validateUniqueItems()
-                };
-                if (! this.validation["uniqueItems"]["status"]) {
-                    this.validation["uniqueItems"]["message"] = LittleCub.findMessage("uniqueItems", this.configs["theme"]);
-                }
+                this.validation["minItems"] = this._validateMinItems();
+                this.validation["maxItems"] = this._validateMaxItems();
+                this.validation["uniqueItems"] = this._validateUniqueItems();
                 this.base();
             }
         }, {

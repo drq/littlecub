@@ -54,6 +54,8 @@
                 }
             },
             "cookie" : "kjdfkdjfkdjfkdjfkdjfkdjfkd",
+            "comments" : []
+            /*
             "comments" : [{
                 "body" : "great",
                 "rating" : 1
@@ -73,6 +75,7 @@
                 "body" : "terrible",
                 "rating" : 3
             }]
+            */
         };
         var schema = {
             "title" : "Movie",
@@ -140,7 +143,7 @@
                 },
                 "comments" : {
                     "type" : "array",
-                    "maxItems" : 3,
+                    "maxItems" : 6,
                     "uniqueItems" : true,
                     "items" : {
                         "type" : "object",

@@ -16,6 +16,12 @@
             this.dataBackup = _.isObject(data) || _.isArray(data) ? LittleCub.cloneJSON(data) : data;
             this.configs = configs || {};
             this.schema = schema || {};
+            if (this.constructor.SCHEMA) {
+                this.schema = _.extend(this.schema, LittleCub.cloneJSON(this.constructor.SCHEMA));
+            }
+            if (this.constructor.CONFIGS) {
+                this.configs = _.extend(this.configs, LittleCub.cloneJSON(this.constructor.CONFIGS));
+            }
 
             // other members
             this.id = this.configs["id"] || LittleCub.id();
@@ -100,6 +106,7 @@
             this.configs["theme"] = this.configs["theme"] || "default";
 
             this.configs["id"] = this.id;
+
             // Sync data
             this.configs["data"] = this.configs["data"] || this.data;
             this.data = this.data || this.configs["data"];
@@ -110,10 +117,6 @@
             this.configs["data"] = this.data;
         },
 
-        isContainer: function() {
-            return false;
-        },
-
         isValidate: function() {
             this.validate();
             return _.every(this.validation, function(v) {
@@ -122,21 +125,18 @@
         },
 
         _validateRequired: function() {
-            if (this.configs.required && LittleCub.isValEmpty(this.val())) {
-                return false;
-            } else {
-                return true;
+            var validation = {
+                "status" : ! (this.configs.required && LittleCub.isValEmpty(this.val()))
             }
+            if (! validation["status"]) {
+                validation["message"] = LittleCub.findMessage("required", this.configs["theme"]);
+            }
+            return validation;
         },
 
         validate: function() {
-            this.validation["required"] = {
-                "status" : this._validateRequired()
-            };
-            if (! this.validation["required"]["status"]) {
-                this.validation["required"]["message"] = LittleCub.findMessage("required", this.configs["theme"]);
-            }
-            var template = LittleCub.findTemplate(this.configs["theme"], "control_messages", true);
+            this.validation["required"] = this._validateRequired();
+            var template = LittleCub.findTemplate(this.configs["theme"], "control_messages");
             if (template && this.messagesContainer) {
                 this.messagesContainer.innerHTML = template({"validation" : this.validation}).trim();
             }
@@ -189,8 +189,7 @@
             mode = mode || "fill";
             this.container = container;
             var theme = this.configs["theme"];
-            var defaultTemplate = LittleCub.isEmpty(this.configs["form"]) ? "control" : "form";
-            var template = this.configs["template"] ? this.configs["template"] : defaultTemplate;
+            var template = this.configs["template"] ? this.configs["template"] : "form";
             if (!LittleCub.isEmpty(data)) {
                 this.bindData(data);
             }
@@ -200,6 +199,7 @@
                 var elem = document.createElement("span");
                 elem.innerHTML = LittleCub.renderTemplate(theme, template, this.configs);
                 container.parentNode.insertBefore(elem.firstChild, container.nextSibling);
+                this.container = this.container.parentNode;
             } else if (mode == "appendTo") {
 
             }

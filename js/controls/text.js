@@ -31,14 +31,14 @@
              * @returns {Boolean} True if it matches the pattern, false otherwise.
              */
             _validatePattern: function() {
-                if (this.schema.pattern) {
-                    var val = this.val();
-                    if (!LittleCub.isValEmpty(val) && !val.match(this.schema.pattern)) {
-                        return false;
-                    }
+                var val = this.val();
+                var validation = {
+                    "status" : LittleCub.isEmpty(this.schema.pattern) || LittleCub.isValEmpty(val) || val.match(this.schema.pattern)
+                };
+                if (! validation["status"]) {
+                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("pattern", this.configs["theme"]), [this.schema["pattern"]]);
                 }
-
-                return true;
+                return validation;
             },
 
             /**
@@ -47,15 +47,14 @@
              * @returns {Boolean} True if its size is greater than minLength, false otherwise.
              */
             _validateMinLength: function() {
-                if (!LittleCub.isEmpty(this.schema.minLength)) {
-                    var val = this.val();
-                    if (!LittleCub.isEmpty(val)) {
-                        if (val.length < this.schema.minLength) {
-                            return false;
-                        }
-                    }
+                var val = this.val();
+                var validation = {
+                    "status" : LittleCub.isEmpty(this.schema.minLength) || LittleCub.isValEmpty(val) || val.length >= this.schema.minLength
+                };
+                if (! validation["status"]) {
+                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minLength", this.configs["theme"]), [this.schema["minLength"]]);
                 }
-                return true;
+                return validation;
             },
 
             /**
@@ -64,36 +63,20 @@
              * @returns {Boolean} True if its size is less than maxLength , false otherwise.
              */
             _validateMaxLength: function() {
-                if (!LittleCub.isEmpty(this.schema.maxLength)) {
-                    var val = this.val();
-                    if (!LittleCub.isEmpty(val)) {
-                        if (val.length > this.schema.maxLength) {
-                            return false;
-                        }
-                    }
+                var val = this.val();
+                var validation = {
+                    "status" : LittleCub.isEmpty(this.schema.maxLength) || LittleCub.isValEmpty(val) || val.length <= this.schema.maxLength
+                };
+                if (! validation["status"]) {
+                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxLength", this.configs["theme"]), [this.schema["maxLength"]]);
                 }
-                return true;
+                return validation;
             },
 
             validate: function() {
-                this.validation["pattern"] = {
-                    "status" : this._validatePattern()
-                };
-                if (! this.validation["pattern"]["status"]) {
-                    this.validation["pattern"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("pattern", this.configs["theme"]),[this.schema["pattern"]]);
-                }
-                this.validation["minLength"] = {
-                    "status" : this._validateMinLength()
-                };
-                if (! this.validation["minLength"]["status"]) {
-                    this.validation["minLength"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minLength", this.configs["theme"]),[this.schema["minLength"]]);
-                }
-                this.validation["maxLength"] = {
-                    "status" : this._validateMaxLength()
-                };
-                if (! this.validation["maxLength"]["status"]) {
-                    this.validation["maxLength"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxLength", this.configs["theme"]),[this.schema["maxLength"]]);
-                }
+                this.validation["pattern"] = this._validatePattern();
+                this.validation["minLength"] = this._validateMinLength();
+                this.validation["maxLength"] = this._validateMaxLength();
                 this.base();
             }
         }, {

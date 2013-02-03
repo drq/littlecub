@@ -17,10 +17,7 @@
 
             init: function() {
                 this.base();
-            },
-
-            isContainer: function() {
-              return true;
+                this.configs["isContainer"] = true;
             },
 
             updateKeyPath: function() {

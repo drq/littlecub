@@ -70,34 +70,36 @@
             {{#if rows}}rows="{{rows}}"{{/if}} {{#if cols}}cols="{{cols}}"{{/if}}>{{#if data}}{{data}}{{/if}}</textarea>
     </script>
     <script id="array_toolbar" type="text/x-handlebars-template">
-        <button data-lcid="{{id}}-add">Add</button>
+        <div class="lc-array-toolbar">
+            <button  type="button" data-lcid="{{id}}-add" class="lc-array-add">Add</button>
+        </div>
     </script>
     <script id="array_item_toolbar" type="text/x-handlebars-template">
-        <div>
+        <div data-lcid="{{id}}-toolbar" class="lc-array-item-toolbar">
             <button type="button" data-lcid="{{id}}-add" class="lc-array-item-add">Add</button>
             <button type="button" data-lcid="{{id}}-remove" class="lc-array-item-remove">Remove</button>
         </div>
     </script>
     <script id="control_array" type="text/x-handlebars-template">
-        {{#if controls}}
-            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}">
-                <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
-                <div>{{helper}}</div>
+        <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+            <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
+            <div>{{helper}}</div>
+            <div data-lcid="{{id}}-items">
                 {{#if controls}}
                     {{#each controls}}
                         {{include 'array_item_toolbar'}}
                         {{include 'control'}}
                     {{/each}}
                 {{else}}
-                    <div>{{include 'array_toolbar'}}</div>
+                    {{include 'array_toolbar'}}
                 {{/if}}
-                <span data-lcid="{{id}}-messages" {{#if messageClass}}class="{{messageClass}}"{{/if}}></span>
-            </fieldset>
-        {{/if}}
+            </div>
+            <span data-lcid="{{id}}-messages" {{#if messageClass}}class="{{messageClass}}"{{/if}}></span>
+        </fieldset>
     </script>
     <script id="control_object" type="text/x-handlebars-template">
         {{#if controls}}
-            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}">
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
                 <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
                 <div>{{helper}}</div>
                 {{#key_value controls}}
@@ -109,7 +111,7 @@
     </script>
     <script id="control_object_table" type="text/x-handlebars-template">
         {{#if controls}}
-            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}">
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
                 <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
                 <div>{{helper}}</div>
                 {{#if table}}
@@ -137,7 +139,7 @@
         {{#isContainer type}}
             {{injectControl}}
         {{else}}
-            <span data-lcid="{{id}}">
+            <span data-lcid="{{id}}" data-lctype="{{type}}">
                 {{include 'control_label'}}
                 {{injectControl}}
                 {{include 'control_helper'}}
@@ -145,11 +147,8 @@
             </span>
         {{/isContainer}}
     </script>
-    <!-- Templates -->
-    <script id="template-control" type="text/x-handlebars-template">
-        {{include 'control'}}
-    </script>
-    <script id="template-form" type="text/x-handlebars-template">
+    <script id="form" type="text/x-handlebars-template">
+        {{#if form}}
         <form data-lcid="{{id}}-form" {{#with form}}{{#key_value attrs}}{{key}}="{{value}}"{{/key_value}}{{/with}}>
             {{include 'control'}}
             {{#with form}}
@@ -162,6 +161,9 @@
                 {{/if}}
             {{/with}}
         </form>
+        {{else}}
+            {{include 'control'}}
+        {{/if}}
     </script>
 </head>
 </html>

@@ -36,33 +36,32 @@
              */
             _validateInteger: function() {
                 var val = this.val();
-                // allow null
-                return !_.isNaN(val) && _.isNumber(val) && (val == parseFloat(this.field.value));
+                var validation = {
+                    "status" : !_.isNaN(val) && this.field.value.match(/^([\+\-]?([1-9]\d*)|0)$/) && (val == parseFloat(this.field.value))
+                };
+                if (! validation["status"]) {
+                    validation["message"] = LittleCub.findMessage("isInteger", this.configs["theme"]);
+                }
+                return validation;
             },
 
             /**
              */
             _validateMultipleOf: function() {
                 var val = this.val();
-                if (!LittleCub.isEmpty(this.schema["multipleOf"]) && !(val % this.schema["multipleOf"] == 0)) {
-                    return false;
-                } else {
-                    return true;
+                var validation = {
+                    "status" : LittleCub.isEmpty(this.schema["multipleOf"]) || (val % this.schema["multipleOf"] == 0)
+                };
+                if (! validation["status"]) {
+                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("multipleOf", this.configs["theme"]),[this.schema["multipleOf"]]);
                 }
+                return validation;
             },
 
             validate: function() {
-                this.validation["isInteger"] = {
-                    "status" : this._validateInteger()
-                };
-                if (! this.validation["isInteger"]["status"]) {
-                    this.validation["isInteger"]["message"] = LittleCub.findMessage("isInteger", this.configs["theme"]);
-                }
-                this.validation["multipleOf"] = {
-                    "status" : this._validateMultipleOf()
-                };
-                if (! this.validation["multipleOf"]["status"]) {
-                    this.validation["multipleOf"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("multipleOf", this.configs["theme"]),[this.schema["multipleOf"]]);
+                this.validation["isInteger"] = this._validateInteger();
+                if (this.validation["isInteger"]["status"]) {
+                    this.validation["multipleOf"] = this._validateMultipleOf();
                 }
                 this.base();
             }

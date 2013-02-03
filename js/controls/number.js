@@ -29,15 +29,20 @@
                 this.base();
                 this.configs["template"] = this.configs["template"] || "control_text";
             },
-            
+
             /**
              * Validates if it is a float number.
              * @returns {Boolean} true if it is a float number
              */
             _validateNumber: function() {
                 var val = this.val();
-                // allow null
-                return !_.isNaN(val) && _.isNumber(val);
+                var validation = {
+                    "status" : !_.isNaN(val) && this.field.value.match(/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/)
+                };
+                if (! validation["status"]) {
+                    validation["message"] = LittleCub.findMessage("isNumber", this.configs["theme"]);
+                }
+                return validation;
             },
 
             /**
@@ -46,13 +51,25 @@
              */
             _validateMaximum: function() {
                 var val = this.val();
-                if (val > this.schema["maximum"]) {
-                    return false;
-                } else if (this.schema["exclusiveMaximum"] && val == this.schema["maximum"]) {
-                    return false;
-                } else {
-                    return true;
+                var status = true;
+                if (!LittleCub.isEmpty(this.schema["maximum"])) {
+                    if (val > this.schema["maximum"]) {
+                        status = false;
+                    } else if (this.schema["exclusiveMaximum"] && val == this.schema["maximum"]) {
+                        status = false;
+                    }
                 }
+                var validation = {
+                    "status" : status
+                };
+                if (!status) {
+                    if (this.schema["exclusiveMaximum"]) {
+                        validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["maximum"]]);
+                    } else {
+                        validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maximum", this.configs["theme"]), [this.schema["maximum"]]);
+                    }
+                }
+                return validation;
             },
 
             /**
@@ -61,45 +78,32 @@
              */
             _validateMinimum: function() {
                 var val = this.val();
-                if (val < this.schema["minimum"]) {
-                    return false;
-                } else if (this.schema["exclusiveMinimum"] && val == this.schema["minimum"]) {
-                    return false;
-                } else {
-                    return true;
+                var status = true;
+                if (!LittleCub.isEmpty(this.schema["minimum"])) {
+                    if (val < this.schema["minimum"]) {
+                        status = false;
+                    } else if (this.schema["exclusiveMinimum"] && val == this.schema["minimum"]) {
+                        status = false;
+                    }
                 }
+                var validation = {
+                    "status" : status
+                };
+                if (!status) {
+                    if (this.schema["exclusiveMinimum"]) {
+                        validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["minimum"]]);
+                    } else {
+                        validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minimum", this.configs["theme"]), [this.schema["minimum"]]);
+                    }
+                }
+                return validation;
             },
 
             validate: function() {
-                this.validation["isNumber"] = {
-                    "status" : this._validateNumber()
-                };
-                if (! this.validation["isNumber"]["status"]) {
-                    this.validation["isNumber"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("isNumber", this.configs["theme"]),[this.schema["isNumber"]]);
-                }
-                if (!LittleCub.isEmpty(this.schema["minimum"])) {
-                    this.validation["minimum"] = {
-                        "status" : this._validateMinimum()
-                    };
-                    if (! this.validation["minimum"]["status"]) {
-                         if (this.schema["exclusiveMinimum"]) {
-                             this.validation["minimum"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("exclusiveMinimum", this.configs["theme"]),[this.schema["minimum"]]);
-                         } else {
-                            this.validation["minimum"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minimum", this.configs["theme"]),[this.schema["minimum"]]);
-                         }
-                    }
-                }
-                if (!LittleCub.isEmpty(this.schema["maximum"])) {
-                    this.validation["maximum"] = {
-                        "status" : this._validateMaximum()
-                    };
-                    if (! this.validation["maximum"]["status"]) {
-                         if (this.schema["exclusiveMaximum"]) {
-                             this.validation["maximum"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("exclusiveMinimum", this.configs["theme"]),[this.schema["maximum"]]);
-                         } else {
-                            this.validation["maximum"]["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maximum", this.configs["theme"]),[this.schema["maximum"]]);
-                         }
-                    }
+                this.validation["isNumber"] = this._validateNumber();
+                if (this.validation["isNumber"]["status"]) {
+                    this.validation["maximum"] = this._validateMaximum();
+                    this.validation["minimum"] = this._validateMinimum();
                 }
                 this.base();
             }
