@@ -22,7 +22,11 @@
                 "isInteger": "Field value must be an integer.",
                 "minItems": "The minimum number of items is {0}.",
                 "maxItems": "The maximum number of items is {0}.",
-                "uniqueItems": "Array items are not unique."
+                "uniqueItems": "Array items are not unique.",
+                "invalidEmail": "Invalid email address.",
+                "invalidHostname": "Invalid hostname.",
+                "invalidIpv4": "Invalid ip address (v4).",
+                "invalidIpv6": "Invalid ip address (v6)."
             }
         }
     });

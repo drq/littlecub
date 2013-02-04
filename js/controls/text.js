@@ -32,8 +32,14 @@
              */
             _validatePattern: function() {
                 var val = this.val();
+                var regex;
+                if (this.schema.pattern) {
+                    var flags = this.schema.pattern.replace(/.*\/([gimy]*)$/, '$1');
+                    var pattern = this.schema.pattern.replace(new RegExp('^/(.*?)/' + flags + '$'), '$1');
+                    regex = new RegExp(pattern, flags);
+                }
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema.pattern) || LittleCub.isValEmpty(val) || val.match(this.schema.pattern)
+                    "status" : LittleCub.isEmpty(this.schema.pattern) || LittleCub.isValEmpty(val) || ! LittleCub.isEmpty(val.match(regex))
                 };
                 if (! validation["status"]) {
                     validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("pattern", this.configs["theme"]), [this.schema["pattern"]]);

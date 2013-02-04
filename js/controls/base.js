@@ -86,6 +86,9 @@
                             return "radio";
                         }
                     }
+                    if (schema["format"] && LittleCub["defaults"]["formatToControl"][schema["format"]]) {
+                        return LittleCub["defaults"]["formatToControl"][schema["format"]];
+                    }
                     return LittleCub["defaults"]["schemaToControl"][schema["type"]] || "text";
                 }
             });
