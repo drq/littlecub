@@ -40,6 +40,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: [
+                    'lib/base/base.js',
                     'js/littlecub.js',
                     'js/themes/themes.js',
                     'js/handlebars/helpers.js',
@@ -57,6 +58,12 @@ module.exports = function(grunt) {
                     'js/controls/file.js',
                     'js/controls/hidden.js',
                     'js/controls/array.js',
+                    'js/controls/format/datetime.js',
+                    'js/controls/format/email.js',
+                    'js/controls/format/hostname.js',
+                    'js/controls/format/ipv4.js',
+                    'js/controls/format/ipv6.js',
+                    'js/controls/format/uri.js',
                     'build/templates.js'
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
@@ -147,4 +154,5 @@ module.exports = function(grunt) {
     // Default task(s).
     grunt.registerTask('default', ['clean', 'splitTemplates', 'handlebars' , 'concat', 'uglify']);
 
+    grunt.registerTask('test', ['default', 'qunit']);
 };

@@ -14,7 +14,7 @@
             _validatePattern: function() {
                 var validation = this.base();
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.findMessage("invalidIpv6", this.configs["theme"]);
+                    validation["message"] = LC.findMessage("invalidIpv6", this.configs["theme"]);
                 }
                 return validation;
             }

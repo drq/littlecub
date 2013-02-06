@@ -14,7 +14,7 @@
             _validatePattern: function() {
                 var validation = this.base();
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.findMessage("invalidEmail", this.configs["theme"]);
+                    validation["message"] = LC.findMessage("invalidEmail", this.configs["theme"]);
                 }
                 return validation;
             }

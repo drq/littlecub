@@ -36,8 +36,6 @@
 
 <body>
 <div id="content"></div>
-<div id="content2"></div>
-<div id="content3"></div>
 </body>
 
 <script type="text/javascript">
@@ -47,85 +45,36 @@
         "default-inline": "../themes/default-inline.html"
     }, function() {
         var data = {
-            "name" : "Life of Pi",
-            "address" : {
-                "street" : ["100 Main Street", "Apt 2"],
-                "city" : "acton",
-                "state" : "MA",
-                "zip" : "01889"
-            },
-            "address2" : {
-                "street" : ["200 Main Street", "Apt 2"],
-                "city" : "burlington",
-                "state" : "NJ",
-                "zip" : "44444"
-            }
+            "age" : 30,
+            "age2" : 15
         };
         var schema = {
-            "title" : "Movie",
-            "description" : "Movie description",
+            "title" : "Profile",
+            "description" : "User profile.",
             "type" : "object",
             "properties" : {
-                "name" : {
-                    "type" : "string",
-                    "title" : "Name",
-                    "description" : "Enter name",
-                    "minLength" : 5,
-                    "maxLength" : 15
+                "age" : {
+                    "$ref" : "#/definitions/positiveInteger",
+                    "title" : "Age"
                 },
-                "address" : {
-                    "type" : "object"
-                },
-                "address2" : {
-                    "type" : "object"
+                "age2" : {
+                    "$ref" : "#/definitions/positiveInteger",
+                    "title" : "Age 2"
                 }
             },
-            "required" : ["name"]
+            "required" : ["age"],
+            "definitions" : {
+                "positiveInteger" : {
+                    "type" : "integer",
+                    "minimum" : 0
+                }
+            }
         };
 
         var configs = {
-            "form" : {
-                "attrs" : {
-                    "name" : "my-form",
-                    "endpoint" : "/post"
-                },
-                "buttons" :[
-                    {
-                        "type" : "submit",
-                        "name" : "submit",
-                        "value" : "Submit"
-                    },
-                    {
-                        "type" : "reset",
-                        "name" : "reset",
-                        "value" : "Reset"
-                    }
-                ]
-            },
-            "controls" : {
-                "name" : {
-                    "type" : "text",
-                    "placeholder" : "Enter Name",
-                    "fieldClass" : "pretty awesome",
-                    "required" : true,
-                    "validationEvent" : "keyup"
-                },
-                "address" : {
-                    "type" : "address",
-                    "label" : "Home Address"
-                },
-                "address2" : {
-                    "type" : "address",
-                    "label" : "Office Address"
-                }
-            }
         };
-        var objectControl = new LittleCub.ObjectControl(data, configs, schema);
-        objectControl.init();
-        objectControl.render(document.getElementById('content'));
+        var objectControl = LittleCub(data, configs, schema,document.getElementById('content'));
 
-        LittleCub.logger.level = 1;
-        LittleCub.log(1, 'I am here');
     });
 
 </script>

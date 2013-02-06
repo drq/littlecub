@@ -4,102 +4,53 @@
      * Base class for providing common methods and interfaces for all controls.
      */
     LittleCub.BaseControl = Base.extend({
-        /**
-         *
-         * @param container
-         * @param data
-         * @param configs
-         * @param schema
-         */
         constructor: function(data, configs, schema) {
             this.data = data;
-            this.dataBackup = _.isObject(data) || _.isArray(data) ? LittleCub.cloneJSON(data) : data;
+            this.dataBackup = _.isObject(data) || _.isArray(data) ? LC.cloneJSON(data) : data;
             this.configs = configs || {};
             this.schema = schema || {};
             if (this.constructor.SCHEMA) {
-                this.schema = _.extend(this.schema, LittleCub.cloneJSON(this.constructor.SCHEMA));
+                this.schema = _.extend(this.schema, LC.cloneJSON(this.constructor.SCHEMA));
             }
             if (this.constructor.CONFIGS) {
-                this.configs = _.extend(this.configs, LittleCub.cloneJSON(this.constructor.CONFIGS));
+                this.configs = _.extend(this.configs, LC.cloneJSON(this.constructor.CONFIGS));
             }
 
             // other members
-            this.id = this.configs["id"] || LittleCub.id();
+            this.id = this.configs["id"] || LC.id();
             this.path = this.configs["path"] || "/";
             this.parent = null;
             this.field = null;
 
             this.validation = {};
-
-            // Private methods
-            this.extend({
-                schemaType: function(schema, configs, data) {
-                    var schema = schema || this.schema;
-                    var configs = configs || this.configs;
-                    var data = data || this.data;
-                    if (schema["type"]) {
-                        return schema["type"];
-                    }
-                    if (configs["type"]) {
-                        _.every(LittleCub["defaults"]["schemaToControl"], function(v, k) {
-                            if (v === configs["type"]) {
-                                return schema["type"] = k;
-                            } else {
-                                return true;
-                            }
-                        });
-                        if (schema["type"]) {
-                            return schema["type"];
-                        }
-                    }
-                    if (_.isNull(data) || _.isUndefined(data)) {
-                        return "string";
-                    }
-                    if (_.isObject(data)) {
-                        return "object";
-                    }
-                    if (_.isString(data)) {
-                        return "string";
-                    }
-                    if (_.isNumber(data)) {
-                        return "number";
-                    }
-                    if (_.isArray(data)) {
-                        return "array";
-                    }
-                    if (_.isBoolean(data)) {
-                        return "boolean";
-                    }
-                    return "string";
-                },
-
-                controlType: function(schema, configs) {
-                    var schema = schema || this.schema;
-                    var configs = configs || this.configs;
-                    if (configs["type"]) {
-                        return configs["type"];
-                    }
-                    if (schema["type"] && schema["enum"]) {
-                        if (schema["enum"].length > 3) {
-                            return "select";
-                        } else {
-                            return "radio";
-                        }
-                    }
-                    if (schema["format"] && LittleCub["defaults"]["formatToControl"][schema["format"]]) {
-                        return LittleCub["defaults"]["formatToControl"][schema["format"]];
-                    }
-                    return LittleCub["defaults"]["schemaToControl"][schema["type"]] || "text";
-                }
-            });
         },
 
         init: function() {
-            this.schema["type"] = this.schemaType();
-            this.configs["type"] = this.controlType();
+            // Load Schema through $ref
+            // Support paths such as #/definitions/address
+            if (this.schema["$ref"]) {
+                var pathElems = this.schema["$ref"].split("/");
+                if (pathElems[0] == "#") {
+                    var control = this;
+                    while (control.parent) {
+                        control = control.parent;
+                    }
+                    var ref = control.schema;
+                    for (var i = 1; i < pathElems.length && ref; i++) {
+                        ref = ref[pathElems[i]];
+                    }
+                    if (ref) {
+                        this.schema = _.extend(this.schema, LC.cloneJSON(ref));
+                        delete this.schema["$ref"];
+                    }
+                }
+            }
+
+            this.schema["type"] = LC.schemaType.call(this);
+            this.configs["type"] = LC.controlType.call(this);
 
             // Sync configs and schema
-            this.configs["label"] = this.configs["label"] || this.schema["title"] || LittleCub.prettyTitle(this.key) || "";
+            this.configs["label"] = this.configs["label"] || this.schema["title"] || LC.prettyTitle(this.key) || "";
             this.schema["title"] = this.schema["title"] || this.configs["label"];
 
             this.configs["helper"] = this.configs["helper"] || this.schema["description"];
@@ -112,6 +63,9 @@
 
             // Sync data
             this.configs["data"] = this.configs["data"] || this.data;
+            if (LC.isValEmpty(this.configs["data"]) && !LC.isEmpty(this.schema["default"])) {
+                this.configs["data"] = this.schema["default"];
+            }
             this.data = this.data || this.configs["data"];
         },
 
@@ -129,20 +83,21 @@
 
         _validateRequired: function() {
             var validation = {
-                "status" : ! (this.configs.required && LittleCub.isValEmpty(this.val()))
+                "status" : ! (this.configs.required && LC.isValEmpty(this.val()))
             }
             if (! validation["status"]) {
-                validation["message"] = LittleCub.findMessage("required", this.configs["theme"]);
+                validation["message"] = LC.findMessage("required", this.configs["theme"]);
             }
             return validation;
         },
 
         validate: function() {
             this.validation["required"] = this._validateRequired();
-            var template = LittleCub.findTemplate(this.configs["theme"], "control_messages");
+            var template = LC.findTemplate(this.configs["theme"], "control_messages");
             if (template && this.messagesContainer) {
                 this.messagesContainer.innerHTML = template({"validation" : this.validation}).trim();
             }
+            return this;
         },
 
         validationEvent: function() {
@@ -153,7 +108,7 @@
             var that = this;
             // register general event handlers through configs
             _.each(this.configs, function(func, key) {
-                if (LittleCub.startsWith(key, 'onControl') && _.isFunction(func)) {
+                if (LC.startsWith(key, 'onControl') && _.isFunction(func)) {
                     var event = key.substring(9).toLowerCase();
                     that.field.addEventListener(event, function(e) {
                         func.call(that, e);
@@ -166,6 +121,29 @@
             var validationTrigger = this.validationEvent();
             this.field.addEventListener(validationTrigger, this.validate.bind(this), false);
             this.bindCustomEventHandlers();
+        },
+
+        controlByPath: function(path) {
+            var parentControl = this;
+            if (path) {
+                var pathArray = path.split('/[]\//');
+                for (var i = 0; i < pathArray.length; i++) {
+                    if (!LC.isValEmpty(pathArray[i])) {
+                        if (parentControl && parentControl.children) {
+                            if (parentControl.children[pathArray[i]]) {
+                                parentControl = parentControl.children[pathArray[i]];
+                            } else {
+                                return null;
+                            }
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
+                }
+                return parentControl;
+            }
         },
 
         bindDOM: function() {
@@ -182,7 +160,7 @@
                 if (this.field) {
                     this.bindEventListeners();
                 }
-                if (!LittleCub.isEmpty(this.configs["form"])) {
+                if (!LC.isEmpty(this.configs["form"])) {
                     this.form = container.querySelector('form[data-lcid=' + this.id + '-form]');
                 }
             }
@@ -193,18 +171,16 @@
             this.container = container;
             var theme = this.configs["theme"];
             var template = this.configs["template"] ? this.configs["template"] : "form";
-            if (!LittleCub.isEmpty(data)) {
+            if (!LC.isEmpty(data)) {
                 this.bindData(data);
             }
             if (mode == "fill") {
-                container.innerHTML = LittleCub.renderTemplate(theme, template, this.configs);
+                container.innerHTML = LC.renderTemplate(theme, template, this.configs);
             } else if (mode == "insertAfter") {
                 var elem = document.createElement("span");
-                elem.innerHTML = LittleCub.renderTemplate(theme, template, this.configs);
+                elem.innerHTML = LC.renderTemplate(theme, template, this.configs);
                 container.parentNode.insertBefore(elem.firstChild, container.nextSibling);
                 this.container = this.container.parentNode;
-            } else if (mode == "appendTo") {
-
             }
             this.bindDOM();
         }

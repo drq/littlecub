@@ -83,4 +83,4 @@
         }
         return options.inverse(this);
     });
-}());
+})();

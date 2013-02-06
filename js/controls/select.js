@@ -2,13 +2,6 @@
     "use strict";
 
     LittleCub.SelectControl = LittleCub.ListControl.extend({
-            /**
-             *
-             * @param container
-             * @param data
-             * @param configs
-             * @param schema
-             */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
             },
@@ -56,10 +49,10 @@
              */
             _validateMinItems: function() {
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema.items) || LittleCub.isEmpty(this.schema.items.minItems) || this.field.value.length >= this.schema.items.minItems
+                    "status" : LC.isEmpty(this.schema.items) || LC.isEmpty(this.schema.items.minItems) || this.field.value.length >= this.schema.items.minItems
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]]);
+                    validation["message"] = LC.substituteTokens(LC.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]]);
                 }
                 return validation;
             },
@@ -70,10 +63,10 @@
              */
             _validateMaxItems: function() {
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema.items) || LittleCub.isEmpty(this.schema.items.maxItems) || this.field.value.length <= this.schema.items.minItems
+                    "status" : LC.isEmpty(this.schema.items) || LC.isEmpty(this.schema.items.maxItems) || this.field.value.length <= this.schema.items.minItems
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]]);
+                    validation["message"] = LC.substituteTokens(LC.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]]);
                 }
                 return validation;
             },
@@ -81,7 +74,7 @@
             validate: function() {
                 this.validation["minItems"] = this._validateMinItems();
                 this.validation["maxItems"] = this._validateMaxItems();
-                this.base();
+                return this.base();
             },
 
             validationEvent: function() {

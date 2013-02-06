@@ -2,13 +2,6 @@
     "use strict";
 
     LittleCub.IntegerControl = LittleCub.NumberControl.extend({
-            /**
-             *
-             * @param container
-             * @param data
-             * @param configs
-             * @param schema
-             */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
             },
@@ -37,10 +30,10 @@
             _validateInteger: function() {
                 var val = this.val();
                 var validation = {
-                    "status" : !_.isNaN(val) && this.field.value.match(/^([\+\-]?([1-9]\d*)|0)$/) && (val == parseFloat(this.field.value))
+                    "status" : LC.isValEmpty(this.field.value) || (!_.isNaN(val) && this.field.value.match(/^([\+\-]?([1-9]\d*)|0)$/) && (val == parseFloat(this.field.value)))
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.findMessage("isInteger", this.configs["theme"]);
+                    validation["message"] = LC.findMessage("isInteger", this.configs["theme"]);
                 }
                 return validation;
             },
@@ -50,10 +43,10 @@
             _validateMultipleOf: function() {
                 var val = this.val();
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema["multipleOf"]) || (val % this.schema["multipleOf"] == 0)
+                    "status" : LC.isEmpty(this.schema["multipleOf"]) || (val % this.schema["multipleOf"] == 0)
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("multipleOf", this.configs["theme"]),[this.schema["multipleOf"]]);
+                    validation["message"] = LC.substituteTokens(LC.findMessage("multipleOf", this.configs["theme"]),[this.schema["multipleOf"]]);
                 }
                 return validation;
             },
@@ -63,7 +56,7 @@
                 if (this.validation["isInteger"]["status"]) {
                     this.validation["multipleOf"] = this._validateMultipleOf();
                 }
-                this.base();
+                return this.base();
             }
 
         }, {

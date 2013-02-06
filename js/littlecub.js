@@ -1,7 +1,22 @@
 (function() {
     "use strict";
 
-    var LittleCub = {
+    var LittleCub = function(data, configs, schema, domElem) {
+        schema = schema || {};
+        configs = configs || {};
+        schema["type"] = LC.schemaType(schema, configs, data);
+        configs["type"] = LC.controlType(schema, configs, data);
+        var controlClass = LittleCub.controlClass(configs["type"]);
+        var control = new controlClass(data, configs, schema);
+        control.init();
+        if (domElem) {
+            control.render(domElem);
+        }
+        return control;
+    };
+
+
+    _.extend(LittleCub, {
         "version": "0.1.0",
 
         "defaults": {
@@ -60,22 +75,22 @@
                 var len = arguments.length;
                 if (len === 1) {
                     return _typeControlClass[arguments[0]];
-                } else if (len === 2){
-                    if ( _.isString(arguments[0]) && !_.isNull(arguments[0])) {
+                } else if (len === 2) {
+                    if (_.isString(arguments[0]) && !_.isNull(arguments[0])) {
                         _typeControlClass[arguments[0]] = arguments[1];
                         return arguments[1];
                     }
                 }
             };
         })(),
-        
+
         "formatControlClass": (function() {
             var _formatControlClass = {};
             return function() {
                 var len = arguments.length;
                 if (len === 1) {
                     return _formatControlClass[arguments[0]];
-                } else if (len === 2){
+                } else if (len === 2) {
                     if (_.isString(arguments[0]) && !_.isNull(arguments[0])) {
                         _formatControlClass[arguments[0]] = arguments[1];
                         return arguments[1];
@@ -90,11 +105,14 @@
                 var len = arguments.length;
                 if (len === 1) {
                     return _controlClassRegistry[arguments[0]];
-                } else if (len === 2){
+                } else if (len === 2) {
                     if (_.isString(arguments[0]) && !_.isNull(arguments[0])) {
                         _controlClassRegistry[arguments[0]] = arguments[1];
                         return arguments[1];
                     }
+                } else if (len === 0) {
+                    // return a duplicated copy
+                    return _.clone(_controlClassRegistry);
                 }
             };
         })(),
@@ -108,9 +126,9 @@
         },
 
         "prettyTitle": function(str) {
-            return str.replace(/\w\S*/g, function(txt) {
+            return str ? str.replace(/\w\S*/g, function(txt) {
                 return txt.charAt(0).toUpperCase() + txt.substr(1);
-            });
+            }) : "";
         },
 
         "isEmpty": function(val) {
@@ -276,44 +294,44 @@
         },
 
         /*
-        "loadThemes": function (themes, callback) {
+         "loadThemes": function (themes, callback) {
 
-            var loadTheme = function(id, path) {
-                console.log("Loading ... " + id);
-                return $.ajax({
-                    "url":path,
-                    "type": "get",
-                    "dataType": "html",
-                    "success": function(data) {
-                        console.log(path + " is loaded.");
-                        _.each($(data).filter('script'), function(v) {
-                            LittleCub.registerTemplate(id + "__" + $(v).attr("id"), $(v).text());
-                        });
-                    }
-                });
-            }
+         var loadTheme = function(id, path) {
+         console.log("Loading ... " + id);
+         return $.ajax({
+         "url":path,
+         "type": "get",
+         "dataType": "html",
+         "success": function(data) {
+         console.log(path + " is loaded.");
+         _.each($(data).filter('script'), function(v) {
+         LittleCub.registerTemplate(id + "__" + $(v).attr("id"), $(v).text());
+         });
+         }
+         });
+         }
 
-            var loadArray = [];
-            for (var id in themes) {
-                if (themes.hasOwnProperty(id)) {
-                    loadArray.push(loadTheme(id, themes[id]));
-                }
-            }
-            $.when.apply(this, loadArray).then(function () {
-                console.log("All loadings are done.");
-                if (callback) {
-                    callback();
-                }
-            });
-        }
-        */
+         var loadArray = [];
+         for (var id in themes) {
+         if (themes.hasOwnProperty(id)) {
+         loadArray.push(loadTheme(id, themes[id]));
+         }
+         }
+         $.when.apply(this, loadArray).then(function () {
+         console.log("All loadings are done.");
+         if (callback) {
+         callback();
+         }
+         });
+         }
+         */
         "loadThemes": function (themes, callback) {
             var nbThemes = _.size(themes);
             var nbResponses = 0;
             var startTag = "<script";
             var endTag = "</script>";
 
-            _.each(themes, function(path,id) {
+            _.each(themes, function(path, id) {
                 var xmlHttpRequest = new XMLHttpRequest();
                 xmlHttpRequest.open("GET", path, true);
                 xmlHttpRequest.onreadystatechange = function () {
@@ -321,11 +339,11 @@
                         var fileContent = this.responseText;
                         var startIndex = 0, endIndex = 0;
                         while (startIndex != -1 && endIndex != -1) {
-                            startIndex = fileContent.indexOf(startTag,startIndex);
+                            startIndex = fileContent.indexOf(startTag, startIndex);
                             if (startIndex != -1) {
-                                endIndex = fileContent.indexOf(endTag,startIndex);
+                                endIndex = fileContent.indexOf(endTag, startIndex);
                                 if (endIndex != -1) {
-                                    var closingIndex = fileContent.indexOf(">",startIndex);
+                                    var closingIndex = fileContent.indexOf(">", startIndex);
                                     if (closingIndex != -1) {
                                         var scriptTag = fileContent.substring(startIndex + startTag.length, closingIndex);
                                         var idMatch = scriptTag.match(/id(\s*)=(\s*)(.*?)['"]+(.*?)['"]+/);
@@ -360,18 +378,132 @@
                 };
                 xmlHttpRequest.send();
             });
+        },
+
+        schemaType: function(schema, configs, data) {
+            var schema = schema || this.schema;
+            var configs = configs || this.configs;
+            var data = data || this.data;
+            if (schema["type"]) {
+                return schema["type"];
+            }
+            if (configs["type"]) {
+                _.every(LittleCub["defaults"]["schemaToControl"], function(v, k) {
+                    if (v === configs["type"]) {
+                        return schema["type"] = k;
+                    } else {
+                        return true;
+                    }
+                });
+                if (schema["type"]) {
+                    return schema["type"];
+                }
+            }
+            if (_.isNull(data) || _.isUndefined(data)) {
+                return "string";
+            }
+            if (_.isObject(data)) {
+                return "object";
+            }
+            if (_.isString(data)) {
+                return "string";
+            }
+            if (_.isNumber(data)) {
+                return "number";
+            }
+            if (_.isArray(data)) {
+                return "array";
+            }
+            if (_.isBoolean(data)) {
+                return "boolean";
+            }
+            return "string";
+        },
+
+        controlType: function(schema, configs) {
+            var schema = schema || this.schema;
+            var configs = configs || this.configs;
+            if (configs["type"]) {
+                return configs["type"];
+            }
+            if (schema["type"] && schema["enum"]) {
+                if (schema["enum"].length > 3) {
+                    return "select";
+                } else {
+                    return "radio";
+                }
+            }
+            if (schema["format"] && LittleCub["defaults"]["formatToControl"][schema["format"]]) {
+                return LittleCub["defaults"]["formatToControl"][schema["format"]];
+            }
+            return LittleCub["defaults"]["schemaToControl"][schema["type"]] || "text";
         }
-    };
+    });
+
+    var LC = LittleCub;
+
+    // In case bind is not implemented
+    if (!Function.prototype.bind) {
+        Function.prototype.bind = function (oThis) {
+            if (typeof this !== "function") {
+                // closest thing possible to the ECMAScript 5 internal IsCallable function
+                throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+            }
+
+            var aArgs = Array.prototype.slice.call(arguments, 1), fToBind = this, fNOP = function () {
+            }, fBound = function () {
+                return fToBind.apply(this instanceof fNOP && oThis
+                    ? this
+                    : oThis,
+                    aArgs.concat(Array.prototype.slice.call(arguments)));
+            };
+
+            fNOP.prototype = this.prototype;
+            fBound.prototype = new fNOP();
+
+            return fBound;
+        };
+    }
+
+    // for jquery
+    if (typeof jQuery != 'undefined') {
+        $.littlecub = $.lc = LittleCub;
+
+        $.fn.littlecub = $.fn.lc = function() {
+            var controls = [];
+            for (var i = 0; i < this.length; i++) {
+                var args = _.toArray(arguments);
+                while (args.length < 3) {
+                    args.push(null);
+                }
+                args.push(this[i]);
+                controls.push(LittleCub.apply(this, args));
+            }
+            return controls.length == 1 ? controls[0] : controls;
+        };
+    }
 
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = LittleCub;
     } else if (typeof define === 'function' && define.amd) {
-        define(function() {
+        define("littlecub", [], function() {
             return LittleCub;
         });
     } else {
+
+        var env = function() {
+            return this || (0, eval)('this');
+        };
+        (env)().LittleCub = (env)().LC = LittleCub;
+
+        /*
         (function() {
             return this || (0, eval)('this');
         }()).LittleCub = LittleCub;
+        // Defines an alias
+        (function() {
+            return this || (0, eval)('this');
+        }()).LC = LittleCub;
+        */
     }
 }());

@@ -2,13 +2,6 @@
     "use strict";
 
     LittleCub.TextControl = LittleCub.BaseControl.extend({
-            /**
-             *
-             * @param container
-             * @param data
-             * @param configs
-             * @param schema
-             */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
             },
@@ -39,10 +32,10 @@
                     regex = new RegExp(pattern, flags);
                 }
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema.pattern) || LittleCub.isValEmpty(val) || ! LittleCub.isEmpty(val.match(regex))
+                    "status" : LC.isEmpty(this.schema.pattern) || LC.isValEmpty(val) || ! LC.isEmpty(val.match(regex))
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("pattern", this.configs["theme"]), [this.schema["pattern"]]);
+                    validation["message"] = LC.substituteTokens(LC.findMessage("pattern", this.configs["theme"]), [this.schema["pattern"]]);
                 }
                 return validation;
             },
@@ -55,10 +48,10 @@
             _validateMinLength: function() {
                 var val = this.val();
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema.minLength) || LittleCub.isValEmpty(val) || val.length >= this.schema.minLength
+                    "status" : LC.isEmpty(this.schema.minLength) || LC.isValEmpty(val) || val.length >= this.schema.minLength
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minLength", this.configs["theme"]), [this.schema["minLength"]]);
+                    validation["message"] = LC.substituteTokens(LC.findMessage("minLength", this.configs["theme"]), [this.schema["minLength"]]);
                 }
                 return validation;
             },
@@ -71,10 +64,10 @@
             _validateMaxLength: function() {
                 var val = this.val();
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema.maxLength) || LittleCub.isValEmpty(val) || val.length <= this.schema.maxLength
+                    "status" : LC.isEmpty(this.schema.maxLength) || LC.isValEmpty(val) || val.length <= this.schema.maxLength
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxLength", this.configs["theme"]), [this.schema["maxLength"]]);
+                    validation["message"] = LC.substituteTokens(LC.findMessage("maxLength", this.configs["theme"]), [this.schema["maxLength"]]);
                 }
                 return validation;
             },
@@ -83,7 +76,7 @@
                 this.validation["pattern"] = this._validatePattern();
                 this.validation["minLength"] = this._validateMinLength();
                 this.validation["maxLength"] = this._validateMaxLength();
-                this.base();
+                return this.base();
             }
         }, {
             TYPE : "text"

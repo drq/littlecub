@@ -26,7 +26,9 @@
                 "invalidEmail": "Invalid email address.",
                 "invalidHostname": "Invalid hostname.",
                 "invalidIpv4": "Invalid ip address (v4).",
-                "invalidIpv6": "Invalid ip address (v6)."
+                "invalidIpv6": "Invalid ip address (v6).",
+                "isDatetime": "Field value must be a date-time.",
+                "isUri": "Field value must be a uri."
             }
         }
     });

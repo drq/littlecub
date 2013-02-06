@@ -20,7 +20,7 @@
                         return this.field.checked ? true : false;
                     } else if (len == 1) {
                         var val = arguments[0];
-                        if (LittleCub.isEmpty(val)) {
+                        if (LC.isEmpty(val)) {
                             this.field.checked = false;
                         } else if (_.isString(val)) {
                             this.field.checked = val === 'true';

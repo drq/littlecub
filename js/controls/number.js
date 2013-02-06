@@ -2,13 +2,6 @@
     "use strict";
 
     LittleCub.NumberControl = LittleCub.TextControl.extend({
-            /**
-             *
-             * @param container
-             * @param data
-             * @param configs
-             * @param schema
-             */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
             },
@@ -37,10 +30,10 @@
             _validateNumber: function() {
                 var val = this.val();
                 var validation = {
-                    "status" : !_.isNaN(val) && this.field.value.match(/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/)
+                    "status" : LC.isValEmpty(this.field.value) || (!_.isNaN(val) && this.field.value.match(/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/))
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LittleCub.findMessage("isNumber", this.configs["theme"]);
+                    validation["message"] = LC.findMessage("isNumber", this.configs["theme"]);
                 }
                 return validation;
             },
@@ -52,7 +45,7 @@
             _validateMaximum: function() {
                 var val = this.val();
                 var status = true;
-                if (!LittleCub.isEmpty(this.schema["maximum"])) {
+                if (!LC.isEmpty(this.schema["maximum"])) {
                     if (val > this.schema["maximum"]) {
                         status = false;
                     } else if (this.schema["exclusiveMaximum"] && val == this.schema["maximum"]) {
@@ -64,9 +57,9 @@
                 };
                 if (!status) {
                     if (this.schema["exclusiveMaximum"]) {
-                        validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["maximum"]]);
+                        validation["message"] = LC.substituteTokens(LC.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["maximum"]]);
                     } else {
-                        validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maximum", this.configs["theme"]), [this.schema["maximum"]]);
+                        validation["message"] = LC.substituteTokens(LC.findMessage("maximum", this.configs["theme"]), [this.schema["maximum"]]);
                     }
                 }
                 return validation;
@@ -79,7 +72,7 @@
             _validateMinimum: function() {
                 var val = this.val();
                 var status = true;
-                if (!LittleCub.isEmpty(this.schema["minimum"])) {
+                if (!LC.isEmpty(this.schema["minimum"])) {
                     if (val < this.schema["minimum"]) {
                         status = false;
                     } else if (this.schema["exclusiveMinimum"] && val == this.schema["minimum"]) {
@@ -91,9 +84,9 @@
                 };
                 if (!status) {
                     if (this.schema["exclusiveMinimum"]) {
-                        validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["minimum"]]);
+                        validation["message"] = LC.substituteTokens(LC.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["minimum"]]);
                     } else {
-                        validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minimum", this.configs["theme"]), [this.schema["minimum"]]);
+                        validation["message"] = LC.substituteTokens(LC.findMessage("minimum", this.configs["theme"]), [this.schema["minimum"]]);
                     }
                 }
                 return validation;
@@ -105,7 +98,7 @@
                     this.validation["maximum"] = this._validateMaximum();
                     this.validation["minimum"] = this._validateMinimum();
                 }
-                this.base();
+                return this.base();
             }
 
         }, {

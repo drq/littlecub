@@ -2,16 +2,8 @@
     "use strict";
 
     LittleCub.ArrayControl = LittleCub.ContainerControl.extend({
-            /**
-             *
-             * @param container
-             * @param data
-             * @param configs
-             * @param schema
-             */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
-
                 this.children = [];
             },
 
@@ -20,9 +12,9 @@
                 var schema = this.schema;
                 var itemSchema = schema && schema["items"] ? schema["items"] : {}
                 var itemConfigs = configs && configs["items"] ? configs["items"] : {}
-                var _itemConfigs = LittleCub.cloneJSON(itemConfigs);
-                itemSchema["type"] = this.schemaType(itemSchema, itemConfigs, v);
-                _itemConfigs["type"] = this.controlType(itemSchema, _itemConfigs);
+                var _itemConfigs = LC.cloneJSON(itemConfigs);
+                itemSchema["type"] = LC.schemaType.call(this,itemSchema, itemConfigs, v);
+                _itemConfigs["type"] = LC.controlType.call(this,itemSchema, _itemConfigs);
                 _itemConfigs["theme"] = _itemConfigs["theme"] || this.configs["theme"];
                 var controlClass = LittleCub.controlClass(_itemConfigs["type"]);
                 // Start to construct child controls
@@ -47,7 +39,7 @@
                 var configs = this.configs;
                 var data = this.data;
 
-                var itemData = LittleCub.isEmpty(data) ? [] : data;
+                var itemData = LC.isEmpty(data) ? [] : data;
                 if (!_.isArray(itemData)) {
                     itemData = [itemData];
                 }
@@ -68,7 +60,7 @@
                 var addElementToolbar = function(child) {
                     // Add array item toolbar
                     var elem = document.createElement("span");
-                    elem.innerHTML = LittleCub.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs, true);
+                    elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs, true);
                     _.each(elem.querySelectorAll('button[class=lc-array-item-add]'), function(v) {
                         v.addEventListener('click', addEventHandler);
                     });
@@ -131,7 +123,7 @@
                             return true;
                         }
                     });
-                    if (! LittleCub.isEmpty(removeAtIndex)) {
+                    if (! LC.isEmpty(removeAtIndex)) {
                         var child = that.children[removeAtIndex];
                         var outerEl = child.outerEl;
                         outerEl.parentNode.removeChild(outerEl);
@@ -144,7 +136,7 @@
                         // Add the array toolbar for empty array
                         if (that.children.length == 0) {
                             var elem = document.createElement("span");
-                            elem.innerHTML = LittleCub.renderTemplate(child.configs["theme"], "array_toolbar", child.configs, true);
+                            elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_toolbar", child.configs, true);
                             _.each(elem.querySelectorAll('button[class=lc-array-add]'), function(v) {
                                 v.addEventListener('click', addFirstEventHandler);
                             });
@@ -193,7 +185,7 @@
                 } else if (len == 1) {
                     var value = arguments[0];
                     _.each(this.children, function(v, k) {
-                        var _val = LittleCub.isEmpty(value) ? null : value[k];
+                        var _val = LC.isEmpty(value) ? null : value[k];
                         v.val(_val);
                     });
                     return value;
@@ -227,10 +219,10 @@
              */
             _validateMinItems: function() {
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema.minItems) ||! _.isNumber(this.schema.minItems) ||  _.size(this.children) >= this.schema.minItems
+                    "status" : LC.isEmpty(this.schema.minItems) ||! _.isNumber(this.schema.minItems) ||  _.size(this.children) >= this.schema.minItems
                 };
                 if (!validation["status"]) {
-                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]])
+                    validation["message"] = LC.substituteTokens(LC.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]])
                 }
                 return validation;
             },
@@ -241,10 +233,10 @@
              */
             _validateMaxItems: function() {
                 var validation = {
-                    "status" : LittleCub.isEmpty(this.schema.minItems) ||! _.isNumber(this.schema.maxItems) || _.size(this.children) <= this.schema.maxItems
+                    "status" : LC.isEmpty(this.schema.minItems) ||! _.isNumber(this.schema.maxItems) || _.size(this.children) <= this.schema.maxItems
                 };
                 if (!validation["status"]) {
-                    validation["message"] = LittleCub.substituteTokens(LittleCub.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]])
+                    validation["message"] = LC.substituteTokens(LC.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]])
                 }
                 return validation;
             },
@@ -261,7 +253,7 @@
                     var len = val.length;
                     for (var i = 0; i < len && !isSame; i++) {
                         for (var j = i + 1; j < len && !isSame; j++) {
-                            isSame = LittleCub.compare(val[i], val[j]);
+                            isSame = LC.compare(val[i], val[j]);
                         }
                     }
                     status = !isSame;
@@ -270,7 +262,7 @@
                     "status" : status
                 };
                 if (! status) {
-                    validation["message"] = LittleCub.findMessage("uniqueItems", this.configs["theme"]);
+                    validation["message"] = LC.findMessage("uniqueItems", this.configs["theme"]);
                 }
                 return validation;
             },
@@ -279,7 +271,7 @@
                 this.validation["minItems"] = this._validateMinItems();
                 this.validation["maxItems"] = this._validateMaxItems();
                 this.validation["uniqueItems"] = this._validateUniqueItems();
-                this.base();
+                return this.base();
             }
         }, {
             TYPE : "array"

@@ -1,16 +1,7 @@
 (function() {
     "use strict";
-    /**
-     * Base class for providing common methods and interfaces for all controls.
-     */
+
     LittleCub.ObjectControl = LittleCub.ContainerControl.extend({
-            /**
-             *
-             * @param container
-             * @param data
-             * @param configs
-             * @param schema
-             */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
 
@@ -46,15 +37,15 @@
                 _.each(params, function(v, k) {
                     v["schema"] = v["schema"] || {};
                     v["configs"] = v["configs"] || {};
-                    v["schema"]["type"] = that.schemaType(v["schema"], v["configs"], v["data"]);
-                    v["configs"]["type"] = that.controlType(v["schema"], v["configs"]);
+                    v["schema"]["type"] = LC.schemaType.call(that,v["schema"], v["configs"], v["data"]);
+                    v["configs"]["type"] = LC.controlType.call(that,v["schema"], v["configs"]);
                     v["configs"]["theme"] = v["configs"]["theme"] || that.configs["theme"];
                     var controlClass = LittleCub.controlClass(v["configs"]["type"]);
                     // Start to construct child controls
                     if (that.schema["required"] && _.indexOf(that.schema["required"], k) != -1) {
                         v["configs"]["required"] = true;
                     }
-                    that.children[k] = new controlClass(v["data"], LittleCub.cloneJSON(v["configs"]), LittleCub.cloneJSON(v["schema"]));
+                    that.children[k] = new controlClass(v["data"], LC.cloneJSON(v["configs"]), LC.cloneJSON(v["schema"]));
                     that.children[k].parent = that;
                     that.children[k].key = k;
                     that.children[k].path = that.path == "/" ? that.path + k : that.path + "/" + k;
@@ -94,7 +85,7 @@
                 } else if (len == 1) {
                     var value = arguments[0];
                     _.each(this.children, function(v) {
-                        var _val = LittleCub.isEmpty(value) ? null : value[v.key];
+                        var _val = LC.isEmpty(value) ? null : value[v.key];
                         v.val(_val);
                     });
                     return value;
@@ -104,7 +95,7 @@
             bindData: function(data) {
                 this.base(data);
                 _.each(this.children, function(v, k) {
-                    var d = LittleCub.isEmpty(data) ? null : data[k];
+                    var d = LC.isEmpty(data) ? null : data[k];
                     v.bindData(d);
                 });
             }

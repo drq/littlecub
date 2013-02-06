@@ -2,13 +2,6 @@
     "use strict";
 
     LittleCub.ListControl = LittleCub.BaseControl.extend({
-            /**
-             *
-             * @param container
-             * @param data
-             * @param configs
-             * @param schema
-             */
             constructor: function(data, configs, schema) {
                 this.base(data, configs, schema);
             },
@@ -24,9 +17,9 @@
                     var _options = [];
                     _.each(enums, function(v, k) {
                         var text = v;
-                        if (! LittleCub.isEmpty(options[k])) {
+                        if (! LC.isEmpty(options[k])) {
                             text = options[k];
-                        } else if (! LittleCub.isEmpty(options[v])) {
+                        } else if (! LC.isEmpty(options[v])) {
                             text = options[v];
                         }
                         _options.push({
