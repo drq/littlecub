@@ -16,7 +16,14 @@
                                 val = v['value'];
                             }
                         });
-                        return val;
+
+                        if (this.schema["type"] == "number") {
+                            return parseFloat(val);
+                        } else if (this.schema["type"] == "integer") {
+                            return parseInt(val);
+                        } else {
+                            return val;
+                        }
                     } else if (len == 1) {
                         var val = arguments[0] || "";
                         if (val != this.val()) {

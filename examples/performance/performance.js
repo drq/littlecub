@@ -9,20 +9,20 @@
 
     var formGeneratorSchema = {
         "title" : "Form Generator",
-        "description" : "Enter or select the below options and then hit the Generate button.",
+        "description" : "Enter or select the below options and then hit the Generate button. The total number of controls will be capped at 2000.",
         "type" : "object",
         "properties" : {
             "depth" : {
-                "title" : "Depth",
+                "title" : "Maximum Depth",
                 "type" : "integer",
-                "description" : "Enter the depth of the form",
+                "description" : "Enter the maximum depth of the form.",
                 "default" : 3,
                 "minimum": 1
             },
             "nbControls" : {
                 "title" : "Number of Controls",
                 "type" : "integer",
-                "description" : "Enter the number of controls for each level",
+                "description" : "Enter the maximum number of controls for each level.",
                 "default" : 30,
                 "minimum": 1
             }

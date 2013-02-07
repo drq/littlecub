@@ -1,12 +1,10 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>jQuery Text Control Examples</title>
+    <title>Barebone Formatted Text Control Examples</title>
     <meta name="description"
-          content="LittleCub Forms text control examples using jQuery."/>
+          content="LittleCub Forms text control examples without stylesheet."/>
     <meta name="author" content="NextFrontier Technologies Inc."/>
-    <script src="../../lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
-
     <script src="../../lib/base/base.js" type="text/javascript"></script>
     <script src="../../lib/underscore/underscore-min.js" type="text/javascript"></script>
     <script src="../../lib/handlebars/handlebars.js" type="text/javascript"></script>
@@ -39,53 +37,68 @@
 
     <script src="../../js/controls/extras/address.js" type="text/javascript"></script>
     <link type="text/css" href="../css/styles.css" rel="stylesheet"/>
+
 </head>
 
 <body>
-<h1><a href="../index.html">Examples</a> > <a href="index.html">jQuery</a> > Text Control</h1>
-<h3>Text control with only string data parameter.</h3>
+<h1><a href="../index.html">Examples</a> > <a href="index.html">Barebone</a> > Formatted Text Control</h1>
+<h3>Email control</h3>
 <div id="text-control-1"></div>
 <pre>
-var textControl1 = $('#text-control-1').lc("Sample1");
+var textControl1 = LittleCub("test@nxf.com", {
+    "type" : "email",
+    "size" : 60
+}, null,document.getElementById('text-control-1'));
 </pre>
-<h3>Text control with data and configs parameters.</h3>
+<h3>Hostname control</h3>
 <div id="text-control-2"></div>
 <pre>
-var textControl2 = $('#text-control-2').lc("Sample2", {
-    "type" : "text",
+var textControl2 = LittleCub("www.nxf.com", {
     "size" : 60
-});
+}, {
+    "type" : "string",
+    "format" : "hostname"
+},document.getElementById('text-control-2'));
 </pre>
-<h3>Text control with data, configs and schema parameters.</h3>
+<h3>IPv4 Control</h3>
 <div id="text-control-3"></div>
 <pre>
-var textControl3 = $('#text-control-3').lc("Sample3", {
-    "type" : "text",
+var textControl3 = LittleCub("100.20", {
     "size" : 60
 }, {
     "type" : "string",
-    "minLength" : 10
-});
+    "format" : "ipv4"
+},document.getElementById('text-control-3')).validate();
 </pre>
-<h3>Text control with configs and schema parameters that have various options.</h3>
+<h3>IPv6 Control</h3>
 <div id="text-control-4"></div>
 <pre>
-var textControl4 = $('#text-control-4').lc("", {
-    "type" : "text",
-    "size" : 60,
-    "label" : "Sample 4",
-    "helper" : "Enter your sample text",
-    "placeholder" : "Sample Text",
-    "required" : true,
-    "validationEvent" : "keyup",
-    "name" : "sample"
+var textControl4 = LittleCub("2001:0db8:85a3:0000:0000:8a2e:0370:7334", {
+    "size" : 60
 }, {
     "type" : "string",
-    "title" : "Sample",
-    "description" : "Enter sample text",
-    "minLength" : 10,
-    "maxLength" : 30
-}).validate();
+    "format" : "ipv6"
+},document.getElementById('text-control-4')).validate();
+</pre>
+<h3>Datetime Control</h3>
+<div id="text-control-5"></div>
+<pre>
+var textControl5 = LittleCub("10/08/2012", {
+    "size" : 60
+}, {
+    "type" : "string",
+    "format" : "date-time"
+},document.getElementById('text-control-5')).validate();
+</pre>
+<h3>URI Control</h3>
+<div id="text-control-6"></div>
+<pre>
+var textControl6 = LittleCub("../test.html", {
+    "size" : 60
+}, {
+    "type" : "string",
+    "format" : "uri"
+},document.getElementById('text-control-6')).validate();
 </pre>
 <footer>
     Copyright &copy; 2013 NextFrontier Technologies Inc. | All Rights Reserved
@@ -99,38 +112,45 @@ var textControl4 = $('#text-control-4').lc("", {
         "default-inline": "../../themes/default-inline.html"
     }, function() {
 
-        var textControl1 = $('#text-control-1').lc("Sample1");
-
-        var textControl2 = $('#text-control-2').lc("Sample2", {
-            "type" : "text",
+        var textControl1 = LittleCub("test@nxf.com", {
+            "type" : "email",
             "size" : 60
-        });
+        }, null,document.getElementById('text-control-1'));
 
-        var textControl3 = $('#text-control-3').lc("Sample3", {
-            "type" : "text",
+        var textControl2 = LittleCub("www.nxf.com", {
             "size" : 60
         }, {
             "type" : "string",
-            "minLength" : 10
-        });
+            "format" : "hostname"
+        },document.getElementById('text-control-2'));
 
-        var textControl4 = $('#text-control-4').lc("", {
-            "type" : "text",
-            "size" : 60,
-            "label" : "Sample 4",
-            "helper" : "Enter your sample text",
-            "placeholder" : "Sample Text",
-            "required" : true,
-            "validationEvent" : "keyup",
-            "name" : "sample"
+        var textControl3 = LittleCub("100.20", {
+            "size" : 60
         }, {
             "type" : "string",
-            "title" : "Sample",
-            "description" : "Enter sample text",
-            "minLength" : 10,
-            "maxLength" : 30
-        }).validate();
+            "format" : "ipv4"
+        },document.getElementById('text-control-3')).validate();
 
+        var textControl4 = LittleCub("2001:0db8:85a3:0000:0000:8a2e:0370:7334", {
+            "size" : 60
+        }, {
+            "type" : "string",
+            "format" : "ipv6"
+        },document.getElementById('text-control-4')).validate();
+
+        var textControl5 = LittleCub("10/08/2012", {
+            "size" : 60
+        }, {
+            "type" : "string",
+            "format" : "date-time"
+        },document.getElementById('text-control-5')).validate();
+
+        var textControl6 = LittleCub("../test.html", {
+            "size" : 60
+        }, {
+            "type" : "string",
+            "format" : "uri"
+        },document.getElementById('text-control-6')).validate();
     });
 
 </script>

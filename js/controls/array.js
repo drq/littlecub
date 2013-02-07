@@ -10,17 +10,23 @@
             addChild : function(v, k) {
                 var configs = this.configs;
                 var schema = this.schema;
-                var itemSchema = schema && schema["items"] ? schema["items"] : {}
-                var itemConfigs = configs && configs["items"] ? configs["items"] : {}
+                var itemSchema = schema["items"];
+                if (! itemSchema) {
+                    itemSchema = schema["items"] = {};
+                }
+                var itemConfigs = configs["items"];
+                if (! itemConfigs) {
+                    itemConfigs = configs["items"] = {};
+                }
                 var _itemConfigs = LC.cloneJSON(itemConfigs);
-                itemSchema["type"] = LC.schemaType.call(this,itemSchema, itemConfigs, v);
-                _itemConfigs["type"] = LC.controlType.call(this,itemSchema, _itemConfigs);
+                itemSchema["type"] = LC.schemaType.call(this, itemSchema, itemConfigs, v);
+                _itemConfigs["type"] = LC.controlType.call(this, itemSchema, _itemConfigs);
                 _itemConfigs["theme"] = _itemConfigs["theme"] || this.configs["theme"];
                 var controlClass = LittleCub.controlClass(_itemConfigs["type"]);
                 // Start to construct child controls
                 var child = new controlClass(v, _itemConfigs, itemSchema);
                 child.parent = this;
-                child.key = this.key + "[" + k + "]";
+                child.key = (this.key ? this.key : "") + "[" + k + "]";
                 child.path = this.path + "[" + k + "]";
                 child.init();
                 this.children.splice(k, 0, child);
@@ -162,7 +168,24 @@
 
                 _.each(this.outerEl.querySelectorAll('button[class=lc-array-item-remove]'), function(v) {
                     v.addEventListener('click', removeEventHandler);
-                })
+                });
+
+                if (this.schema.uniqueItems) {
+                    var that = this;
+                    this.outerEl.addEventListener("lc-update", function(e) {
+                        var lcControl = e["lc-control"];
+                        var isParent = false, parent = lcControl.parent;
+                        while(parent && !isParent) {
+                            if (parent == that) {
+                                isParent = true;
+                            }
+                            parent = parent.parent;
+                        }
+                        if (isParent) {
+                            that.validate();
+                        }
+                    }, false);
+                }
             },
 
             _updateKeyPath: function(v, k) {
@@ -219,7 +242,7 @@
              */
             _validateMinItems: function() {
                 var validation = {
-                    "status" : LC.isEmpty(this.schema.minItems) ||! _.isNumber(this.schema.minItems) ||  _.size(this.children) >= this.schema.minItems
+                    "status" : LC.isEmpty(this.schema.minItems) || ! _.isNumber(this.schema.minItems) || _.size(this.children) >= this.schema.minItems
                 };
                 if (!validation["status"]) {
                     validation["message"] = LC.substituteTokens(LC.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]])
@@ -233,7 +256,7 @@
              */
             _validateMaxItems: function() {
                 var validation = {
-                    "status" : LC.isEmpty(this.schema.minItems) ||! _.isNumber(this.schema.maxItems) || _.size(this.children) <= this.schema.maxItems
+                    "status" : LC.isEmpty(this.schema.minItems) || ! _.isNumber(this.schema.maxItems) || _.size(this.children) <= this.schema.maxItems
                 };
                 if (!validation["status"]) {
                     validation["message"] = LC.substituteTokens(LC.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]])

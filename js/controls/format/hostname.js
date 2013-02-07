@@ -8,7 +8,7 @@
 
             init: function() {
                 this.base();
-                this.configs["template"] = this.configs["template"] || "control_text";
+                this.configs["altTemplate"] = "control_text";
             },
 
             _validatePattern: function() {
@@ -21,7 +21,7 @@
         }, {
             TYPE : "hostname",
             SCHEMA : {
-                "pattern" : "/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/"
+                "pattern" : "/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$/"
             }
         }
     );

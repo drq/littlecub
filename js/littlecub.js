@@ -161,7 +161,7 @@
          * @param {String} suffix Suffix.
          * @returns {Boolean} True if the string ends with the given suffix, false otherwise.
          */
-        endsWith : function(text, suffix) {
+        "endsWith" : function(text, suffix) {
             return text.indexOf(suffix, text.length - suffix.length) !== -1;
         },
 
@@ -172,7 +172,7 @@
          * @param {String} prefix Prefix
          * @returns {Boolean} True if the string starts with the given prefix, false otherwise.
          */
-        startsWith : function(text, prefix) {
+        "startsWith" : function(text, prefix) {
             return text.substr(0, prefix.length) === prefix;
         },
 
@@ -184,7 +184,7 @@
          *
          * @returns Substituted string.
          */
-        substituteTokens : function(text, args) {
+        "substituteTokens" : function(text, args) {
             if (!LittleCub.isEmpty(text)) {
                 for (var i = 0, len = args.length; i < len; i++) {
                     var token = "{" + i + "}";
@@ -199,7 +199,7 @@
             return text;
         },
 
-        compare : function(obj1, obj2) {
+        "compare" : function(obj1, obj2) {
             if (_.isObject(obj1) && _.isObject(obj2)) {
                 return _.isEqual(obj1, obj2);
             } else if (_.isArray(obj1) && _.isArray(obj2)) {
@@ -219,11 +219,47 @@
             }
         },
 
+        "regExp" : function(text) {
+            var flags = text.replace(/.*\/([gimy]*)$/, '$1');
+            var pattern = text.replace(new RegExp('^/(.*?)/' + flags + '$'), '$1');
+            return new RegExp(pattern, flags);
+        },
+
+        "hasClass" : function(elem, className) {
+            var regexp = LC.regExp('/(?:^|\\s)' + className +'(?!\\S)/');
+            return elem.className.match(regexp);
+        },
+
+        "addClass" : function(elem, className) {
+            if (!LC.hasClass(elem,className)) {
+                elem.className += " " + className;
+            }
+        },
+
+        "removeClass" : function(elem, className) {
+            if (LC.hasClass(elem, className)) {
+                var regexp = LC.regExp('/(?:^|\\s)' + className +'(?!\\S)/g');
+                elem.className = elem.className.replace(regexp, '');
+            }
+        },
+
         "registerTheme": function(theme, themeId) {
             themeId = themeId || theme["id"];
             if (themeId) {
                 LittleCub.themes[themeId] = theme;
             }
+        },
+
+        "findThemeConfig" : function(configId, themeId) {
+            var theme = LittleCub.themes[themeId];
+            var config = theme[configId];
+            var parentThemeId = theme["parent"];
+            while (!config && parentThemeId) {
+                theme = LittleCub.themes[parentThemeId];
+                config = theme["configs"];
+                parentThemeId = theme["parent"];
+            }
+            return config;
         },
 
         "findMessage" : function(messageId, themeId, locale) {
@@ -402,6 +438,9 @@
             if (_.isNull(data) || _.isUndefined(data)) {
                 return "string";
             }
+            if (_.isArray(data)) {
+                return "array";
+            }
             if (_.isObject(data)) {
                 return "object";
             }
@@ -410,9 +449,6 @@
             }
             if (_.isNumber(data)) {
                 return "number";
-            }
-            if (_.isArray(data)) {
-                return "array";
             }
             if (_.isBoolean(data)) {
                 return "boolean";

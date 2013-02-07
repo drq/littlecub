@@ -57,7 +57,7 @@
     <script id="control_checkbox" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="checkbox" {{#if name}}name="{{name}}"{{/if}}
             {{#if data}}checked="checked"{{/if}} {{#if fieldClass}}class="{{fieldClass}}"{{/if}}/>
-        {{#if rightLabel}}<span><label {{#if name}}for="{{name}}"{{/if}}>{{rightLabel}}</label></span>{{/if}}
+        {{#if prompt}}<span><label {{#if name}}for="{{name}}"{{/if}}>{{prompt}}</label></span>{{/if}}
     </script>
     <script id="control_text" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
@@ -82,8 +82,8 @@
     </script>
     <script id="control_array" type="text/x-handlebars-template">
         <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
-            <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
-            <div>{{helper}}</div>
+            {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
+            {{#if helper}}<div>{{helper}}</div>{{/if}}
             <div data-lcid="{{id}}-items">
                 {{#if controls}}
                     {{#each controls}}
@@ -100,8 +100,8 @@
     <script id="control_object" type="text/x-handlebars-template">
         {{#if controls}}
             <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
-                <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
-                <div>{{helper}}</div>
+                {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
+                {{#if helper}}<div>{{helper}}</div>{{/if}}
                 {{#key_value controls}}
                     <div>{{include 'control'}}</div>
                 {{/key_value}}

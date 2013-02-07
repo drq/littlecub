@@ -8,7 +8,7 @@
 
             init: function() {
                 this.base();
-                this.configs["template"] = this.configs["template"] || "control_text";
+                this.configs["altTemplate"] = "control_text";
             },
 
             _validatePattern: function() {

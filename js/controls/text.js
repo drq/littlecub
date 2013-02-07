@@ -27,9 +27,7 @@
                 var val = this.val();
                 var regex;
                 if (this.schema.pattern) {
-                    var flags = this.schema.pattern.replace(/.*\/([gimy]*)$/, '$1');
-                    var pattern = this.schema.pattern.replace(new RegExp('^/(.*?)/' + flags + '$'), '$1');
-                    regex = new RegExp(pattern, flags);
+                    regex = LC.regExp(this.schema.pattern);
                 }
                 var validation = {
                     "status" : LC.isEmpty(this.schema.pattern) || LC.isValEmpty(val) || ! LC.isEmpty(val.match(regex))

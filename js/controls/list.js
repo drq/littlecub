@@ -17,10 +17,10 @@
                     var _options = [];
                     _.each(enums, function(v, k) {
                         var text = v;
-                        if (! LC.isEmpty(options[k])) {
-                            text = options[k];
-                        } else if (! LC.isEmpty(options[v])) {
+                        if (! LC.isEmpty(options[v])) {
                             text = options[v];
+                        } else if (! LC.isEmpty(options[k])) {
+                            text = options[k];
                         }
                         _options.push({
                             "value": v,

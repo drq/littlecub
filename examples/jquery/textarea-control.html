@@ -1,9 +1,9 @@
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>jQuery Text Control Examples</title>
+    <meta http-equiv="Content-Type" content="textarea/html; charset=iso-8859-1"/>
+    <title>jQuery Textarea Control Examples</title>
     <meta name="description"
-          content="LittleCub Forms text control examples using jQuery."/>
+          content="LittleCub Forms textarea control examples without stylesheet."/>
     <meta name="author" content="NextFrontier Technologies Inc."/>
     <script src="../../lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
 
@@ -39,53 +39,59 @@
 
     <script src="../../js/controls/extras/address.js" type="text/javascript"></script>
     <link type="text/css" href="../css/styles.css" rel="stylesheet"/>
+
 </head>
 
 <body>
-<h1><a href="../index.html">Examples</a> > <a href="index.html">jQuery</a> > Text Control</h1>
-<h3>Text control with only string data parameter.</h3>
-<div id="text-control-1"></div>
+<h1><a href="../index.html">Examples</a> > <a href="index.html">jQuery</a> > Textarea Control</h1>
+<h3>Textarea control with data and configs parameters.</h3>
+<div id="textarea-control-1"></div>
 <pre>
-var textControl1 = $('#text-control-1').lc("Sample1");
-</pre>
-<h3>Text control with data and configs parameters.</h3>
-<div id="text-control-2"></div>
-<pre>
-var textControl2 = $('#text-control-2').lc("Sample2", {
-    "type" : "text",
-    "size" : 60
+var textareaControl1 = $('#textare-control-1').lc("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", {
+    "type" : "textarea"
 });
 </pre>
-<h3>Text control with data, configs and schema parameters.</h3>
-<div id="text-control-3"></div>
+<h3>Textarea control with data and configs parameters.</h3>
+<div id="textarea-control-2"></div>
 <pre>
-var textControl3 = $('#text-control-3').lc("Sample3", {
-    "type" : "text",
-    "size" : 60
+var textareaControl2 = $('#textarea-control-2').lc("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", {
+    "type" : "textarea",
+    "rows" : 5,
+    "cols" : 40
+});
+</pre>
+<h3>Textarea control with data, configs and schema parameters.</h3>
+<div id="textarea-control-3"></div>
+<pre>
+var textareaControl3 = $('#textarea-control-3').lc("Sample3", {
+    "type" : "textarea",
+    "rows" : 5,
+    "cols" : 40
 }, {
     "type" : "string",
-    "minLength" : 10
+    "minLength" : 100
 });
 </pre>
-<h3>Text control with configs and schema parameters that have various options.</h3>
-<div id="text-control-4"></div>
+<h3>Textarea control with configs and schema parameters that have various options.</h3>
+<div id="textarea-control-4"></div>
 <pre>
-var textControl4 = $('#text-control-4').lc("", {
-    "type" : "text",
-    "size" : 60,
+var textareaControl4 = $('#textarea-control-4').lc("", {
+    "type" : "textarea",
+    "rows" : 5,
+    "cols" : 40,
     "label" : "Sample 4",
-    "helper" : "Enter your sample text",
-    "placeholder" : "Sample Text",
+    "helper" : "Enter your sample textarea",
+    "placeholder" : "Sample Textarea",
     "required" : true,
     "validationEvent" : "keyup",
     "name" : "sample"
 }, {
     "type" : "string",
     "title" : "Sample",
-    "description" : "Enter sample text",
+    "description" : "Enter sample textarea",
     "minLength" : 10,
     "maxLength" : 30
-}).validate();
+});
 </pre>
 <footer>
     Copyright &copy; 2013 NextFrontier Technologies Inc. | All Rights Reserved
@@ -99,37 +105,42 @@ var textControl4 = $('#text-control-4').lc("", {
         "default-inline": "../../themes/default-inline.html"
     }, function() {
 
-        var textControl1 = $('#text-control-1').lc("Sample1");
-
-        var textControl2 = $('#text-control-2').lc("Sample2", {
-            "type" : "text",
-            "size" : 60
+        var textareaControl1 = $('#textarea-control-1').lc("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", {
+            "type" : "textarea"
         });
 
-        var textControl3 = $('#text-control-3').lc("Sample3", {
-            "type" : "text",
-            "size" : 60
+        var textareaControl2 = $('#textarea-control-2').lc("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", {
+            "type" : "textarea",
+            "rows" : 5,
+            "cols" : 40
+        });
+
+        var textareaControl3 = $('#textarea-control-3').lc("Sample3", {
+            "type" : "textarea",
+            "rows" : 5,
+            "cols" : 40
         }, {
             "type" : "string",
-            "minLength" : 10
+            "minLength" : 100
         });
 
-        var textControl4 = $('#text-control-4').lc("", {
-            "type" : "text",
-            "size" : 60,
+        var textareaControl4 = $('#textarea-control-4').lc("", {
+            "type" : "textarea",
+            "rows" : 5,
+            "cols" : 40,
             "label" : "Sample 4",
-            "helper" : "Enter your sample text",
-            "placeholder" : "Sample Text",
+            "helper" : "Enter your sample textarea",
+            "placeholder" : "Sample Textarea",
             "required" : true,
             "validationEvent" : "keyup",
             "name" : "sample"
         }, {
             "type" : "string",
             "title" : "Sample",
-            "description" : "Enter sample text",
+            "description" : "Enter sample textarea",
             "minLength" : 10,
             "maxLength" : 30
-        }).validate();
+        });
 
     });
 

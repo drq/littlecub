@@ -8,7 +8,7 @@
 
             init: function() {
                 this.base();
-                this.configs["template"] = this.configs["template"] || "control_text";
+                this.configs["altTemplate"] = "control_text";
             },
 
             _validatePattern: function() {
@@ -21,7 +21,7 @@
         }, {
             TYPE : "ipv4",
             SCHEMA : {
-                "pattern" : "/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/"
+                "pattern" : "/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/"
             }
         }
     );

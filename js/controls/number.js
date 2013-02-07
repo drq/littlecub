@@ -20,7 +20,7 @@
 
             init: function() {
                 this.base();
-                this.configs["template"] = this.configs["template"] || "control_text";
+                this.configs["altTemplate"] = "control_text";
             },
 
             /**
@@ -48,7 +48,7 @@
                 if (!LC.isEmpty(this.schema["maximum"])) {
                     if (val > this.schema["maximum"]) {
                         status = false;
-                    } else if (this.schema["exclusiveMaximum"] && val == this.schema["maximum"]) {
+                    } if (this.schema["exclusiveMaximum"] && val == this.schema["maximum"]) {
                         status = false;
                     }
                 }

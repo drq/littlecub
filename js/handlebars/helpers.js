@@ -71,6 +71,9 @@
         var themeId = this["theme"];
         var templateId = this["template"] || "control_" + this.type;
         var template = LittleCub.findTemplate(themeId,templateId);
+        if (!template && this["altTemplate"]) {
+            template = LittleCub.findTemplate(themeId,this["altTemplate"]);
+        }
         return template ? new Handlebars.SafeString(template(this)) : "";
     });
 
