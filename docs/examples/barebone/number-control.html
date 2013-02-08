@@ -12,6 +12,7 @@
 
     <script src="../../../js/littlecub.js" type="text/javascript"></script>
     <script src="../../../js/themes/themes.js" type="text/javascript"></script>
+    <script src="../../../js/themes/default.js" type="text/javascript"></script>
 
     <script src="../../../js/controls/base.js" type="text/javascript"></script>
     <script src="../../../js/controls/container.js" type="text/javascript"></script>
@@ -42,12 +43,15 @@
 
 <body>
 <h1><a href="../index.html">Examples</a> > <a href="index.html">Barebone</a> > Number Control</h1>
+
 <h3>Number control with only number data parameter.</h3>
+
 <div id="number-control-1"></div>
 <pre>
 var numberControl1 = LittleCub(123.01, null, null,document.getElementById('number-control-1'));
 </pre>
 <h3>Number control with data and configs parameters.</h3>
+
 <div id="number-control-2"></div>
 <pre>
 var numberControl2 = LittleCub(123.01, {
@@ -57,6 +61,7 @@ var numberControl2 = LittleCub(123.01, {
 }, null,document.getElementById('number-control-2'));
 </pre>
 <h3>Number control with data, configs and schema parameters.</h3>
+
 <div id="number-control-3"></div>
 <pre>
 var numberControl3 = LittleCub(124.02, {
@@ -69,6 +74,7 @@ var numberControl3 = LittleCub(124.02, {
 },document.getElementById('number-control-3'));
 </pre>
 <h3>Number control with configs and schema parameters that have various options.</h3>
+
 <div id="number-control-4"></div>
 <pre>
 var numberControl4 = LittleCub("124.0", {
@@ -94,13 +100,13 @@ var numberControl4 = LittleCub("124.0", {
         "default-horizontal": "../../../themes/default/default-horizontal.html"
     }, function() {
 
-        var numberControl1 = LittleCub(123.01, null, null,document.getElementById('number-control-1'));
+        var numberControl1 = LittleCub(123.01, null, null, document.getElementById('number-control-1'));
 
         var numberControl2 = LittleCub(123.01, {
             "type" : "number",
             "label" : "Number",
             "size" : 6
-        }, null,document.getElementById('number-control-2'));
+        }, null, document.getElementById('number-control-2'));
 
         var numberControl3 = LittleCub(124.02, {
             "type" : "number",
@@ -109,7 +115,7 @@ var numberControl4 = LittleCub("124.0", {
             "type" : "number",
             "minimum" : 124.0,
             "maximum" : 125.0
-        },document.getElementById('number-control-3'));
+        }, document.getElementById('number-control-3'));
 
         var numberControl4 = LittleCub("124.0", {
             "type" : "number",
@@ -122,7 +128,7 @@ var numberControl4 = LittleCub("124.0", {
             "maximum" : 125.0,
             "exclusiveMinimum" : true,
             "exclusiveMaximum" : true
-        },document.getElementById('number-control-4')).validate();
+        }, document.getElementById('number-control-4')).validate();
 
     });
 

@@ -68,12 +68,21 @@ module.exports = function(grunt) {
                 ],
                 dest: 'dist/<%= pkg.name %>-core.js'
             },
-            dist: {
+            "default": {
                 src: [
                     'dist/<%= pkg.name %>-core.js',
+                    'js/themes/default.js',
                     'build/templates-default.js'
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
+            },
+            "bootstrap": {
+                src: [
+                    'dist/<%= pkg.name %>-core.js',
+                    'js/themes/bootstrap.js',
+                    'build/templates-default.js'
+                ],
+                dest: 'dist/<%= pkg.name %>-bootstrap.js'
             }
         },
         uglify: {
@@ -84,15 +93,19 @@ module.exports = function(grunt) {
                 src: 'dist/<%= pkg.name %>-core.js',
                 dest: 'dist/<%= pkg.name %>-core.min.js'
             },
-            dist: {
+            "default": {
                 src: 'dist/<%= pkg.name %>.js',
                 dest: 'dist/<%= pkg.name %>.min.js'
             },
-            "default": {
+            "bootstrap": {
+                src: 'dist/<%= pkg.name %>-bootstrap.js',
+                dest: 'dist/<%= pkg.name %>-bootstrap.min.js'
+            },
+            "default-templates": {
                 src: 'build/templates-default.js',
                 dest: 'dist/templates-default.min.js'
             },
-            bootstrap: {
+            "bootstrap-templates": {
                 src: 'build/templates-bootstrap.js',
                 dest: 'dist/templates-bootstrap.min.js'
             }

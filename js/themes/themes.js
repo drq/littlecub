@@ -2,12 +2,11 @@
     "use strict";
 
     LittleCub.registerTheme({
-        "id" : "default",
-        "title" : "Default Them",
-        "description" : "Default theme for rendering basic forms.",
+        "id" : "base",
+        "title" : "Base Theme",
+        "description" : "Base theme for extending.",
         "templateEngine":"handlebars",
         "platform":["web"],
-        "errorClass" : "lc-error",
         "messages" : {
             "en_US" : {
                 "required" : "Required field.",
@@ -34,32 +33,4 @@
         }
     });
 
-    LittleCub.registerTheme({
-        "id" : "default-horizontal",
-        "parent" : "default",
-        "title" : "Default Horizontal Style Theme",
-        "description" : "Default theme for rendering basic forms with helpers and labels on the same line as their mapped control."
-    });
-
-    LittleCub.registerTheme({
-        "id" : "bootstrap",
-        "title" : "Default Twitter Bootstrap Theme",
-        "description" : "Default Twitter bootstrap theme for rendering basic forms.",
-        "parent" : "default",
-        "errorInjection" : function(status) {
-            var errorClass= "control-group error";
-            if (status) {
-                $(this.outerEl).removeClass(errorClass);
-            } else {
-                $(this.outerEl).addClass(errorClass);
-            }
-        }
-    });
-
-    LittleCub.registerTheme({
-        "id" : "bootstrap-horizontal",
-        "title" : "Default Them",
-        "description" : "Twitter bootstrap theme for rendering basic forms with horizontal styles.",
-        "parent" : "bootstrap"
-    });
 }());

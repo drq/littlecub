@@ -12,6 +12,7 @@
 
     <script src="../../../js/littlecub.js" type="text/javascript"></script>
     <script src="../../../js/themes/themes.js" type="text/javascript"></script>
+    <script src="../../../js/themes/default.js" type="text/javascript"></script>
 
     <script src="../../../js/controls/base.js" type="text/javascript"></script>
     <script src="../../../js/controls/container.js" type="text/javascript"></script>
@@ -42,12 +43,15 @@
 
 <body>
 <h1><a href="../index.html">Examples</a> > <a href="index.html">Barebone</a> > Text Control</h1>
+
 <h3>Text control with only string data parameter.</h3>
+
 <div id="text-control-1"></div>
 <pre>
 var textControl1 = LittleCub("Sample", null, null,document.getElementById('text-control-1'));
 </pre>
 <h3>Text control with data and configs parameters.</h3>
+
 <div id="text-control-2"></div>
 <pre>
 var textControl2 = LittleCub("Sample2", {
@@ -56,6 +60,7 @@ var textControl2 = LittleCub("Sample2", {
 }, null,document.getElementById('text-control-2'));
 </pre>
 <h3>Text control with data, configs and schema parameters.</h3>
+
 <div id="text-control-3"></div>
 <pre>
 var textControl3 = LittleCub("Sample3", {
@@ -67,6 +72,7 @@ var textControl3 = LittleCub("Sample3", {
 },document.getElementById('text-control-3'));
 </pre>
 <h3>Text control with configs and schema parameters that have various options.</h3>
+
 <div id="text-control-4"></div>
 <pre>
 var textControl4 = LittleCub("", {
@@ -97,12 +103,12 @@ var textControl4 = LittleCub("", {
         "default-horizontal": "../../../themes/default/default-horizontal.html"
     }, function() {
 
-        var textControl1 = LittleCub("Sample1", null, null,document.getElementById('text-control-1'));
+        var textControl1 = LittleCub("Sample1", null, null, document.getElementById('text-control-1'));
 
         var textControl2 = LittleCub("Sample2", {
             "type" : "text",
             "size" : 60
-        }, null,document.getElementById('text-control-2'));
+        }, null, document.getElementById('text-control-2'));
 
         var textControl3 = LittleCub("Sample3", {
             "type" : "text",
@@ -110,7 +116,7 @@ var textControl4 = LittleCub("", {
         }, {
             "type" : "string",
             "minLength" : 10
-        },document.getElementById('text-control-3'));
+        }, document.getElementById('text-control-3'));
 
         var textControl4 = LittleCub("", {
             "type" : "text",
@@ -127,7 +133,7 @@ var textControl4 = LittleCub("", {
             "description" : "Enter sample text",
             "minLength" : 10,
             "maxLength" : 30
-        },document.getElementById('text-control-4'));
+        }, document.getElementById('text-control-4'));
 
     });
 

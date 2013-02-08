@@ -52,7 +52,7 @@
             // Sync configs and schema
             this.configs["label"] = !LC.isEmpty(this.configs["label"]) ? this.configs["label"] : this.schema["title"];
             if (LC.isEmpty(this.configs["label"]) && this.parent && this.parent.schema["type"] != "array") {
-                this.configs["label"] =  LC.prettyTitle(this.key) || "";
+                this.configs["label"] = LC.prettyTitle(this.key) || "";
             }
             this.schema["title"] = this.schema["title"] || this.configs["label"];
 
@@ -60,7 +60,7 @@
             this.schema["description"] = this.schema["description"] || this.configs["helper"];
 
             this.configs["name"] = this.configs["name"] || this.path.substring(1).replace(/\//g, "_");
-            this.configs["theme"] = this.configs["theme"] || "default";
+            this.configs["theme"] = this.configs["theme"] || LittleCub["defaults"]["theme"];
 
             this.configs["id"] = this.id;
 
@@ -77,8 +77,10 @@
             this.configs["data"] = this.data;
         },
 
-        isValidate: function() {
-            this.validate();
+        isValid: function(skipValidation) {
+            if (!skipValidation) {
+                this.validate();
+            }
             return _.every(this.validation, function(v) {
                 return v["status"];
             });
@@ -209,6 +211,10 @@
                 this.container = this.container.parentNode;
             }
             this.bindDOM();
+            var injection = LC.findThemeConfig("injection", theme)
+            if (injection && _.isFunction(injection)) {
+                injection.call(this,container);
+            }
         }
     });
 })();

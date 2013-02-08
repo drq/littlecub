@@ -21,6 +21,7 @@
 
         "defaults": {
             "locale": "en_US",
+            "theme" : "default",
             "templateEngine": "handlebars",
             "validationEvent": "blur",
             "schemaToControl": {

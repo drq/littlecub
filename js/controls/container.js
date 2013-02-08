@@ -44,16 +44,13 @@
                 });
             },
 
-            isValidate: function() {
-                if (!this.validate()) {
+            isValid: function(skipValidation) {
+                var status = this.base(skipValidation);
+                if (! status) {
                     return false;
                 } else {
                     return _.every(this.children, function(v) {
-                        if (!v.isValidate()) {
-                            return false;
-                        } else {
-                            return true;
-                        }
+                        return !v.isValid(skipValidation);
                     });
                 }
             }

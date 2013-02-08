@@ -111,27 +111,27 @@
             </fieldset>
         {{/if}}
     </script>
-    <script id="control_object_table" type="text/x-handlebars-template">
+    <script id="control_object_grid" type="text/x-handlebars-template">
         {{#if controls}}
             <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
                 <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
                 <div>{{helper}}</div>
-                {{#if table}}
-                <table>
-                    {{#key_value table}}
-                    <tr>
+                {{#if grid}}
+                <div>
+                    {{#key_value grid}}
+                    <div class="row">
                         {{#key_value value}}
-                            <td data-licid="{{../key}}-{{key}}">
-                                {{#each value}}
-                                    {{#object_with_key ../../../controls key=this}}
+                            <div class="span{{value.span}}" data-licid="{{../key}}-{{key}}">
+                                {{#each value.controls}}
+                                    {{#object_with_key ../../../../controls key=this}}
                                         <div>{{include 'control'}}</div>
                                     {{/object_with_key}}
                                 {{/each}}
-                            </td>
+                            </div>
                         {{/key_value}}
-                    </tr>
+                    </div>
                     {{/key_value}}
-                </table>
+                </div>
                 {{/if}}
                 <span data-lcid="{{id}}-message"></span>
             </fieldset>
@@ -151,7 +151,7 @@
     </script>
     <script id="form" type="text/x-handlebars-template">
         {{#if form}}
-        <form data-lcid="{{id}}-form" {{#with form}}{{#key_value attrs}}{{key}}="{{value}}"{{/key_value}}{{/with}}>
+        <form data-lcid="{{id}}" {{#with form}}{{#key_value attrs}}{{key}}="{{value}}"{{/key_value}}{{/with}}>
             {{include 'control'}}
             {{#with form}}
                 {{#if buttons}}

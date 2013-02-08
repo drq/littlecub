@@ -12,6 +12,7 @@
 
     <script src="../../../js/littlecub.js" type="text/javascript"></script>
     <script src="../../../js/themes/themes.js" type="text/javascript"></script>
+    <script src="../../../js/themes/default.js" type="text/javascript"></script>
 
     <script src="../../../js/controls/base.js" type="text/javascript"></script>
     <script src="../../../js/controls/container.js" type="text/javascript"></script>
@@ -42,12 +43,15 @@
 
 <body>
 <h1><a href="../index.html">Examples</a> > <a href="index.html">Barebone</a> > Integer Control</h1>
+
 <h3>Integer control with only integer data parameter.</h3>
+
 <div id="integer-control-1"></div>
 <pre>
 var integerControl1 = LittleCub(35, null, null,document.getElementById('integer-control-1'));
 </pre>
 <h3>Integer control with data and configs parameters.</h3>
+
 <div id="integer-control-2"></div>
 <pre>
 var integerControl2 = LittleCub(35, {
@@ -57,6 +61,7 @@ var integerControl2 = LittleCub(35, {
 }, null,document.getElementById('integer-control-2'));
 </pre>
 <h3>Integer control with data, configs and schema parameters.</h3>
+
 <div id="integer-control-3"></div>
 <pre>
 var integerControl3 = LittleCub(35, {
@@ -69,6 +74,7 @@ var integerControl3 = LittleCub(35, {
 },document.getElementById('integer-control-3'));
 </pre>
 <h3>Integer control with configs and schema parameters that have various options.</h3>
+
 <div id="integer-control-4"></div>
 <pre>
 var integerControl4 = LittleCub("17", {
@@ -97,13 +103,13 @@ var integerControl4 = LittleCub("17", {
         "default-horizontal": "../../../themes/default/default-horizontal.html"
     }, function() {
 
-        var integerControl1 = LittleCub(35, null, null,document.getElementById('integer-control-1'));
+        var integerControl1 = LittleCub(35, null, null, document.getElementById('integer-control-1'));
 
         var integerControl2 = LittleCub(35, {
             "type" : "integer",
             "label" : "Bear Age",
             "size" : 6
-        }, null,document.getElementById('integer-control-2'));
+        }, null, document.getElementById('integer-control-2'));
 
         var integerControl3 = LittleCub(35, {
             "type" : "integer",
@@ -112,7 +118,7 @@ var integerControl4 = LittleCub("17", {
             "type" : "integer",
             "minimum" : 15,
             "maximum" : 55
-        },document.getElementById('integer-control-3'));
+        }, document.getElementById('integer-control-3'));
 
         var integerControl4 = LittleCub("17", {
             "type" : "integer",
@@ -126,7 +132,7 @@ var integerControl4 = LittleCub("17", {
             "exclusiveMinimum" : true,
             "exclusiveMaximum" : true,
             "multipleOf" : 2
-        },document.getElementById('integer-control-4')).validate();
+        }, document.getElementById('integer-control-4')).validate();
 
     });
 

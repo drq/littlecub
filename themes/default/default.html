@@ -149,7 +149,7 @@
     </script>
     <script id="form" type="text/x-handlebars-template">
         {{#if form}}
-        <form data-lcid="{{id}}-form" {{#with form}}{{#key_value attrs}}{{key}}="{{value}}"{{/key_value}}{{/with}}>
+        <form data-lcid="{{id}}" {{#with form}}{{#key_value attrs}}{{key}}="{{value}}"{{/key_value}}{{/with}}>
             {{include 'control'}}
             {{#with form}}
                 {{#if buttons}}

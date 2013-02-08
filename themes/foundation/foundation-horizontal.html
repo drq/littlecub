@@ -1,0 +1,28 @@
+<html>
+<head>
+    <!-- Partials -->
+    <script id="control_label" type="text/x-handlebars-template">
+        {{#if label}}
+            <label class="right inline{{#if labelClass}} {{labelClass}}{{/if}}" {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
+        {{/if}}
+    </script>
+    <script id="control" type="text/x-handlebars-template">
+        {{#isContainer type}}
+            {{injectControl}}
+        {{else}}
+            <span data-lcid="{{id}}" data-lctype="{{type}}" class="row">
+                <div class="two mobile-one columns">
+                    {{include 'control_label'}}
+                </div>
+                <div class="ten mobile-one columns">
+                    {{injectControl}}
+                </div>
+                <div class="ten mobile-one columns">
+                    {{include 'control_helper'}}
+                    <span data-lcid="{{id}}-messages"></span>
+                </div>
+            </span>
+        {{/isContainer}}
+    </script>
+</head>
+</html>

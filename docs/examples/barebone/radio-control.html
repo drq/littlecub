@@ -12,6 +12,7 @@
 
     <script src="../../../js/littlecub.js" type="text/javascript"></script>
     <script src="../../../js/themes/themes.js" type="text/javascript"></script>
+    <script src="../../../js/themes/default.js" type="text/javascript"></script>
 
     <script src="../../../js/controls/base.js" type="text/javascript"></script>
     <script src="../../../js/controls/container.js" type="text/javascript"></script>
@@ -41,7 +42,9 @@
 
 <body>
 <h1><a href="../index.html">Examples</a> > <a href="index.html">Barebone</a> > Radio Button Group Control</h1>
+
 <h3>Radio control with only schema parameter.</h3>
+
 <div id="radio-control-1"></div>
 <pre>
 var radioControl1 = LittleCub("giant panda", null, {
@@ -50,6 +53,7 @@ var radioControl1 = LittleCub("giant panda", null, {
 },document.getElementById('radio-control-1'));
 </pre>
 <h3>Radio control with schema and configs parameters.</h3>
+
 <div id="radio-control-2"></div>
 <pre>
 var radioControl2 = LittleCub("giant panda", {
@@ -60,6 +64,7 @@ var radioControl2 = LittleCub("giant panda", {
 }, null,document.getElementById('radio-control-2'));
 </pre>
 <h3>Radio control with data, configs and schema parameters.</h3>
+
 <div id="radio-control-3"></div>
 <pre>
 var radioControl3 = LittleCub("giant panda", {
@@ -104,14 +109,14 @@ var radioControl4 = LittleCub(5, {
         var radioControl1 = LittleCub("giant panda", null, {
             "type" : "string",
             "enum" : ["giant panda", "polar bear", "grizzly bear"]
-        },document.getElementById('radio-control-1'));
+        }, document.getElementById('radio-control-1'));
 
         var radioControl2 = LittleCub("giant panda", {
             "type" : "radio"
         }, {
             "type" : "string",
             "enum" : ["giant panda", "polar bear", "grizzly bear", "atlas bear", "blue bear"]
-        },document.getElementById('radio-control-2'));
+        }, document.getElementById('radio-control-2'));
 
         var radioControl3 = LittleCub("giant panda", {
             "type" : "radio",
@@ -121,7 +126,7 @@ var radioControl4 = LittleCub(5, {
         }, {
             "type" : "string",
             "enum" : ["giant panda", "polar bear", "grizzly bear", "atlas bear", "blue bear"]
-        },document.getElementById('radio-control-3'));
+        }, document.getElementById('radio-control-3'));
 
         var radioControl4 = LittleCub(5, {
             "type" : "radio",
@@ -137,7 +142,7 @@ var radioControl4 = LittleCub(5, {
         }, {
             "type" : "integer",
             "enum" : [1, 2, 3, 4, 5]
-        },document.getElementById('radio-control-4'));
+        }, document.getElementById('radio-control-4'));
     });
 
 </script>

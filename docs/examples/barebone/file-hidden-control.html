@@ -12,6 +12,7 @@
 
     <script src="../../../js/littlecub.js" type="text/javascript"></script>
     <script src="../../../js/themes/themes.js" type="text/javascript"></script>
+    <script src="../../../js/themes/default.js" type="text/javascript"></script>
 
     <script src="../../../js/controls/base.js" type="text/javascript"></script>
     <script src="../../../js/controls/container.js" type="text/javascript"></script>
@@ -42,7 +43,9 @@
 
 <body>
 <h1><a href="../index.html">Examples</a> > <a href="index.html">Barebone</a> > File Control and Hidden Control</h1>
+
 <h3>File control for picking file.</h3>
+
 <div id="file-hidden-control-1"></div>
 <pre>
 var fileControl1 = LittleCub("", {
@@ -51,6 +54,7 @@ var fileControl1 = LittleCub("", {
 }, null,document.getElementById('file-hidden-control-2'));
 </pre>
 <h3>Hidden control for hidden form field.</h3>
+
 <div id="file-hidden-control-2"></div>
 <pre>
 var hiddenControl1 = LittleCub("hidden value", {
@@ -75,13 +79,13 @@ var hiddenControl1 = LittleCub("hidden value", {
         var fileControl1 = LittleCub("", {
             "type" : "file",
             "size" : 60
-        }, null,document.getElementById('file-hidden-control-1'));
+        }, null, document.getElementById('file-hidden-control-1'));
 
         var hiddenControl1 = LittleCub("hidden value", {
             "type" : "hidden"
         }, {
             "type" : "string"
-        },document.getElementById('file-hidden-control-2'));
+        }, document.getElementById('file-hidden-control-2'));
 
     });
 
