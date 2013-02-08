@@ -1,0 +1,171 @@
+<html>
+<head>
+    <!-- Partials -->
+    <script id="control_label" type="text/x-handlebars-template">
+        {{#if label}}
+            <label class="control-label{{#if labelClass}} {{labelClass}}{{/if}}" {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
+        {{/if}}
+    </script>
+    <script id="control_helper" type="text/x-handlebars-template">
+        {{#if helper}}
+            <span class="help-block{{#if helperClass}} {{helperClass}}{{/if}}"><i class="icon-info-sign"></i> {{helper}}</span>
+        {{/if}}
+    </script>
+    <script id="control_messages" type="text/x-handlebars-template">
+        {{#each validation}}
+            {{#if message}}
+                <div class="help-block">{{message}}</div>
+            {{/if}}
+        {{/each}}
+    </script>
+    <script id="control_hidden" type="text/x-handlebars-template">
+        <input data-lcid="{{id}}-field" type="hidden" {{#if name}}name="{{name}}"{{/if}}
+            value="{{#if data}}{{data}}{{/if}}"/>
+    </script>
+    <script id="control_file" type="text/x-handlebars-template">
+        <input data-lcid="{{id}}-field" type="file" {{#if name}}name="{{name}}"{{/if}}
+            {{#if fieldClass}}class="{{fieldClass}}"{{/if}}
+            {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
+    </script>
+    <script id="control_select" type="text/x-handlebars-template">
+        <select data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if multiple}}multiple="multiple"{{/if}}
+            {{#if size}}size="{{size}}"{{/if}} {{#if name}}name="{{name}}"{{/if}}>
+            {{#unless required}}
+                <option value="">None</option>
+            {{/unless}}
+            {{#each options}}
+                <option value="{{value}}" {{#if selected}}selected="selected"{{/if}}>{{text}}</option>
+            {{/each}}
+        </select>
+    </script>
+    <script id="control_radio" type="text/x-handlebars-template">
+        <div class="{{#if fieldClass}} {{fieldClass}}{{/if}}" data-lcid="{{id}}-field">
+            {{#unless required}}
+                <label class="radio">
+                    <input type="radio" {{#if readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} value=""/>
+                    None
+                </label>
+            {{/unless}}
+            {{# options}}
+                <label class="radio">
+                    <input type="radio" {{#if readonly}}readonly="readonly"{{/if}} {{#with ../name}}name="{{.}}"{{/with}} value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>
+                    {{text}}
+                </label>
+            {{/options}}
+        </div>
+    </script>
+    <script id="control_checkbox" type="text/x-handlebars-template">
+        <label class="checkbox">
+            <input data-lcid="{{id}}-field" type="checkbox" {{#if name}}name="{{name}}"{{/if}}
+                {{#if data}}checked="checked"{{/if}} {{#if fieldClass}}class="{{fieldClass}}"{{/if}}/>
+            {{#if prompt}}{{prompt}}{{/if}}
+        </label>
+    </script>
+    <script id="control_text" type="text/x-handlebars-template">
+        <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
+            value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}}
+            {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
+    </script>
+    <script id="control_textarea" type="text/x-handlebars-template">
+        <textarea data-lcid="{{id}}-field" {{#if name}}name="{{name}}"{{/if}}
+            {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
+            {{#if rows}}rows="{{rows}}"{{/if}} {{#if cols}}cols="{{cols}}"{{/if}}>{{#if data}}{{data}}{{/if}}</textarea>
+    </script>
+    <script id="array_toolbar" type="text/x-handlebars-template">
+        <div class="lc-array-toolbar" data-lcid="{{id}}-array-toolbar">
+            <button  type="button" data-lcid="{{id}}-array-toolbar-add" class="lc-array-add btn btn-small">Add</button>
+        </div>
+    </script>
+    <script id="array_item_toolbar" type="text/x-handlebars-template">
+        <div data-lcid="{{id}}-toolbar" class="lc-array-item-toolbar">
+            <button type="button" data-lcid="{{id}}-add" class="lc-array-item-add btn btn-small">Add</button>
+            <button type="button" data-lcid="{{id}}-remove" class="lc-array-item-remove btn btn-small">Remove</button>
+        </div>
+    </script>
+    <script id="control_array" type="text/x-handlebars-template">
+        <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+            {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
+            {{#if helper}}<div>{{helper}}</div>{{/if}}
+            <div data-lcid="{{id}}-items">
+                {{#if controls}}
+                    {{#each controls}}
+                        {{include 'array_item_toolbar'}}
+                        {{include 'control'}}
+                    {{/each}}
+                {{else}}
+                    {{include 'array_toolbar'}}
+                {{/if}}
+            </div>
+            <span data-lcid="{{id}}-messages" {{#if messageClass}}class="{{messageClass}}"{{/if}}></span>
+        </fieldset>
+    </script>
+    <script id="control_object" type="text/x-handlebars-template">
+        {{#if controls}}
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+                {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
+                {{#if helper}}<div>{{helper}}</div>{{/if}}
+                {{#key_value controls}}
+                    <div>{{include 'control'}}</div>
+                {{/key_value}}
+                <span data-lcid="{{id}}-messages" {{#if messageClass}}class="{{messageClass}}"{{/if}}></span>
+            </fieldset>
+        {{/if}}
+    </script>
+    <script id="control_object_table" type="text/x-handlebars-template">
+        {{#if controls}}
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+                <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
+                <div>{{helper}}</div>
+                {{#if table}}
+                <table>
+                    {{#key_value table}}
+                    <tr>
+                        {{#key_value value}}
+                            <td data-licid="{{../key}}-{{key}}">
+                                {{#each value}}
+                                    {{#object_with_key ../../../controls key=this}}
+                                        <div>{{include 'control'}}</div>
+                                    {{/object_with_key}}
+                                {{/each}}
+                            </td>
+                        {{/key_value}}
+                    </tr>
+                    {{/key_value}}
+                </table>
+                {{/if}}
+                <span data-lcid="{{id}}-message"></span>
+            </fieldset>
+        {{/if}}
+    </script>
+    <script id="control" type="text/x-handlebars-template">
+        {{#isContainer type}}
+            {{injectControl}}
+        {{else}}
+            <span data-lcid="{{id}}" data-lctype="{{type}}" class="control-group">
+                {{include 'control_label'}}
+                {{injectControl}}
+                {{include 'control_helper'}}
+                <span data-lcid="{{id}}-messages"></span>
+            </span>
+        {{/isContainer}}
+    </script>
+    <script id="form" type="text/x-handlebars-template">
+        {{#if form}}
+        <form data-lcid="{{id}}-form" {{#with form}}{{#key_value attrs}}{{key}}="{{value}}"{{/key_value}}{{/with}}>
+            {{include 'control'}}
+            {{#with form}}
+                {{#if buttons}}
+                    <div data-lcid="{{../../id}}-buttons">
+                        {{#each buttons}}
+                            <input class="btn" {{#key_value this}}{{key}}="{{value}}"{{/key_value}}/>
+                        {{/each}}
+                    </div>
+                {{/if}}
+            {{/with}}
+        </form>
+        {{else}}
+            {{include 'control'}}
+        {{/if}}
+    </script>
+</head>
+</html>

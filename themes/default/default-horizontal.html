@@ -1,0 +1,30 @@
+<html>
+<head>
+    <script id="control_label" type="text/x-handlebars-template">
+        {{#if label}}
+            <span {{#if labelClass}}class="{{labelClass}}"{{/if}}>
+                <label {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
+            </span>
+        {{/if}}
+    </script>
+    <script id="control_helper" type="text/x-handlebars-template">
+        {{#if helper}}
+            <span {{#if helperClass}}class="{{helperClass}}"{{/if}}>
+                <span>{{helper}}</span>
+            </span>
+        {{/if}}
+    </script>
+    <script id="control_radio" type="text/x-handlebars-template">
+        <span data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}}>
+            {{#unless required}}
+                <input type="radio" {{#if readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} value=""/>
+                <span>None</span>
+            {{/unless}}
+            {{# options}}
+                <input type="radio" {{#if readonly}}readonly="readonly"{{/if}} {{#with ../name}}name="{{.}}"{{/with}} value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>
+                <span>{{text}}</span>
+            {{/options}}
+        </span>
+    </script>
+</head>
+</html>

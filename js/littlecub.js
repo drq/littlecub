@@ -256,7 +256,7 @@
             var parentThemeId = theme["parent"];
             while (!config && parentThemeId) {
                 theme = LittleCub.themes[parentThemeId];
-                config = theme["configs"];
+                config = theme[configId];
                 parentThemeId = theme["parent"];
             }
             return config;
@@ -265,11 +265,11 @@
         "findMessage" : function(messageId, themeId, locale) {
             var theme = LittleCub.themes[themeId];
             locale = locale || LittleCub.defaults.locale;
-            var message = theme["messages"][locale] ? theme["messages"][locale][messageId] : null;
+            var message = theme["messages"] && theme["messages"][locale] ? theme["messages"][locale][messageId] : null;
             var parentThemeId = theme["parent"];
             while (!message && parentThemeId) {
                 theme = LittleCub.themes[parentThemeId];
-                message = theme["messages"][locale] ? theme["messages"][locale][messageId] : null;
+                message = theme["messages"] && theme["messages"][locale] ? theme["messages"][locale][messageId] : null;
                 parentThemeId = theme["parent"];
             }
             if (message) {
@@ -289,6 +289,7 @@
                 fullId = parentThemeId + "__" + partialId;
                 template = Handlebars.partials[fullId] || LittleCub["templates"][fullId];
                 parentThemeId = theme["parent"];
+                theme = LC.themes[parentThemeId];
             }
             return template;
         },

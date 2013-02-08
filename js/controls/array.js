@@ -67,10 +67,10 @@
                     // Add array item toolbar
                     var elem = document.createElement("span");
                     elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs, true);
-                    _.each(elem.querySelectorAll('button[class=lc-array-item-add]'), function(v) {
+                    _.each(elem.querySelectorAll('.lc-array-item-add'), function(v) {
                         v.addEventListener('click', addEventHandler);
                     });
-                    _.each(elem.querySelectorAll('button[class=lc-array-item-remove]'), function(v) {
+                    _.each(elem.querySelectorAll('.lc-array-item-remove'), function(v) {
                         v.addEventListener('click', removeEventHandler);
                     });
                     return elem;
@@ -80,7 +80,7 @@
                     var child = that.addChild(null, 1);
                     // Add array item toolbar
                     var elem = addElementToolbar(child);
-                    var arrayToolbarElem = that.outerEl.querySelector('[class=lc-array-toolbar]');
+                    var arrayToolbarElem = that.outerEl.querySelector('.lc-array-toolbar');
                     arrayToolbarElem.parentNode.insertBefore(elem.firstChild, arrayToolbarElem.nextSibling);
                     // Render the child
                     child.render(arrayToolbarElem.nextSibling, null, "insertAfter");
@@ -143,7 +143,7 @@
                         if (that.children.length == 0) {
                             var elem = document.createElement("span");
                             elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_toolbar", child.configs, true);
-                            _.each(elem.querySelectorAll('button[class=lc-array-add]'), function(v) {
+                            _.each(elem.querySelectorAll('.lc-array-add'), function(v) {
                                 v.addEventListener('click', addFirstEventHandler);
                             });
                             lcId = that.outerEl.getAttribute("data-lcid");
@@ -158,15 +158,15 @@
                     return false;
                 };
 
-                _.each(this.outerEl.querySelectorAll('button[class=lc-array-add]'), function(v) {
+                _.each(this.outerEl.querySelectorAll('.lc-array-add'), function(v) {
                     v.addEventListener('click', addFirstEventHandler);
                 });
 
-                _.each(this.outerEl.querySelectorAll('button[class=lc-array-item-add]'), function(v) {
+                _.each(this.outerEl.querySelectorAll('.lc-array-item-add'), function(v) {
                     v.addEventListener('click', addEventHandler);
                 });
 
-                _.each(this.outerEl.querySelectorAll('button[class=lc-array-item-remove]'), function(v) {
+                _.each(this.outerEl.querySelectorAll('.lc-array-item-remove'), function(v) {
                     v.addEventListener('click', removeEventHandler);
                 });
 

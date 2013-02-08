@@ -24,13 +24,14 @@ module.exports = function(grunt) {
                         var pieces = filePath.split("/");
                         var fileName = pieces[pieces.length - 1];
                         if (fileName.indexOf(".hbs") != -1) {
-                            fileName = fileName.substring(0,fileName.indexOf(".hbs"));
+                            fileName = fileName.substring(0, fileName.indexOf(".hbs"));
                         }
                         return fileName;
                     }
                 },
                 files: {
-                    "build/templates.js": ["build/templates/*.hbs"]
+                    "build/templates-default.js": ["build/templates/default/*.hbs"],
+                    "build/templates-bootstrap.js": ["build/templates/bootstrap/*.hbs"]
                 }
             }
         },
@@ -38,9 +39,9 @@ module.exports = function(grunt) {
             options: {
                 separator: ';'
             },
-            dist: {
+            core: {
                 src: [
-                    'lib/base/base.js',
+                    'js/base.js',
                     'js/littlecub.js',
                     'js/themes/themes.js',
                     'js/handlebars/helpers.js',
@@ -63,8 +64,14 @@ module.exports = function(grunt) {
                     'js/controls/format/hostname.js',
                     'js/controls/format/ipv4.js',
                     'js/controls/format/ipv6.js',
-                    'js/controls/format/uri.js',
-                    'build/templates.js'
+                    'js/controls/format/uri.js'
+                ],
+                dest: 'dist/<%= pkg.name %>-core.js'
+            },
+            dist: {
+                src: [
+                    'dist/<%= pkg.name %>-core.js',
+                    'build/templates-default.js'
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
             }
@@ -73,9 +80,21 @@ module.exports = function(grunt) {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
+            core: {
+                src: 'dist/<%= pkg.name %>-core.js',
+                dest: 'dist/<%= pkg.name %>-core.min.js'
+            },
             dist: {
                 src: 'dist/<%= pkg.name %>.js',
                 dest: 'dist/<%= pkg.name %>.min.js'
+            },
+            "default": {
+                src: 'build/templates-default.js',
+                dest: 'dist/templates-default.min.js'
+            },
+            bootstrap: {
+                src: 'build/templates-bootstrap.js',
+                dest: 'dist/templates-bootstrap.min.js'
             }
         },
         qunit: {
@@ -85,8 +104,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('splitTemplates', 'Task for parsing and splitting templates from theme template files.', function() {
         grunt.file.recurse("themes", function callback(abspath, rootdir, subdir, filename) {
-            grunt.log.writeln(abspath);
-            grunt.log.writeln(subdir);
+            grunt.log.writeln("abspath ==>" + abspath);
+            grunt.log.writeln("subdir ==>" + subdir);
             if (filename.indexOf(".html", filename.length - ".html".length) !== -1) {
                 var theme = filename.split(".")[0];
                 grunt.log.writeln(theme);
@@ -97,11 +116,11 @@ module.exports = function(grunt) {
                 var endTag = "</script>";
                 var startIndex = 0, endIndex = 0;
                 while (startIndex != -1 && endIndex != -1) {
-                    startIndex = fileContent.indexOf(startTag,startIndex);
+                    startIndex = fileContent.indexOf(startTag, startIndex);
                     if (startIndex != -1) {
-                        endIndex = fileContent.indexOf(endTag,startIndex);
+                        endIndex = fileContent.indexOf(endTag, startIndex);
                         if (endIndex != -1) {
-                            var closingIndex = fileContent.indexOf(">",startIndex);
+                            var closingIndex = fileContent.indexOf(">", startIndex);
                             if (closingIndex != -1) {
                                 grunt.log.writeln("------------------------------");
                                 var scriptTag = fileContent.substring(startIndex + startTag.length, closingIndex);
@@ -110,7 +129,7 @@ module.exports = function(grunt) {
                                 if (idMatch != null) {
                                     var id = idMatch[idMatch.length - 1];
                                     var templateIdList = id.split(",");
-                                    for (var i = 0 ; i < templateIdList.length ; i++) {
+                                    for (var i = 0; i < templateIdList.length; i++) {
                                         var _id = templateIdList[i].trim();
                                         if (_id) {
                                             var isTemplate = _id.indexOf("template-") == 0;
@@ -119,10 +138,11 @@ module.exports = function(grunt) {
                                             }
                                             grunt.log.writeln("-->id:" + _id);
                                             var templateContent = fileContent.substring(closingIndex + 1, endIndex).trim();
-                                            grunt.file.write("build/templates/" + (isTemplate ? "" : "_") + theme + "__" + _id + ".hbs", templateContent);
+                                            grunt.file.write("build/templates/" + subdir + "/" + (isTemplate ? "" : "_") + theme + "__" + _id + ".hbs", templateContent);
                                             grunt.log.writeln(templateContent);
                                         }
-                                    };
+                                    }
+                                    ;
                                 }
                             }
                             startIndex = endIndex + endTag.length;

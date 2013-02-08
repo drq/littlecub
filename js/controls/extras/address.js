@@ -15,7 +15,7 @@
 
             init: function() {
                 this.base();
-                this.configs["template"] = this.configs["template"] || "control_object";
+                this.configs["altTemplate"] = "control_object";
             }
         }, {
             TYPE : "address",
@@ -46,7 +46,7 @@
                     "zip": {
                         "title": "Zip Code",
                         "type": "string",
-                        "pattern": /^(\d{5}(-\d{4})?)?$/
+                        "pattern": "/^(\\d{5}(-\\d{4})?)?$/"
                     }
                 }
             },
