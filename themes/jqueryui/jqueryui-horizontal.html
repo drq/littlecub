@@ -1,0 +1,40 @@
+<html>
+<head>
+    <!-- Partials -->
+    <script id="control_label" type="text/x-handlebars-template">
+        {{#if label}}
+            <div class="{{#if labelClass}}{{labelClass}}{{/if}} lc-label-horizontal">
+                <label {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
+            </div>
+        {{/if}}
+    </script>
+    <script id="control_helper" type="text/x-handlebars-template">
+        {{#if helper}}
+            <div class="lc-helper lc-helper-horizontal {{#if helperClass}} {{helperClass}}{{/if}}">
+                <span class="ui-icon ui-icon-info"></span>{{helper}}
+            </div>
+        {{/if}}
+    </script>
+    <script id="control_messages" type="text/x-handlebars-template">
+        {{#each validation}}
+            {{#if message}}
+                <div class="lc-helper lc-helper-horizontal"><span class="ui-icon ui-icon-alert"></span>{{message}}</div>
+            {{/if}}
+        {{/each}}
+    </script>
+    <script id="control" type="text/x-handlebars-template">
+        {{#isContainer type}}
+            {{injectControl}}
+        {{else}}
+            <span data-lcid="{{id}}" data-lctype="{{type}}" class="ui-widget">
+                {{include 'control_label'}}
+                <div>
+                    {{injectControl}}
+                    {{include 'control_helper'}}
+                    <span data-lcid="{{id}}-messages"></span>
+                </div>
+            </span>
+        {{/isContainer}}
+    </script>
+</head>
+</html>

@@ -46,7 +46,7 @@
                     "status" : LC.isEmpty(this.schema["multipleOf"]) || (val % this.schema["multipleOf"] == 0)
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LC.substituteTokens(LC.findMessage("multipleOf", this.configs["theme"]),[this.schema["multipleOf"]]);
+                    validation["message"] = LC.replaceTokens(LC.findMessage("multipleOf", this.configs["theme"]),[this.schema["multipleOf"]]);
                 }
                 return validation;
             },

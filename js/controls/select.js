@@ -17,10 +17,17 @@
                 if (this.field) {
                     var len = arguments.length;
                     if (len == 0) {
-                        var val = this.field.value;
-                        _.each(this.configs["options"], function(v) {
-                            if (String(v['value']) == val) {
-                                val = v['value'];
+                        var val = this.configs["multiple"] ? [] : this.field.value;
+                        var that = this;
+                        _.each(this.configs["options"], function(v, k) {
+                            if (that.configs["multiple"]) {
+                                if (that.field.options[k].selected && String(v['value']) == that.field.options[k].value) {
+                                    val.push(v['value']);
+                                }
+                            } else {
+                                if (String(v['value']) == val) {
+                                    val = v['value'];
+                                }
                             }
                         });
                         return val;
@@ -49,10 +56,10 @@
              */
             _validateMinItems: function() {
                 var validation = {
-                    "status" : LC.isEmpty(this.schema.items) || LC.isEmpty(this.schema.items.minItems) || this.field.value.length >= this.schema.items.minItems
+                    "status" : LC.isEmpty(this.schema.minItems) || this.val().length >= this.schema.minItems
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LC.substituteTokens(LC.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]]);
+                    validation["message"] = LC.replaceTokens(LC.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]]);
                 }
                 return validation;
             },
@@ -63,10 +70,10 @@
              */
             _validateMaxItems: function() {
                 var validation = {
-                    "status" : LC.isEmpty(this.schema.items) || LC.isEmpty(this.schema.items.maxItems) || this.field.value.length <= this.schema.items.minItems
+                    "status" : LC.isEmpty(this.schema.maxItems) || this.val().length <= this.schema.minItems
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LC.substituteTokens(LC.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]]);
+                    validation["message"] = LC.replaceTokens(LC.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]]);
                 }
                 return validation;
             },

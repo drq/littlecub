@@ -33,7 +33,7 @@
                     "status" : LC.isEmpty(this.schema.pattern) || LC.isValEmpty(val) || ! LC.isEmpty(val.match(regex))
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LC.substituteTokens(LC.findMessage("pattern", this.configs["theme"]), [this.schema["pattern"]]);
+                    validation["message"] = LC.replaceTokens(LC.findMessage("pattern", this.configs["theme"]), [this.schema["pattern"]]);
                 }
                 return validation;
             },
@@ -49,7 +49,7 @@
                     "status" : LC.isEmpty(this.schema.minLength) || LC.isValEmpty(val) || val.length >= this.schema.minLength
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LC.substituteTokens(LC.findMessage("minLength", this.configs["theme"]), [this.schema["minLength"]]);
+                    validation["message"] = LC.replaceTokens(LC.findMessage("minLength", this.configs["theme"]), [this.schema["minLength"]]);
                 }
                 return validation;
             },
@@ -65,7 +65,7 @@
                     "status" : LC.isEmpty(this.schema.maxLength) || LC.isValEmpty(val) || val.length <= this.schema.maxLength
                 };
                 if (! validation["status"]) {
-                    validation["message"] = LC.substituteTokens(LC.findMessage("maxLength", this.configs["theme"]), [this.schema["maxLength"]]);
+                    validation["message"] = LC.replaceTokens(LC.findMessage("maxLength", this.configs["theme"]), [this.schema["maxLength"]]);
                 }
                 return validation;
             },

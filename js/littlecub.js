@@ -155,44 +155,21 @@
             return false;
         },
 
-        /**
-         * Finds if an string ends with a given suffix.
-         *
-         * @param {String} text The string being evaluated.
-         * @param {String} suffix Suffix.
-         * @returns {Boolean} True if the string ends with the given suffix, false otherwise.
-         */
         "endsWith" : function(text, suffix) {
             return text.indexOf(suffix, text.length - suffix.length) !== -1;
         },
 
-        /**
-         * Finds if an string starts with a given prefix.
-         *
-         * @param {String} text The string being evaluated.
-         * @param {String} prefix Prefix
-         * @returns {Boolean} True if the string starts with the given prefix, false otherwise.
-         */
         "startsWith" : function(text, prefix) {
             return text.substr(0, prefix.length) === prefix;
         },
 
-        /**
-         * Substitutes a string with a list of tokens.
-         *
-         * @param text Source string.
-         * @param args List of tokens.
-         *
-         * @returns Substituted string.
-         */
-        "substituteTokens" : function(text, args) {
+        "replaceTokens" : function(text, args) {
             if (!LittleCub.isEmpty(text)) {
                 for (var i = 0, len = args.length; i < len; i++) {
                     var token = "{" + i + "}";
-
-                    var x = text.indexOf(token);
-                    if (x != -1) {
-                        var nt = text.substring(0, x) + args[i] + text.substring(x + 3);
+                    var index = text.indexOf(token);
+                    if (index != -1) {
+                        var nt = text.substring(0, index) + args[i] + text.substring(index + token.length);
                         text = nt;
                     }
                 }
@@ -312,57 +289,6 @@
             }
         },
 
-        "loadTemplate": function (themeId, path, callback) {
-            $.ajax({
-                "url":path,
-                "type": "get",
-                "dataType": "html",
-                "success": function(data) {
-                    _.each($(data).filter('script'), function(v) {
-                        LittleCub.registerTemplate(themeId + "__" + $(v).attr("id"), $(v).text());
-                    });
-                    if (callback) {
-                        callback();
-                    }
-                },
-                "error": function(jqXHR, textStatus, errorThrown) {
-
-                }
-            });
-        },
-
-        /*
-         "loadThemes": function (themes, callback) {
-
-         var loadTheme = function(id, path) {
-         console.log("Loading ... " + id);
-         return $.ajax({
-         "url":path,
-         "type": "get",
-         "dataType": "html",
-         "success": function(data) {
-         console.log(path + " is loaded.");
-         _.each($(data).filter('script'), function(v) {
-         LittleCub.registerTemplate(id + "__" + $(v).attr("id"), $(v).text());
-         });
-         }
-         });
-         }
-
-         var loadArray = [];
-         for (var id in themes) {
-         if (themes.hasOwnProperty(id)) {
-         loadArray.push(loadTheme(id, themes[id]));
-         }
-         }
-         $.when.apply(this, loadArray).then(function () {
-         console.log("All loadings are done.");
-         if (callback) {
-         callback();
-         }
-         });
-         }
-         */
         "loadThemes": function (themes, callback) {
             var nbThemes = _.size(themes);
             var nbResponses = 0;
@@ -533,15 +459,5 @@
             return this || (0, eval)('this');
         };
         (env)().LittleCub = (env)().LC = LittleCub;
-
-        /*
-        (function() {
-            return this || (0, eval)('this');
-        }()).LittleCub = LittleCub;
-        // Defines an alias
-        (function() {
-            return this || (0, eval)('this');
-        }()).LC = LittleCub;
-        */
     }
 }());

@@ -10,9 +10,10 @@
                 this.base();
                 this.configs["options"] = this.configs["options"] || [];
                 var options = this.configs["options"];
-                var enums = this.schema["enum"];
                 var that = this;
                 var isArray = _.isArray(that.data);
+                var enums = isArray && this.schema["items"] ? this.schema["items"]["enum"] : this.schema["enum"];
+
                 if (enums) {
                     var _options = [];
                     _.each(enums, function(v, k) {

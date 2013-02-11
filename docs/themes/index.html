@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>LittleCub Forms - Themes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="LittleCub is a light-weight, high-performance, easily customizable forms engine for Node.js and browser with support for various responsive and mobile UI frameworks."/>
+    <meta name="author" content="NextFrontier Technologies Inc."/>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
+    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../lib/bootstrap/css/bootstrap-sidenav.css" rel="stylesheet">
+    <link type="text/css" href="../css/styles.css" rel="stylesheet"/>
+    <link type="text/css" href="../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar" onload="prettyPrint();">
+
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">LittleCub</a>
+
+            <div class="nav-collapse" id="main-menu">
+                <ul class="nav" id="main-menu-left">
+                    <li><a href="">Get started</a></li>
+                    <li><a href="">API</a></li>
+                    <li><a href="../controls/index.html">Controls</a></li>
+                    <li><a href="#">Themes</a></li>
+                    <li><a href="../tools/index.html">Tools</a></li>
+                </ul>
+                <ul id="main-menu-right" class="nav pull-right">
+                    <li><a href="https://github.com/drq/littlecub">View on GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<header class="jumbotron subhead" id="overview">
+    <div class="row">
+        <div class="span6">
+            <h1>LittleCub Forms</h1>
+
+            <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
+        </div>
+        <div class="span6">
+            <div class="">
+                <section id="downloads">
+                    <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
+                        this project as a .zip file</a>
+                    <a class="tar_download_link" href="https://github.com/drq/littlecub/tarball/master">Download
+                        this project as a tar.gz file</a>
+                </section>
+            </div>
+        </div>
+    </div>
+</header>
+<ul class="breadcrumb">
+    <li><a href="../index.html">Home</a> <span class="divider">></span></li>
+    <li><a href="#">Themes</a></li>
+</ul>
+
+<div class="row">
+<div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li><a href="#themes-overview"><i class="icon-chevron-right"></i> Overview</a></li>
+        <li><a href="#load-themes"><i class="icon-chevron-right"></i> Load Themes</a></li>
+        <li><a href="#apply-themes"><i class="icon-chevron-right"></i> Apply Themes</a></li>
+        <li><a href="#supported-themes"><i class="icon-chevron-right"></i> Supported Themes</a></li>
+    </ul>
+</div>
+<div class="span9">
+
+<section id="themes-overview">
+    <div class="row">
+        <div class="span9">
+            <p>LittleCub is designed to work with various responsive and mobile UI frameworks with out of the box
+                support for most popular ones such as <a href="bootstrap/index.html">Twitter Bootstrap</a>, <a
+                        href="foundation/index.html">Zurb Foundation</a>, <a href="jqueryui/index.html">jQuery UI</a>
+                etc.</p>
+
+            <p>Each theme contains a set of Handlebar templates placed in an HTML file and a JavaScript class
+                that describes and registers it with LittleCub.</p>
+        </div>
+    </div>
+</section>
+<section id="load-themes">
+    <div class="row">
+        <div class="span9">
+
+            <div class="page-header">
+                <h3>Load Themes</h3>
+            </div>
+
+            <p>
+                LittleCub allows you to load and register multiple themes at the same time and use mixed themes
+                for the same form if needed. In general, there are two ways to load themes :
+            </p>
+            <h4>Runtime Mode</h4>
+
+            <p>
+                For the best performance, it is recommended to pre-compile theme templates into JavaScript code. And
+                then includes the compiled code into your HTML pages. LittleCub provides custom Grunt task that can
+                work with its Handlebar plugin to parse out the templates from the template HTML files and compile
+                them.
+            </p>
+
+<pre class="prettyprint linenums">
+&lt;script src="dist/littlecub-core.min.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="dist/templates-defaults.min.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="dist/templates-foundation.min.js" type="text/javascript"&gt;&lt;/script&gt;
+</pre>
+            <h4>Development Mode</h4>
+
+            <p>
+                During the development phase, it is very unpleasant and inefficient to compile and reload templates
+                for
+                any template change. Thus LittleCub allows you to load themes from their HTML files directly so that
+                no compilation is needed. To use the loadThemes API, you will need to provide the list of key/value
+                pairs for theme ID and its HTML file location.
+            </p>
+<pre class="prettyprint linenums">
+LittleCub.loadThemes({
+    "default" : "../../../themes/default/default.html",
+    "default-horizontal": "../../../themes/default/default-horizontal.html"
+}, function() {
+    // Rest of your forms related code goes here!
+});
+</pre>
+        </div>
+    </div>
+</section>
+<section id="apply-themes">
+    <div class="row">
+        <div class="span9">
+            <div class="page-header">
+                <h3>Apply Themes</h3>
+            </div>
+
+            <p>
+                Once themes are loaded, they are ready to be used for your form rendition. LittleCub follows
+                following
+                rules to find the theme for your control and then locate the corresponding rendition template from
+                the theme.
+            </p>
+            <ol>
+                <li>
+                    Theme defined by the control's <code>theme</code> option of its configs parameter.
+                </li>
+                <li>
+                    If the control-level theme is not set, it will try to look for the theme specified for the
+                    control's parent. The look-up process will stop unless a theme is founded or it can't find the
+                    parent control any more.
+                </li>
+                <li>
+                    If still no theme is found, it will then try to use the global default theme which is defined
+                    by <code>LittleCub["defaults"]["theme"]</code> which can be overwritten such as.
+                </li>
+<pre class="prettyprint linenums">
+LittleCub["defaults"]["theme"] = "foundation";
+</pre>
+            </ol>
+
+            <div class="page-header">
+                <h3>Add A New Theme</h3>
+            </div>
+            <ol>
+                <li><p>Adding the JavaScript class that describes the theme and registers it with LittleCub.</p>
+                </li>
+<pre class="prettyprint linenums">
+LittleCub.registerTheme({
+    /* An unique ID that LittleCub API will reference to. */
+    "id" : "bootstrap",
+    /* Short description of the theme. */
+    "title" : "Default Twitter Bootstrap Theme",
+    /* Detailed description of the theme. */
+    "description" : "Default Twitter bootstrap theme for rendering basic forms.",
+    /* Theme ID of the parent theme that this theme extends. This is a required setting and all themes must inherit from
+        the base theme.*/
+    "parent" : "base",
+    /* Optional callback for injecting additional styles or elements for invalid controls. */
+    "errorInjection" : function(status) {
+        // the context this will be the target control.
+    },
+    /* Optional style classes that will be injected into the control when it is invalid. */
+    "errorClass" : "ui-state-error",
+    /* Optional callback for for processing dynamic elements. */
+    "injection" : function(container) {
+        // container is the outer container of the target control.
+    }
+});
+</pre>
+                <li><p>Creating an HTML file with your custom Handlebar templates that are wrapped in
+                    <code>script</code> tags.</p> Each tag needs to have the template id. You will also need to name
+                    the html as <code>[theme id].html</code> so that you can compile the templates with the custom
+                    Grunt task that LittleCub provides.
+                </li>
+<pre class="prettyprint linenums">
+&lt;html&gt;
+&lt;head&gt;
+    ...
+    &lt;script id="control_helper" type="text/x-handlebars-template"&gt;
+        ...
+    &lt;/script&gt;
+    ....
+&lt;/head&gt;
+&lt;/html&gt;
+</pre>
+            </ol>
+
+        </div>
+    </div>
+</section>
+<section id="supported-themes">
+    <div class="row">
+        <div class="span9">
+            <div class="page-header">
+                <h3>Supported Themes</h3>
+            </div>
+        </div>
+        <div class="span9">
+            <h3><a href="default/index.html">Default Themes</a></h3>
+
+            <p>
+                Basic themes that provide minimal required templates for rendering plain forms with no dependency on
+                any UI framework. They can be served as good starting point to write own theme or you can provide it
+                with your own stylesheet to make them look prettier.
+            </p>
+            <ul>
+                <li>
+                    <a href="default/form.html">Default Theme Example</a>
+                </li>
+                <li>
+                    <a href="default/form-horizontal.html">Horizontal Theme Example</a>
+                </li>
+                <li>
+                    <a href="default/form-mixed-themes.html">Mixed-Themes Example</a>
+                </li>
+                <li>
+                    <a href="default/form-table-layout.html">Table Layout Example</a>
+                </li>
+            </ul>
+        </div>
+        <div class="span9">
+            <h3><a href="">Twitter Bootstrap Theme</a></h3>
+
+            <p>
+                <a href="http://twitter.github.com/bootstrap">Twitter Bootstrap</a> is one of the most popular and
+                powerful responsive UI framework for faster and easier
+                web development. </p>
+
+            <p>
+                LittleCub provides two themes <code>bootstrap</code> and <code>bootstrap-horizontal</code> that render
+                form controls in bootstrap styles. It also comes with a configurable grid template for grid style form
+                layout.
+            </p>
+            <ul>
+                <li>
+                    <a href="bootstrap/form.html">Bootstrap Default Theme Example</a>
+                </li>
+                <li>
+                    <a href="bootstrap/form-horizontal.html">Bootstrap Horizontal Theme Example</a>
+                </li>
+                <li>
+                    <a href="bootstrap/form-grid-layout.html">Bootstrap Grid Layout Example</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            <h3><a href="">Zurb Foundation Theme</a></h3>
+
+            <p></p>
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div class="span9">
+            <h3><a href="">jQuery UI Theme</a></h3>
+
+            <p></p>
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+</section>
+</div>
+</div>
+
+<!-- Footer
+================================================== -->
+<hr>
+
+<footer id="footer">
+    <p class="pull-right"><a href="#">Back to top</a></p>
+
+    <div class="links">
+    </div>
+    <p class="copyright">Copyright &copy; 2013 NextFrontier Technologies Inc. | All Rights Reserved</p>
+</footer>
+
+</div>
+<!-- /container -->
+<script src="../lib/handlebars/handlebars.js" type="text/javascript"></script>
+<script src="../lib/jquery/jquery-1.9.0.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../lib/google-code-prettify/prettify.js" type="text/javascript"></script>
+<script src="../js/tools.js"></script>
+
+<script type="text/javascript">
+$(function() {
+    LCTools.sidebar();
+});
+</script>
+</body>
+</html>

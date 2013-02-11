@@ -249,7 +249,7 @@
                     "status" : LC.isEmpty(this.schema.minItems) || ! _.isNumber(this.schema.minItems) || _.size(this.children) >= this.schema.minItems
                 };
                 if (!validation["status"]) {
-                    validation["message"] = LC.substituteTokens(LC.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]])
+                    validation["message"] = LC.replaceTokens(LC.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]])
                 }
                 return validation;
             },
@@ -263,7 +263,7 @@
                     "status" : LC.isEmpty(this.schema.minItems) || ! _.isNumber(this.schema.maxItems) || _.size(this.children) <= this.schema.maxItems
                 };
                 if (!validation["status"]) {
-                    validation["message"] = LC.substituteTokens(LC.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]])
+                    validation["message"] = LC.replaceTokens(LC.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]])
                 }
                 return validation;
             },

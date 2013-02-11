@@ -1,32 +1,220 @@
+<!DOCTYPE HTML>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
     <title>LittleCub Forms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-          content="LittleCub Forms."/>
+          content="LittleCub is a light-weight, high-performance, easily customizable forms engine for Node.js and browser with support for various responsive and mobile UI frameworks."/>
     <meta name="author" content="NextFrontier Technologies Inc."/>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
     <link type="text/css" href="css/styles.css" rel="stylesheet"/>
 </head>
 
-<body>
-<h1>LittleCub</h1>
+<body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
 
-<p>
-    LittleCub Forms.
-</p>
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">LittleCub</a>
 
-<h3><a href="examples/index.html">Examples</a></h3>
-<ul>
-    <li><a href="examples/barebone/index.html">Barebone Examples</a></li>
-    <li><a href="examples/jquery/index.html">jQuery Examples</a></li>
-    <li><a href="examples/bootstrap/index.html">Bootstrap Examples</a></li>
-</ul>
-<h3><a href="tools/index.html">Tools</a></h3>
-<ul>
-    <li><a href="tools/performance/performance.html">Performance Tester</a></li>
-</ul>
-<footer>
-    Copyright &copy; 2013 NextFrontier Technologies Inc. | All Rights Reserved
-</footer>
+            <div class="nav-collapse" id="main-menu">
+                <ul class="nav" id="main-menu-left">
+                    <li><a href="">Get started</a></li>
+                    <li><a href="">API</a></li>
+                    <li><a href="">Examples</a></li>
+                    <li><a href="">UI frameworks</a></li>
+                    <li><a href="tools/index.html">Tools</a></li>
+                </ul>
+                <ul id="main-menu-right" class="nav pull-right">
+                    <li><a href="https://github.com/drq/littlecub">View on GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <header class="jumbotron subhead" id="overview">
+        <div class="row">
+            <div class="span6">
+                <h1>LittleCub Forms</h1>
+
+                <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
+            </div>
+            <div class="span6">
+                <div class="">
+                    <section id="downloads">
+                        <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
+                            this project as a .zip file</a>
+                        <a class="tar_download_link" href="https://github.com/drq/littlecub/tarball/master">Download
+                            this project as a tar.gz file</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </header>
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a></li>
+    </ul>
+
+    <section id="typography">
+        <div class="row">
+            <div class="span12">
+                <p>LittleCub is a light-weight, high-performance, easily customizable forms engine for Node.js and
+                    browser. It comes with support for various responsive and mobile UI frameworks and can be easily
+                    customized or extended.</p>
+
+                <p>LittleCub Forms is based on JSON schema V4 and can be used to present JSON data as entry or edit
+                    forms</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <h3>High Performance</h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th># Controls</th>
+                        <th>Time (Sec)</th>
+                    </tr>
+                    <tr>
+                        <td>180</td>
+                        <td>0.094</td>
+                    </tr>
+                    <tr>
+                        <td>630</td>
+                        <td>0.554</td>
+                    </tr>
+                    <tr>
+                        <td>930</td>
+                        <td>0.947</td>
+                    </tr>
+                </table>
+                <h5><a href="tools/performance/performance.html">Test it by yourself >></a></h5>
+            </div>
+            <div class="span6">
+                <h3>Light Weight</h3>
+
+                <p>
+                    This core library of LittleCub is ~8 K (minified and gziped). It only requires
+                    <a href="http://underscorejs.org/">Underscore</a> for utility functions and
+                    <a href="http://handlebarsjs.com/">Handlebar</a> for templating.
+                </p>
+
+                <p>
+                    LittleCub provides both native API and jQuery API for rendering forms but jQuery is <u>NOT</u>
+                    needed for running LittleCub.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="span6">
+                <h3>Easy Customization</h3>
+
+                <p>
+                    The general approach of building forms with LittleCub is through configuration such as defining
+                    nested data structure using JSON schema or specifying form control parameters in a configuration
+                    JSON document. LittleCub can even generate a nice form simply based on the JSON data you supply.
+                </p>
+
+                <p>
+                    LittleCub is shipped with a full set of controls that would satisfy most of your need to build
+                    forms. It
+                    also provides a straightforward way of building new controls through an object-oriented framework.
+                </p>
+            </div>
+            <div class="span6">
+                <h3>UI Framework Support</h3>
+
+                <p>LittleCub supports most popular responsive and mobile UI frameworks such as</p>
+                <ul>
+                    <li>Twitter Bootstrap</li>
+                    <li>Zurb Foundation</li>
+                    <li>jQuery UI</li>
+                </ul>
+                <p>
+                    Adding support for another UI framework can be as simple as adding a new theme with a set of
+                    Handlebar
+                    based templates and a few line of JavaScript code to register it with LittleCub. You can also
+                    extend existing themes with your customization by adding or modifying a few templates.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="span6">
+                <h3>Developer Friendly</h3>
+
+            </div>
+            <div class="span6">
+                <h3>BigData</h3>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="span12">
+                <p>
+                    <a href="contact.html">Contact us</a> to leverage our expertise to complete
+                    your projects in the time frame you desire.
+                </p>
+
+
+            </div>
+        </div>
+
+    </section>
+
+    <h3><a href="themes/index.html">Examples</a></h3>
+    <ul>
+        <li><a href="themes/default/index.html">Barebone Examples</a></li>
+        <li><a href="themes/jquery/index.html">jQuery Examples</a></li>
+    </ul>
+    <h3><a href="themes/index.html">UI Frameworks</a></h3>
+    <ul>
+        <li><a href="themes/bootstrap/index.html">Twitter Bootstrap</a></li>
+        <li><a href="themes/foundation/index.html">Zurb Foundation</a></li>
+        <li><a href="themes/jqueryui/index.html">jQuery UI</a></li>
+    </ul>
+    <h3><a href="tools/index.html">Tools</a></h3>
+    <ul>
+        <li><a href="tools/performance/performance.html">Performance Tester</a></li>
+    </ul>
+    <!-- Footer
+   ================================================== -->
+    <hr>
+
+    <footer id="footer">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+
+        <div class="links">
+        </div>
+        <p class="copyright">Copyright &copy; 2013 NextFrontier Technologies Inc. | All Rights Reserved</p>
+    </footer>
+
+</div>
+<!-- /container -->
+
+<script src="lib/jquery/jquery-1.9.0.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
 </body>
 </html>

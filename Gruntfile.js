@@ -31,7 +31,9 @@ module.exports = function(grunt) {
                 },
                 files: {
                     "build/templates-default.js": ["build/templates/default/*.hbs"],
-                    "build/templates-bootstrap.js": ["build/templates/bootstrap/*.hbs"]
+                    "build/templates-bootstrap.js": ["build/templates/bootstrap/*.hbs"],
+                    "build/templates-foundation.js": ["build/templates/foundation/*.hbs"],
+                    "build/templates-jqueryui.js": ["build/templates/jqueryui/*.hbs"]
                 }
             }
         },
@@ -41,6 +43,7 @@ module.exports = function(grunt) {
             },
             core: {
                 src: [
+                    'license.txt',
                     'js/base.js',
                     'js/littlecub.js',
                     'js/themes/themes.js',
@@ -80,14 +83,30 @@ module.exports = function(grunt) {
                 src: [
                     'dist/<%= pkg.name %>-core.js',
                     'js/themes/bootstrap.js',
-                    'build/templates-default.js'
+                    'build/templates-bootstrap.js'
                 ],
                 dest: 'dist/<%= pkg.name %>-bootstrap.js'
+            },
+            "foundation": {
+                src: [
+                    'dist/<%= pkg.name %>-core.js',
+                    'js/themes/foundation.js',
+                    'build/templates-foundation.js'
+                ],
+                dest: 'dist/<%= pkg.name %>-foundation.js'
+            },
+            "jqueryui": {
+                src: [
+                    'dist/<%= pkg.name %>-core.js',
+                    'js/themes/jqueryui.js',
+                    'build/templates-jqueryui.js'
+                ],
+                dest: 'dist/<%= pkg.name %>-jqueryui.js'
             }
         },
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %>\nCopyright 2013 NextFrontier Technologies Inc. Licensed under the Apache 2 license.\n https://github.com/drq/littlecub/blob/master/license.txt */'
             },
             core: {
                 src: 'dist/<%= pkg.name %>-core.js',
@@ -101,6 +120,14 @@ module.exports = function(grunt) {
                 src: 'dist/<%= pkg.name %>-bootstrap.js',
                 dest: 'dist/<%= pkg.name %>-bootstrap.min.js'
             },
+            "foundation": {
+                src: 'dist/<%= pkg.name %>-foundation.js',
+                dest: 'dist/<%= pkg.name %>-foundation.min.js'
+            },
+            "jqueryui": {
+                src: 'dist/<%= pkg.name %>-jqueryui.js',
+                dest: 'dist/<%= pkg.name %>-jqueryui.min.js'
+            },
             "default-templates": {
                 src: 'build/templates-default.js',
                 dest: 'dist/templates-default.min.js'
@@ -108,6 +135,14 @@ module.exports = function(grunt) {
             "bootstrap-templates": {
                 src: 'build/templates-bootstrap.js',
                 dest: 'dist/templates-bootstrap.min.js'
+            },
+            "foundation-templates": {
+                src: 'build/templates-foundation.js',
+                dest: 'dist/templates-foundation.min.js'
+            },
+            "jqueryui-templates": {
+                src: 'build/templates-jqueryui.js',
+                dest: 'dist/templates-jqueryui.min.js'
             }
         },
         qunit: {
@@ -117,13 +152,14 @@ module.exports = function(grunt) {
 
     grunt.registerTask('splitTemplates', 'Task for parsing and splitting templates from theme template files.', function() {
         grunt.file.recurse("themes", function callback(abspath, rootdir, subdir, filename) {
-            grunt.log.writeln("abspath ==>" + abspath);
-            grunt.log.writeln("subdir ==>" + subdir);
+            grunt.log.writeln("------------------------------------------------------------");
+            grunt.log.writeln("template :: " + abspath);
+            //grunt.log.writeln("subdir ==>" + subdir);
             if (filename.indexOf(".html", filename.length - ".html".length) !== -1) {
                 var theme = filename.split(".")[0];
-                grunt.log.writeln(theme);
+                grunt.log.writeln("theme :: " + theme);
                 var fileContent = grunt.file.read(abspath);
-                grunt.log.writeln(fileContent);
+                //grunt.log.writeln(fileContent);
                 //
                 var startTag = "<script";
                 var endTag = "</script>";
@@ -135,9 +171,8 @@ module.exports = function(grunt) {
                         if (endIndex != -1) {
                             var closingIndex = fileContent.indexOf(">", startIndex);
                             if (closingIndex != -1) {
-                                grunt.log.writeln("------------------------------");
+                                //grunt.log.writeln("------------------------------");
                                 var scriptTag = fileContent.substring(startIndex + startTag.length, closingIndex);
-                                grunt.log.writeln("-->" + scriptTag);
                                 var idMatch = scriptTag.match(/id(\s*)=(\s*)(.*?)['"]+(.*?)['"]+/);
                                 if (idMatch != null) {
                                     var id = idMatch[idMatch.length - 1];
@@ -149,13 +184,12 @@ module.exports = function(grunt) {
                                             if (isTemplate) {
                                                 _id = _id.substring(9);
                                             }
-                                            grunt.log.writeln("-->id:" + _id);
+                                            grunt.log.writeln("id :: " + _id);
                                             var templateContent = fileContent.substring(closingIndex + 1, endIndex).trim();
                                             grunt.file.write("build/templates/" + subdir + "/" + (isTemplate ? "" : "_") + theme + "__" + _id + ".hbs", templateContent);
-                                            grunt.log.writeln(templateContent);
+                                            //grunt.log.writeln(templateContent);
                                         }
                                     }
-                                    ;
                                 }
                             }
                             startIndex = endIndex + endTag.length;

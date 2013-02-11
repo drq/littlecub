@@ -57,9 +57,9 @@
                 };
                 if (!status) {
                     if (this.schema["exclusiveMaximum"]) {
-                        validation["message"] = LC.substituteTokens(LC.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["maximum"]]);
+                        validation["message"] = LC.replaceTokens(LC.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["maximum"]]);
                     } else {
-                        validation["message"] = LC.substituteTokens(LC.findMessage("maximum", this.configs["theme"]), [this.schema["maximum"]]);
+                        validation["message"] = LC.replaceTokens(LC.findMessage("maximum", this.configs["theme"]), [this.schema["maximum"]]);
                     }
                 }
                 return validation;
@@ -84,9 +84,9 @@
                 };
                 if (!status) {
                     if (this.schema["exclusiveMinimum"]) {
-                        validation["message"] = LC.substituteTokens(LC.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["minimum"]]);
+                        validation["message"] = LC.replaceTokens(LC.findMessage("exclusiveMinimum", this.configs["theme"]), [this.schema["minimum"]]);
                     } else {
-                        validation["message"] = LC.substituteTokens(LC.findMessage("minimum", this.configs["theme"]), [this.schema["minimum"]]);
+                        validation["message"] = LC.replaceTokens(LC.findMessage("minimum", this.configs["theme"]), [this.schema["minimum"]]);
                     }
                 }
                 return validation;

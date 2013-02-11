@@ -16,7 +16,7 @@
 
     LittleCub.registerTheme({
         "id" : "jqueryui-horizontal",
-        "parent" : "default",
+        "parent" : "jqueryui",
         "title" : "Default jQuery UI Horizontal Style Theme",
         "description" : "Default jQuery UI theme for rendering basic forms with helpers and labels on the same line as their mapped control."
     });
