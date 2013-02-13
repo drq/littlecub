@@ -176,6 +176,10 @@
             }
         },
 
+        val: function() {
+
+        },
+
         bindDOM: function() {
             var container = this.container;
             var parent = this.parent;

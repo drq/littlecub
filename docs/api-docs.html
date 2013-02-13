@@ -83,8 +83,8 @@
     <ul class="nav nav-list bs-docs-sidenav">
         <li><a href="#themes-overview"><i class="icon-chevron-right"></i> Overview</a></li>
         <li><a href="#littlecub"><i class="icon-chevron-right"></i> LittleCub</a></li>
-        <li><a href="#littlecub-control"><i class="icon-chevron-right"></i> LittleCub Control</a></li>
-        <li><a href="#supported-themes"><i class="icon-chevron-right"></i> Handlebars Helper</a></li>
+        <li><a href="#base-control"><i class="icon-chevron-right"></i> BaseControl</a></li>
+        <li><a href="#handlebars-helpers"><i class="icon-chevron-right"></i> Handlebars Helpers</a></li>
     </ul>
 </div>
 <div class="span9">
@@ -93,7 +93,7 @@
     <div class="row">
         <div class="span9">
             <div class="page-header">
-                <h2>Overview</h2>
+                <h1>Overview</h1>
             </div>
             <p>LittleCub supports two styles of API, native and jQuery. If you only use Native API, you won't need to
                 include the jQuery library.</p>
@@ -105,7 +105,7 @@
 <div class="span9">
 
 <div class="page-header">
-    <h2>LittleCub</h2>
+    <h1>LittleCub</h1>
 </div>
 
 <p>
@@ -123,38 +123,6 @@
             <code>configs</code> and <code>schema</code> parameters.
         </p>
 
-        <h4><code>data</code></h4>
-
-        <p>
-            Initial JSON data that will be bound to the rendered form control. It
-            will also be used to
-            decide the control type if the <code>configs</code> and <code>schema</code> don't provide that
-            information.
-        </p>
-
-        <h4><code>configs</code></h4>
-
-        <p>
-            A JSON document that contains all control related settings
-            such as control type,
-            size of text field etc.
-        </p>
-
-        <h4><code>schema</code></h4>
-
-        <p>
-            A JSON schema document that describe data structure, format and validation rules.
-        </p>
-
-        <h4><code>domElem</code></h4>
-
-        <p>
-            A DOM element that will server as the container element for the form control rendition.
-            If this parameter is provided, LittleCub will render the form control as HTML markups
-            based on the control's theme and template setting. Otherwise, it will only initialize the
-            control and you will need to use the control's <code>render</code> method for form rendition.
-        </p>
-
         <p>
             Instead of using <code>LittleCub</code>, you can also use its short name <code>LC</code>.
         </p>
@@ -163,6 +131,56 @@
         <p>
             An initialized LittleCub form control.
         </p>
+
+        <h4>Parameters</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>data</td>
+                <td>Initial JSON data that will be bound to the rendered form control. It
+                    will also be used to
+                    decide the control type if the <code>configs</code> and <code>schema</code> don't provide that
+                    information.
+                </td>
+                <td>json</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>configs</td>
+                <td>A JSON document that contains all control related settings
+                    such as control type,
+                    size of text field etc.
+                </td>
+                <td>json</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>schema</td>
+                <td>A JSON schema document that describe data structure, format and validation rules.</td>
+                <td>json</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>domElem</td>
+                <td>A DOM element that will server as the container element for the form control rendition.
+                    If this parameter is provided, LittleCub will render the form control as HTML markups
+                    based on the control's theme and template setting. Otherwise, it will only initialize the
+                    control and you will need to use the control's <code>render</code> method for form rendition.
+                </td>
+                <td>DOM</td>
+                <td>No</td>
+            </tr>
+            </tbody>
+        </table>
+
         <h4>Examples</h4>
 
 <pre class="prettyprint linenums">
@@ -228,13 +246,13 @@ var arrayControl2 =  LittleCub(["Sample1","Sample2"], {
             Instead of using <code>$(selector).littlecub</code>, you can also use its short name
             <code>$(slector).lc</code>.
         </p>
-        <h5>Returns</h5>
+        <h4>Returns</h4>
 
         <p>
             Single form control if the jQuery selector returns single DOM element. List of form controls if the selector
             returns multiple DOM elements.
         </p>
-        <h5>Examples</h5>
+        <h4>Examples</h4>
 <pre class="prettyprint linenums">
 // Renders single text field within the DOM element with id text-control-1.
 var textControl1 =  $('#text-control-1').lc("Sample");
@@ -257,26 +275,26 @@ var arrayControl1 =  $('#array-control-1')(["Sample1","Sample2"], {
 </pre>
     </dd>
 </dl>
-<h3>Methods</h3>
+<h2>Methods</h2>
 <hr/>
 <dl>
 <dt>
-<h4>id ( )</a></h4>
+<h3>id ( )</a></h3>
 </dt>
 <dd>
     <p>
         Generate a unique LittleCub id such as <code>lc-12</code>.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>A unique LittleCub id.</p>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 LittleCub.id();
 </pre>
 </dd>
 <dt>
-<h4>typeControlClass (type, ControlClass)</h4>
+<h3>typeControlClass (type, ControlClass)</h3>
 </dt>
 <dd>
     <p>
@@ -284,10 +302,10 @@ LittleCub.id();
         mapping if
         both type and class parameters are provided.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>The mapped control class.</p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -312,7 +330,7 @@ LittleCub.id();
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 // Registers the text control class to type string mapping.
 LittleCub.typeControlClass("string", LittleCub.TextControl);
@@ -321,17 +339,17 @@ LittleCub.typeControlClass("string");
 </pre>
 </dd>
 <dt>
-<h4>formatControlClass (format, ControlClass)</h4>
+<h3>formatControlClass (format, ControlClass)</h3>
 </dt>
 <dd>
     <p>
         Retrieve control class for provided format or register a control class to format
         mapping if both format and class parameters are provided.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>The mapped control class.</p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -356,7 +374,7 @@ LittleCub.typeControlClass("string");
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 // Registers the email control class to format email mapping.
 LittleCub.formatControlClass("text", LittleCub.EmailControl);
@@ -365,7 +383,7 @@ LittleCub.formatControlClass("email");
 </pre>
 </dd>
 <dt>
-<h4>controlClass (controlType, ControlClass)</h4>
+<h3>controlClass (controlType, ControlClass)</h3>
 </dt>
 <dd>
     <p>
@@ -373,10 +391,10 @@ LittleCub.formatControlClass("email");
         mapping if
         both type and class parameters are provided.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>The mapped control class.</p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -401,7 +419,7 @@ LittleCub.formatControlClass("email");
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 // Registers the text control class to type text mapping.
 LittleCub.typeControlClass("text", LittleCub.TextControl);
@@ -411,17 +429,17 @@ LittleCub.typeControlClass("text");
 </dd>
 
 <dt>
-<h4>log (level, msg)</h4>
+<h3>log (level, msg)</h3>
 </dt>
 <dd>
     <p>
         Log a message with the provided logging level. The logging will happen if the provided logging level is same or
         higher than the global logging level which is defined by <code>LittleCub.logger.level</code>.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
-    <p></p>
-    <h5>Parameters</h5>
+    <p>None</p>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -447,25 +465,25 @@ LittleCub.typeControlClass("text");
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 // Logs a debug message
 LittleCub.log(0,"Debugging message");
 </pre>
 </dd>
 <dt>
-<h4>cloneJSON (json)</h4>
+<h3>cloneJSON (json)</h3>
 </dt>
 <dd>
     <p>
         Makes a deep copy of the provided source JSON document.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>
         A deep copy of the source JSON document.
     </p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -484,23 +502,23 @@ LittleCub.log(0,"Debugging message");
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 var json1 = {"foo" : "bar"};
 var json2 = LittleCub.cloneJSON(json1);
 </pre>
 </dd>
 <dt>
-<h4>registerTheme (theme, themeId)</h4>
+<h3>registerTheme (theme, themeId)</h3>
 </dt>
 <dd>
     <p>
         Register a theme with the given ID.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
-    <p></p>
-    <h5>Parameters</h5>
+    <p>None</p>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -525,7 +543,7 @@ var json2 = LittleCub.cloneJSON(json1);
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 LittleCub.registerTheme({
     "id" : "bootstrap-horizontal",
@@ -537,18 +555,18 @@ LittleCub.registerTheme({
 </dd>
 <!-- -->
 <dt>
-<h4>findThemeConfig (configId, themeId)</h4>
+<h3>findThemeConfig (configId, themeId)</h3>
 </dt>
 <dd>
     <p>
         Locate the theme with the given theme ID and then find the theme configuration with the given config ID.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>
         Theme configuration with the given config ID.
     </p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -573,24 +591,24 @@ LittleCub.registerTheme({
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 LC.findThemeConfig("injection", that.configs["theme"]);
 </pre>
 </dd>
 <!-- -->
 <dt>
-<h4>findMessage (messageId, themeId, locale)</h4>
+<h3>findMessage (messageId, themeId, locale)</h3>
 </dt>
 <dd>
     <p>
         Locate the theme with the given theme ID and then find the message associated with the theme with the given
         message ID and locale.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
-    <p></p>
-    <h5>Parameters</h5>
+    <p>None</p>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -621,24 +639,24 @@ LC.findThemeConfig("injection", that.configs["theme"]);
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 validation["message"] = LC.findMessage("isDatetime", this.configs["theme"]);
 </pre>
 </dd>
 <!-- --><!-- -->
 <dt>
-<h4>findTemplate (themeId, templateId)</h4>
+<h3>findTemplate (themeId, templateId)</h3>
 </dt>
 <dd>
     <p>
         Locate the theme with the given theme ID and then find the template associated with the theme with the given
         template ID.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>A compiled template.</p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -663,26 +681,26 @@ validation["message"] = LC.findMessage("isDatetime", this.configs["theme"]);
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 var template = LC.findTemplate(this.configs["theme"], "control_messages");
 </pre>
 </dd>
 <!-- --><!-- -->
 <dt>
-<h4>renderTemplate (themeId, templateId, data)</h4>
+<h3>renderTemplate (themeId, templateId, data)</h3>
 </dt>
 <dd>
     <p>
         Locate the theme with the given theme ID, find the template associated with the theme with the given template ID
         and render the template with the given data.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>
         String from the rendition.
     </p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -713,14 +731,14 @@ var template = LC.findTemplate(this.configs["theme"], "control_messages");
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs);
 </pre>
 </dd>
 <!-- --><!-- -->
 <dt>
-<h4>registerTemplate (id, template, isTemplate)</h4>
+<h3>registerTemplate (id, template, isTemplate)</h3>
 </dt>
 <dd>
     <p>
@@ -728,10 +746,10 @@ elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar",
         template
         namespace or registered as a reusable partial.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
-    <p></p>
-    <h5>Parameters</h5>
+    <p>None</p>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -762,23 +780,23 @@ elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar",
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 LittleCub.registerTemplate(id, templateContent.trim(), true);
 </pre>
 </dd>
 <!-- --><!-- -->
 <dt>
-<h4>loadThemes (themes, callback)</h4>
+<h3>loadThemes (themes, callback)</h3>
 </dt>
 <dd>
     <p>
         Load set of themes from HTML files and then call the callback once all themes are loaded.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
-    <p></p>
-    <h5>Parameters</h5>
+    <p>None</p>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -803,7 +821,7 @@ LittleCub.registerTemplate(id, templateContent.trim(), true);
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 LittleCub.loadThemes({
     "bootstrap" : "../../../themes/bootstrap/bootstrap.html",
@@ -815,16 +833,16 @@ LittleCub.loadThemes({
 </dd>
 <!-- --><!-- -->
 <dt>
-<h4>compare (obj1, obj2)</h4>
+<h3>compare (obj1, obj2)</h3>
 </dt>
 <dd>
     <p>
         A deep comparison of two JSON objects.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>True if two objects are identical.</p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -849,23 +867,23 @@ LittleCub.loadThemes({
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 var isSame = LC.compare([{"foo" : "bar"}], ["foo"]);
 </pre>
 </dd>
 <!-- --><!-- -->
 <dt>
-<h4>isEmpty (obj)</h4>
+<h3>isEmpty (obj)</h3>
 </dt>
 <dd>
     <p>
         Check if the given object is either NULL or undefined.
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>True if the given object is either NULL or undefined.</p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -884,7 +902,7 @@ var isSame = LC.compare([{"foo" : "bar"}], ["foo"]);
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 // Returns false.
 var isEmpty = LC.isEmpty("");
@@ -892,16 +910,16 @@ var isEmpty = LC.isEmpty("");
 </dd>
 <!-- --><!-- -->
 <dt>
-<h4>isValEmpty (obj)</h4>
+<h3>isValEmpty (obj)</h3>
 </dt>
 <dd>
     <p>
         Check if the given object has an empty value ( such as "" for string, [] for an array, {} for an object etc.).
     </p>
-    <h5>Returns</h5>
+    <h4>Returns</h4>
 
     <p>True if the given object has empty value.</p>
-    <h5>Parameters</h5>
+    <h4>Parameters</h4>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -920,7 +938,7 @@ var isEmpty = LC.isEmpty("");
         </tr>
         </tbody>
     </table>
-    <h5>Examples</h5>
+    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 // Returns true.
 var isValEmpty = LC.isValEmpty([]);
@@ -931,59 +949,67 @@ var isValEmpty = LC.isValEmpty([]);
 </div>
 </div>
 </section>
-<section id="littlecub-control">
-<div class="row">
-<div class="span9">
-<div class="page-header">
-    <h2>LittleCub Control</h2>
+<section id="base-control">
+    <div class="row">
+        <div class="span9">
+            <div class="page-header">
+                <h1>BaseControl</h1>
 
-    <p>
-        Once a form control is created by the LittleCub API, we will have access to the control's members and methods
-        for further operations.
-    </p>
-</div>
-<h3>Members</h3>
-<p>List of members that are available for a LittleCub control.</p>
-<hr/>
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Type</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>data</td>
-        <td>Data bound to the control.</td>
-        <td>json</td>
-    </tr>
-    <tr>
-        <td>schema</td>
-        <td>Schema bound to the control.</td>
-        <td>json</td>
-    </tr>
-    <tr>
-        <td>configs</td>
-        <td>Control configuration.</td>
-        <td>json</td>
-    </tr>
-    <tr>
-        <td>container</td>
-        <td>The outer DOM element that the control's highest ancestor is rendered into.</td>
-        <td>DOM</td>
-    </tr>
-    <tr>
-        <td>id</td>
-        <td>Unique LittleCub ID for the control.</td>
-        <td>string</td>
-    </tr>
-    <tr>
-        <td>path</td>
-        <td>
-            The path for the root control is /. And the path for its descendant will be calculated based on its parent's
-            path and its property key or item index if it is part of an array. For example, for the following json data
+                <p>
+                    Once a form control is created by the <code>LittleCub</code> API, we will have access to the
+                    control's members
+                    and methods
+                    for further operations. <code>BaseControl</code> class is the common ancestor of all control
+                    classes. Therefore
+                    all controls
+                    should have the members and methods from <code>BaseControl</code>.
+                </p>
+            </div>
+            <h2>Members</h2>
+
+            <p>List of members that are available from BaseControl.</p>
+            <hr/>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>data</td>
+                    <td>Data bound to the control.</td>
+                    <td>json</td>
+                </tr>
+                <tr>
+                    <td>schema</td>
+                    <td>Schema bound to the control.</td>
+                    <td>json</td>
+                </tr>
+                <tr>
+                    <td>configs</td>
+                    <td>Control configuration.</td>
+                    <td>json</td>
+                </tr>
+                <tr>
+                    <td>container</td>
+                    <td>The outer DOM element that the control's highest ancestor is rendered into.</td>
+                    <td>DOM</td>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td>Unique LittleCub ID for the control.</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>path</td>
+                    <td>
+                        The path for the root control is /. And the path for its descendant will be calculated based on
+                        its parent's
+                        path and its property key or item index if it is part of an array. For example, for the
+                        following json data
 <pre class="prettyprint linenums">
 {
     "foo" : "bar",
@@ -992,429 +1018,662 @@ var isValEmpty = LC.isValEmpty([]);
     }
 }
 </pre>
-            The path for the control mapped to <code>foo11</code> will be <code>/foo1/foo11</code> and the path for
-            <code>bar12</code> will be <code>/foo1/foo11[1]</code>.
-        </td>
-        <td>string</td>
-    </tr>
-    <tr>
-        <td>parent</td>
-        <td>The parent control of the current control. It will be null if this control is the root one.</td>
-        <td>control</td>
-    </tr>
-    <tr>
-        <td>children</td>
-        <td>List of child controls of the current control.</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>field</td>
-        <td>HTML field that rendered for this control.</td>
-        <td>DOM</td>
-    </tr>
-    <tr>
-        <td>outerEl</td>
-        <td>The outer most DOM element of the control rendition.</td>
-        <td>DOM</td>
-    </tr>
-    <tr>
-        <td>messagesContainer</td>
-        <td>The container DOM for validation messages.</td>
-        <td>DOM</td>
-    </tr>
-    </tbody>
-</table>
-<h3>Methods</h3>
-<hr/>
-<!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+                        The path for the control mapped to <code>foo11</code> will be <code>/foo1/foo11</code> and the
+                        path for
+                        <code>bar12</code> will be <code>/foo1/foo11[1]</code>.
+                    </td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>parent</td>
+                    <td>The parent control of the current control. It will be null if this control is the root one.</td>
+                    <td>control</td>
+                </tr>
+                <tr>
+                    <td>children</td>
+                    <td>List of child controls of the current control.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>field</td>
+                    <td>HTML field that rendered for this control.</td>
+                    <td>DOM</td>
+                </tr>
+                <tr>
+                    <td>outerEl</td>
+                    <td>The outer most DOM element of the control rendition.</td>
+                    <td>DOM</td>
+                </tr>
+                <tr>
+                    <td>messagesContainer</td>
+                    <td>The container DOM for validation messages.</td>
+                    <td>DOM</td>
+                </tr>
+                </tbody>
+            </table>
+            <h2>Methods</h2>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
+            <p>List of members that are provided by BaseControl.</p>
+            <hr/>
+            <dl>
+                <!-- -->
+                <dt>
+                <h3>init</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Initialize control data, schema and configs. This method will be invoked when you call <code>LittleCub</code>
+                        API to create the control. So this API should only be used when you try to extend it in your custom control.
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>None</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+var control = new controlClass(data, configs, schema);
+control.init();
+</pre>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>bindData (data)</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Bind data with the control. This method will be invoked when you call <code>LittleCub</code>
+                        API to create the control. So this API should only be used when you try to extend it in your custom control.
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>None</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>data</td>
+                            <td>Data to be bound to the control.</td>
+                            <td>json</td>
+                            <td>Yes</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 </pre>
-    </dd>
-</dl>
-<!-- -->
-<!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>validate</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Validation the control according to its schema.
+                    </p>
+                    <h4>Returns</h4>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
+                    <p>The control itself.</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+var control = control.validation();
+</pre>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>isValid (skipValidation)</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Check if a control is valid or not. Validation will triggered if <code>skipValidation</code> is not set as true.
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>True if the control is valid.</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>skipValidation</td>
+                            <td>Skip the actual validation.</td>
+                            <td>boolean</td>
+                            <td>No</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+var isValid = control.isValid();
+</pre>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>validationEvent</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Returns the event that will trigger the validation.
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>Validation event.</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+ var validationEvent = control.validationEvent();
+</pre>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>bindEventListeners</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Bind event listeners and also fire <code>lc-update</code> event when the control field is updated.
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>None</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 </pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>controlByPath (path)</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Find control based on its path.
+                    </p>
+                    <h4>Returns</h4>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
+                    <p>Control with the given path.</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>path</td>
+                            <td>Path to the control.</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+var childControl = control.controlByPath("/foo/bar");
+</pre>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>bindDOM</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Bind DOM elements to the control such as HTML field, outer element etc.
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>None</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+control.bindDOM();
+</pre>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>render (container, data, mode)</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Render the control into the provided container with the given data.
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>None</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>container</td>
+                            <td>The DOM element that the control will be rendered into.</td>
+                            <td>DOM</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>data</td>
+                            <td>Data to be rendered with. If not provided, it will user the data bound to the control.</td>
+                            <td>json</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>mode</td>
+                            <td>
+                                <ul>
+                                    <li><code>fill</code>(default): Render the control within the container.</li>
+                                    <li><code>insertAfter</code>: Render the control after the container.</li>
+                                </ul>
+                            </td>
+                            <td>string</td>
+                            <td>No</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+objectControl.render(document.getElementById('content2'), data);
+objectControl.render(document.getElementById('content3'), data, 'insertAfter');
+</pre>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3>val (obj)</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Return control value or set control value if obj parameter is provided.
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>Control value</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>obj</td>
+                            <td>Value to be set.</td>
+                            <td>json</td>
+                            <td>No</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+var val = control.val();
+control.val({"foo" : "bar"});
+</pre>
+                </dd>
+                <!-- -->
+                <!-- -->
+                <dt>
+                <h3></h3>
+                </dt>
+                <dd>
+                    <p>
+                    </p>
+                    <h4>Returns</h4>
+
+                    <p>None</p>
+                    <h4>Parameters</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Examples</h4>
 <pre class="prettyprint linenums">
 </pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+                </dd>
+                <!-- -->
+            </dl>
+        </div>
+    </div>
+</section>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
-<pre class="prettyprint linenums">
-</pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+<section id="handlebars-helpers">
+    <div class="row">
+        <div class="span9">
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
-<pre class="prettyprint linenums">
-</pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+            <div class="page-header">
+                <h1>Handlebars Helpers</h1>
+            </div>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
-<pre class="prettyprint linenums">
-</pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+            <p>
+                LittleBars provides a set of custom helpers for its theme templates.
+            </p>
+            <dl>
+                <dt>
+                <h3>key_value</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Iterate over an object, setting 'key' and 'value' for each property in the object.
+                    </p>
+                    <h4>Usage</h4>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
 <pre class="prettyprint linenums">
+{{#key_value obj}}
+    Key: {{key}} // Value: {{value}}
+{{/key_value}}
 </pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+{{#key_value table}}
+&lt;tr&gt;
+    {{#key_value value}}
+        &lt;td data-licid="{{../key}}-{{key}}"&gt;
+            {{#each value}}
+                {{#object_with_key ../../../controls key=this}}
+                    &lt;div&gt;{{include 'control'}}&lt;/div&gt;
+                {{/object_with_key}}
+            {{/each}}
+        &lt;/td&gt;
+    {{/key_value}}
+&lt;/tr&gt;
+{{/key_value}}
+</pre>
+                </dd>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
-<pre class="prettyprint linenums">
-</pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+                <dt>
+                <h3>each_with_key</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Iterate over an object containing other objects. Each
+      inner object will be used in turn, with an added key ("myKey")
+      set to the value of the inner object's key in the container.
+                    </p>
+                    <h4>Usage</h4>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
 <pre class="prettyprint linenums">
+{{#each_with_key container key="myKey"}}
+    ...
+{{/each_with_key}}
 </pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+{{#key_value table}}
+&lt;tr&gt;
+{{#each_with_key container key="myKey"}}
+    {{myKey}}
+{{/each_with_key}}
+</pre>
+                </dd>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
-<pre class="prettyprint linenums">
-</pre>
-    </dd>
-</dl>
-<!-- -->            <!-- -->
-<dl>
-    <dt>
-    <h4></h4>
-    </dt>
-    <dd>
-        <p>
-        </p>
-        <h5>Returns</h5>
+                <dt>
+                <h3>key_value</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Iterate over an object, setting 'key' and 'value' for each property in the object.
+                    </p>
+                    <h4>Usage</h4>
 
-        <p></p>
-        <h5>Parameters</h5>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <h5>Examples</h5>
 <pre class="prettyprint linenums">
+{{#key_value obj}}
+    Key: {{key}} // Value: {{value}}
+{{/key_value}}
 </pre>
-    </dd>
-</dl>
-<!-- -->
-</div>
-</div>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+{{#key_value table}}
+&lt;tr&gt;
+    {{#key_value value}}
+        &lt;td data-licid="{{../key}}-{{key}}"&gt;
+            {{#each value}}
+                {{#object_with_key ../../../controls key=this}}
+                    &lt;div&gt;{{include 'control'}}&lt;/div&gt;
+                {{/object_with_key}}
+            {{/each}}
+        &lt;/td&gt;
+    {{/key_value}}
+&lt;/tr&gt;
+{{/key_value}}
+</pre>
+                </dd>
+
+                <dt>
+                <h3>object_with_key</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Iterate over an object, setting the context for the inner template code with the "key" parameter.
+                    </p>
+                    <h4>Usage</h4>
+
+<pre class="prettyprint linenums">
+{{#object_with_key obj key=context}}
+    ...
+{{/object_with_key}}
+</pre>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+{{#object_with_key ../../../controls key=this}}
+    &lt;div&gt;{{include 'control'}}&lt;/div&gt;
+{{/object_with_key}}
+</pre>
+                </dd>
+
+                <dt>
+                <h3>include</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Render the template specified by the templateId with the context data.
+                    </p>
+                    <h4>Usage</h4>
+
+<pre class="prettyprint linenums">
+{{include templateId}}
+</pre>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+{{#each controls}}
+    {{include 'array_item_toolbar'}}
+    {{include 'control'}}
+{{/each}}
+</pre>
+                </dd>
+
+                <dt>
+                <h3>injectControl</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Render the context which is a control.
+                    </p>
+                    <h4>Usage</h4>
+
+<pre class="prettyprint linenums">
+{{injectControl}}
+</pre>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+{{injectControl}}
+</pre>
+                </dd>
+
+                <dt>
+                <h3>isContainer</h3>
+                </dt>
+                <dd>
+                    <p>
+                        Conditional helper for checking if the control is container or not.
+                    </p>
+                    <h4>Usage</h4>
+
+<pre class="prettyprint linenums">
+{{#isContainer type}}
+    ...
+{{else}}
+    ...
+{{/isContainer}}
+</pre>
+                    <h4>Examples</h4>
+<pre class="prettyprint linenums">
+{{#isContainer type}}
+    {{injectControl}}
+{{else}}
+    &lt;span data-lcid="{{id}}" data-lctype="{{type}}" class="control-group form-horizontal"&gt;
+        {{include 'control_label'}}
+        &lt;div class="controls"&gt;
+        {{injectControl}}
+        &lt;/div&gt;
+        {{include 'control_helper'}}
+        &lt;span data-lcid="{{id}}-messages"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+{{/isContainer}}
+</pre>
+                </dd>
+
+            </dl>
+        </div>
+    </div>
 </section>
 
 </div>
