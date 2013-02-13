@@ -66,7 +66,7 @@
                 var addElementToolbar = function(child) {
                     // Add array item toolbar
                     var elem = document.createElement("span");
-                    elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs, true);
+                    elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs);
                     _.each(elem.querySelectorAll('.lc-array-item-add'), function(v) {
                         v.addEventListener('click', addEventHandler);
                     });

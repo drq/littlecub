@@ -1,0 +1,1449 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>LittleCub Forms - API Docs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="API Docs of LittleCub, a light-weight, high-performance, easily customizable forms engine for Node.js and browser with support for various responsive and mobile UI frameworks."/>
+    <meta name="author" content="NextFrontier Technologies Inc."/>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/bootstrap-sidenav.css" rel="stylesheet">
+    <link type="text/css" href="css/styles.css" rel="stylesheet"/>
+    <link type="text/css" href="lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar" onload="prettyPrint();">
+
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">LittleCub</a>
+
+            <div class="nav-collapse" id="main-menu">
+                <ul class="nav" id="main-menu-left">
+                    <li><a href="">Get started</a></li>
+                    <li><a href="#">API</a></li>
+                    <li><a href="controls/index.html">Controls</a></li>
+                    <li><a href="themes/index.html">Themes</a></li>
+                    <li><a href="tools/index.html">Tools</a></li>
+                </ul>
+                <ul id="main-menu-right" class="nav pull-right">
+                    <li><a href="https://github.com/drq/littlecub">View on GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<header class="jumbotron subhead" id="overview">
+    <div class="row">
+        <div class="span6">
+            <h1>LittleCub Forms</h1>
+
+            <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
+        </div>
+        <div class="span6">
+            <div class="">
+                <section id="downloads">
+                    <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
+                        this project as a .zip file</a>
+                    <a class="tar_download_link" href="https://github.com/drq/littlecub/tarball/master">Download
+                        this project as a tar.gz file</a>
+                </section>
+            </div>
+        </div>
+    </div>
+</header>
+<ul class="breadcrumb">
+    <li><a href="index.html">Home</a> <span class="divider">></span></li>
+    <li><a href="#">API Docs</a></li>
+</ul>
+
+<div class="row">
+<div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li><a href="#themes-overview"><i class="icon-chevron-right"></i> Overview</a></li>
+        <li><a href="#littlecub"><i class="icon-chevron-right"></i> LittleCub</a></li>
+        <li><a href="#littlecub-control"><i class="icon-chevron-right"></i> LittleCub Control</a></li>
+        <li><a href="#supported-themes"><i class="icon-chevron-right"></i> Handlebars Helper</a></li>
+    </ul>
+</div>
+<div class="span9">
+
+<section id="themes-overview">
+    <div class="row">
+        <div class="span9">
+            <div class="page-header">
+                <h2>Overview</h2>
+            </div>
+            <p>LittleCub supports two styles of API, native and jQuery. If you only use Native API, you won't need to
+                include the jQuery library.</p>
+        </div>
+    </div>
+</section>
+<section id="littlecub">
+<div class="row">
+<div class="span9">
+
+<div class="page-header">
+    <h2>LittleCub</h2>
+</div>
+
+<p>
+    <code>LittleCub</code> is the global namespace of this library. It is the entry API for you to
+    initialize a form control and render it as HTML markups within a DOM element.
+</p>
+<dl>
+    <dt>
+    <h3>LittleCub (data, configs, schema, domElem)</h3>
+    </dt>
+    <dd>
+        <p>
+            Native API for initializing a new form control based on the input parameters.
+            All four parameters are optional. However you will need to at least provide one of the <code>data</code>,
+            <code>configs</code> and <code>schema</code> parameters.
+        </p>
+
+        <h4><code>data</code></h4>
+
+        <p>
+            Initial JSON data that will be bound to the rendered form control. It
+            will also be used to
+            decide the control type if the <code>configs</code> and <code>schema</code> don't provide that
+            information.
+        </p>
+
+        <h4><code>configs</code></h4>
+
+        <p>
+            A JSON document that contains all control related settings
+            such as control type,
+            size of text field etc.
+        </p>
+
+        <h4><code>schema</code></h4>
+
+        <p>
+            A JSON schema document that describe data structure, format and validation rules.
+        </p>
+
+        <h4><code>domElem</code></h4>
+
+        <p>
+            A DOM element that will server as the container element for the form control rendition.
+            If this parameter is provided, LittleCub will render the form control as HTML markups
+            based on the control's theme and template setting. Otherwise, it will only initialize the
+            control and you will need to use the control's <code>render</code> method for form rendition.
+        </p>
+
+        <p>
+            Instead of using <code>LittleCub</code>, you can also use its short name <code>LC</code>.
+        </p>
+        <h4>Returns</h4>
+
+        <p>
+            An initialized LittleCub form control.
+        </p>
+        <h4>Examples</h4>
+
+<pre class="prettyprint linenums">
+// Example 1
+// Renders a single text control within the DOM element with id text-control-1.
+// The text field has initial value Sample.
+var textControl1 =  LittleCub("Sample", null, null,document.getElementById('text-control-1'));
+
+// Example 2
+// Initializes a text control and bind it with data sample. But no form rendition as this point.
+var textControl2 =  LittleCub("Sample");
+// Now renders the text control within the DOM element with id text-control-2
+textControl2.render(document.getElementById('text-control-2'));
+// Uses the same control to render a new text control into
+// a different DOM element with different data.
+textControl2.render(document.getElementById('text-control-3'), "Sample2");
+
+// Example 3
+// Renders an array control with a dynamic list of text controls.
+var arrayControl1 =  LittleCub(["Sample1","Sample2"], null, null,
+    document.getElementById('array-control-1'));
+// Renders the same array data as a drop-down select control because of the settings in configs.
+var selectControl1 =  LittleCub(["Sample1","Sample2"], {
+    "type" : "select"
+    }, null,document.getElementById('select-control-1'));
+// Renders an array control with a dynamic list of text controls.
+// Each text field has length 25 and a validation error will be displayed
+// is the length of text input is less than 4.
+var arrayControl2 =  LittleCub(["Sample1","Sample2"], {
+        "type" : "array",
+        "items" : {
+            "type" : "text",
+            "size" : 25
+        }
+    }, {
+        "type" : "array",
+        "items" : {
+            "type" : "string",
+            "minLength" : 4
+        }
+    },document.getElementById('array-control-2'));
+</pre>
+    </dd>
+    <dt>
+    <h3>$.littlecub(data, configs, schema, domElem)</h3>
+    </dt>
+    <dd>
+        <p>
+            jQuery API that has same behavior as the Native API. Instead of using <code>$.littlecub</code>, you can also
+            use its short name <code>$.lc</code>.
+        </p>
+    </dd>
+    <dt>
+    <h3>$(selector).littlecub(data, configs, schema)</h3>
+    </dt>
+    <dd>
+        <p>
+            jQuery API that initializes form control(s) and renders the form controls into the DOM element(s)
+            returned from the jQuery selector.
+        </p>
+
+        <p>
+            Instead of using <code>$(selector).littlecub</code>, you can also use its short name
+            <code>$(slector).lc</code>.
+        </p>
+        <h5>Returns</h5>
+
+        <p>
+            Single form control if the jQuery selector returns single DOM element. List of form controls if the selector
+            returns multiple DOM elements.
+        </p>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+// Renders single text field within the DOM element with id text-control-1.
+var textControl1 =  $('#text-control-1').lc("Sample");
+// Renders a text field for each DOM element with class text-control.
+var textControls =  $('.text-control').lc("Sample");
+// Renders an array control with a dynamic list of text controls.
+var arrayControl1 =  $('#array-control-1')(["Sample1","Sample2"], {
+        "type" : "array",
+        "items" : {
+            "type" : "text",
+            "size" : 25
+        }
+    }, {
+        "type" : "array",
+        "items" : {
+            "type" : "string",
+            "minLength" : 4
+        }
+    });
+</pre>
+    </dd>
+</dl>
+<h3>Methods</h3>
+<hr/>
+<dl>
+<dt>
+<h4>id ( )</a></h4>
+</dt>
+<dd>
+    <p>
+        Generate a unique LittleCub id such as <code>lc-12</code>.
+    </p>
+    <h5>Returns</h5>
+
+    <p>A unique LittleCub id.</p>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+LittleCub.id();
+</pre>
+</dd>
+<dt>
+<h4>typeControlClass (type, ControlClass)</h4>
+</dt>
+<dd>
+    <p>
+        Retrieve control class for provided data type or register a default control class to data type
+        mapping if
+        both type and class parameters are provided.
+    </p>
+    <h5>Returns</h5>
+
+    <p>The mapped control class.</p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>type</td>
+            <td>Data type defined by JSON schema</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>controlClass</td>
+            <td>Control class</td>
+            <td>class</td>
+            <td>No</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+// Registers the text control class to type string mapping.
+LittleCub.typeControlClass("string", LittleCub.TextControl);
+// Retrieves the control class mapped to type string.
+LittleCub.typeControlClass("string");
+</pre>
+</dd>
+<dt>
+<h4>formatControlClass (format, ControlClass)</h4>
+</dt>
+<dd>
+    <p>
+        Retrieve control class for provided format or register a control class to format
+        mapping if both format and class parameters are provided.
+    </p>
+    <h5>Returns</h5>
+
+    <p>The mapped control class.</p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>format</td>
+            <td>Data format defined by JSON schema</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>controlClass</td>
+            <td>Control class</td>
+            <td>class</td>
+            <td>No</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+// Registers the email control class to format email mapping.
+LittleCub.formatControlClass("text", LittleCub.EmailControl);
+// Retrieves the email control class mapped to type text.
+LittleCub.formatControlClass("email");
+</pre>
+</dd>
+<dt>
+<h4>controlClass (controlType, ControlClass)</h4>
+</dt>
+<dd>
+    <p>
+        Retrieve control class for provided control type or register a control class to control type
+        mapping if
+        both type and class parameters are provided.
+    </p>
+    <h5>Returns</h5>
+
+    <p>The mapped control class.</p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>controlType</td>
+            <td>Control type</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>controlClass</td>
+            <td>Control class</td>
+            <td>class</td>
+            <td>No</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+// Registers the text control class to type text mapping.
+LittleCub.typeControlClass("text", LittleCub.TextControl);
+// Retrieves the text control class mapped to type text.
+LittleCub.typeControlClass("text");
+</pre>
+</dd>
+
+<dt>
+<h4>log (level, msg)</h4>
+</dt>
+<dd>
+    <p>
+        Log a message with the provided logging level. The logging will happen if the provided logging level is same or
+        higher than the global logging level which is defined by <code>LittleCub.logger.level</code>.
+    </p>
+    <h5>Returns</h5>
+
+    <p></p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>log</td>
+            <td>Logging level. The mapping for logging level looks like <code>{0: 'debug', 1: 'info', 2: 'warn', 3:
+                'error'}</code></td>
+            <td>integer</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>msg</td>
+            <td>Message to be logged.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+// Logs a debug message
+LittleCub.log(0,"Debugging message");
+</pre>
+</dd>
+<dt>
+<h4>cloneJSON (json)</h4>
+</dt>
+<dd>
+    <p>
+        Makes a deep copy of the provided source JSON document.
+    </p>
+    <h5>Returns</h5>
+
+    <p>
+        A deep copy of the source JSON document.
+    </p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>json</td>
+            <td>Source JSON document to be cloned</td>
+            <td>json</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+var json1 = {"foo" : "bar"};
+var json2 = LittleCub.cloneJSON(json1);
+</pre>
+</dd>
+<dt>
+<h4>registerTheme (theme, themeId)</h4>
+</dt>
+<dd>
+    <p>
+        Register a theme with the given ID.
+    </p>
+    <h5>Returns</h5>
+
+    <p></p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>theme</td>
+            <td>Theme definition JSON document.</td>
+            <td>object</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>themeId</td>
+            <td>Unique theme id that the theme will be registered with.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+LittleCub.registerTheme({
+    "id" : "bootstrap-horizontal",
+    "parent" : "bootstrap",
+    "title" : "Horizontal Twitter Bootstrap Theme",
+    "description" : "Twitter bootstrap theme for rendering basic forms with horizontal styles."
+});
+</pre>
+</dd>
+<!-- -->
+<dt>
+<h4>findThemeConfig (configId, themeId)</h4>
+</dt>
+<dd>
+    <p>
+        Locate the theme with the given theme ID and then find the theme configuration with the given config ID.
+    </p>
+    <h5>Returns</h5>
+
+    <p>
+        Theme configuration with the given config ID.
+    </p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>configId</td>
+            <td>Theme configuration ID.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>themeId</td>
+            <td>Theme ID of the target theme. If not provided, it will pick the default theme.</td>
+            <td>string</td>
+            <td>No</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+LC.findThemeConfig("injection", that.configs["theme"]);
+</pre>
+</dd>
+<!-- -->
+<dt>
+<h4>findMessage (messageId, themeId, locale)</h4>
+</dt>
+<dd>
+    <p>
+        Locate the theme with the given theme ID and then find the message associated with the theme with the given
+        message ID and locale.
+    </p>
+    <h5>Returns</h5>
+
+    <p></p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>messageId</td>
+            <td>Message ID.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>themeId</td>
+            <td>Theme ID of the target theme. If not provided, it will pick the default theme.</td>
+            <td>string</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>Locale</td>
+            <td>Language locale. If not provided, it will pick the default locale.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+validation["message"] = LC.findMessage("isDatetime", this.configs["theme"]);
+</pre>
+</dd>
+<!-- --><!-- -->
+<dt>
+<h4>findTemplate (themeId, templateId)</h4>
+</dt>
+<dd>
+    <p>
+        Locate the theme with the given theme ID and then find the template associated with the theme with the given
+        template ID.
+    </p>
+    <h5>Returns</h5>
+
+    <p>A compiled template.</p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>themeId</td>
+            <td>Theme ID of the target theme. If not provided, it will pick the default theme.</td>
+            <td>string</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>templateId</td>
+            <td>ID of the template to be found.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+var template = LC.findTemplate(this.configs["theme"], "control_messages");
+</pre>
+</dd>
+<!-- --><!-- -->
+<dt>
+<h4>renderTemplate (themeId, templateId, data)</h4>
+</dt>
+<dd>
+    <p>
+        Locate the theme with the given theme ID, find the template associated with the theme with the given template ID
+        and render the template with the given data.
+    </p>
+    <h5>Returns</h5>
+
+    <p>
+        String from the rendition.
+    </p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>themeId</td>
+            <td>Theme ID of the target theme. If not provided, it will pick the default theme.</td>
+            <td>string</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>templateId</td>
+            <td>ID of the template to be found.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>data</td>
+            <td>Source data for template rendition.</td>
+            <td>json</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs);
+</pre>
+</dd>
+<!-- --><!-- -->
+<dt>
+<h4>registerTemplate (id, template, isTemplate)</h4>
+</dt>
+<dd>
+    <p>
+        Compile and register the given template with the Handlebars under the give id. It can be either placed in the
+        template
+        namespace or registered as a reusable partial.
+    </p>
+    <h5>Returns</h5>
+
+    <p></p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>id</td>
+            <td>Template id that template will be registered under.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>template</td>
+            <td>Template to be registered.</td>
+            <td>string</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>isTemplate</td>
+            <td>Registered as template if true.</td>
+            <td>boolean</td>
+            <td>No</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+LittleCub.registerTemplate(id, templateContent.trim(), true);
+</pre>
+</dd>
+<!-- --><!-- -->
+<dt>
+<h4>loadThemes (themes, callback)</h4>
+</dt>
+<dd>
+    <p>
+        Load set of themes from HTML files and then call the callback once all themes are loaded.
+    </p>
+    <h5>Returns</h5>
+
+    <p></p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>themes</td>
+            <td>A list of theme id and theme file path pairs.</td>
+            <td>object</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>callback</td>
+            <td>Callback function that will be executed once all themes are loaded.</td>
+            <td>function</td>
+            <td>No</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+LittleCub.loadThemes({
+    "bootstrap" : "../../../themes/bootstrap/bootstrap.html",
+    "bootstrap-horizontal" : "../../../themes/bootstrap/bootstrap-horizontal.html"
+}, function() {
+    ...
+});
+</pre>
+</dd>
+<!-- --><!-- -->
+<dt>
+<h4>compare (obj1, obj2)</h4>
+</dt>
+<dd>
+    <p>
+        A deep comparison of two JSON objects.
+    </p>
+    <h5>Returns</h5>
+
+    <p>True if two objects are identical.</p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>obj1</td>
+            <td>Source JSON object to be compared.</td>
+            <td>json</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>obj2</td>
+            <td>Target JSON object to be compared.</td>
+            <td>json</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+var isSame = LC.compare([{"foo" : "bar"}], ["foo"]);
+</pre>
+</dd>
+<!-- --><!-- -->
+<dt>
+<h4>isEmpty (obj)</h4>
+</dt>
+<dd>
+    <p>
+        Check if the given object is either NULL or undefined.
+    </p>
+    <h5>Returns</h5>
+
+    <p>True if the given object is either NULL or undefined.</p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>obj</td>
+            <td>JSON object to be checked.</td>
+            <td>json</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+// Returns false.
+var isEmpty = LC.isEmpty("");
+</pre>
+</dd>
+<!-- --><!-- -->
+<dt>
+<h4>isValEmpty (obj)</h4>
+</dt>
+<dd>
+    <p>
+        Check if the given object has an empty value ( such as "" for string, [] for an array, {} for an object etc.).
+    </p>
+    <h5>Returns</h5>
+
+    <p>True if the given object has empty value.</p>
+    <h5>Parameters</h5>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Required</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>obj</td>
+            <td>JSON object to be checked.</td>
+            <td>json</td>
+            <td>Yes</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Examples</h5>
+<pre class="prettyprint linenums">
+// Returns true.
+var isValEmpty = LC.isValEmpty([]);
+</pre>
+</dd>
+<!-- -->
+</dl>
+</div>
+</div>
+</section>
+<section id="littlecub-control">
+<div class="row">
+<div class="span9">
+<div class="page-header">
+    <h2>LittleCub Control</h2>
+
+    <p>
+        Once a form control is created by the LittleCub API, we will have access to the control's members and methods
+        for further operations.
+    </p>
+</div>
+<h3>Members</h3>
+<p>List of members that are available for a LittleCub control.</p>
+<hr/>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>data</td>
+        <td>Data bound to the control.</td>
+        <td>json</td>
+    </tr>
+    <tr>
+        <td>schema</td>
+        <td>Schema bound to the control.</td>
+        <td>json</td>
+    </tr>
+    <tr>
+        <td>configs</td>
+        <td>Control configuration.</td>
+        <td>json</td>
+    </tr>
+    <tr>
+        <td>container</td>
+        <td>The outer DOM element that the control's highest ancestor is rendered into.</td>
+        <td>DOM</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>Unique LittleCub ID for the control.</td>
+        <td>string</td>
+    </tr>
+    <tr>
+        <td>path</td>
+        <td>
+            The path for the root control is /. And the path for its descendant will be calculated based on its parent's
+            path and its property key or item index if it is part of an array. For example, for the following json data
+<pre class="prettyprint linenums">
+{
+    "foo" : "bar",
+    "foo1" : {
+        "foo11" : ["bar11", "bar12"]
+    }
+}
+</pre>
+            The path for the control mapped to <code>foo11</code> will be <code>/foo1/foo11</code> and the path for
+            <code>bar12</code> will be <code>/foo1/foo11[1]</code>.
+        </td>
+        <td>string</td>
+    </tr>
+    <tr>
+        <td>parent</td>
+        <td>The parent control of the current control. It will be null if this control is the root one.</td>
+        <td>control</td>
+    </tr>
+    <tr>
+        <td>children</td>
+        <td>List of child controls of the current control.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>field</td>
+        <td>HTML field that rendered for this control.</td>
+        <td>DOM</td>
+    </tr>
+    <tr>
+        <td>outerEl</td>
+        <td>The outer most DOM element of the control rendition.</td>
+        <td>DOM</td>
+    </tr>
+    <tr>
+        <td>messagesContainer</td>
+        <td>The container DOM for validation messages.</td>
+        <td>DOM</td>
+    </tr>
+    </tbody>
+</table>
+<h3>Methods</h3>
+<hr/>
+<!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->
+<!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->            <!-- -->
+<dl>
+    <dt>
+    <h4></h4>
+    </dt>
+    <dd>
+        <p>
+        </p>
+        <h5>Returns</h5>
+
+        <p></p>
+        <h5>Parameters</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Examples</h5>
+<pre class="prettyprint linenums">
+</pre>
+    </dd>
+</dl>
+<!-- -->
+</div>
+</div>
+</section>
+
+</div>
+</div>
+
+<!-- Footer
+================================================== -->
+<hr>
+
+<footer id="footer">
+    <p class="pull-right"><a href="#">Back to top</a></p>
+
+    <div class="links">
+    </div>
+    <p class="copyright">Copyright &copy; 2013 NextFrontier Technologies Inc. | All Rights Reserved</p>
+</footer>
+
+</div>
+<!-- /container -->
+<script src="lib/handlebars/handlebars.js" type="text/javascript"></script>
+<script src="lib/jquery/jquery-1.9.0.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="lib/google-code-prettify/prettify.js" type="text/javascript"></script>
+<script src="js/tools.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        LCTools.sidebar();
+    });
+</script>
+</body>
+</html>

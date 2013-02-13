@@ -7,6 +7,10 @@
         schema["type"] = LC.schemaType(schema, configs, data);
         configs["type"] = LC.controlType(schema, configs, data);
         var controlClass = LittleCub.controlClass(configs["type"]);
+        if (!controlClass) {
+            configs["type"] = "text";
+            controlClass = LittleCub.controlClass(configs["type"]);
+        }
         var control = new controlClass(data, configs, schema);
         control.init();
         if (domElem) {
@@ -14,7 +18,6 @@
         }
         return control;
     };
-
 
     _.extend(LittleCub, {
         "version": "0.1.0",
