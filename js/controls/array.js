@@ -146,16 +146,22 @@
                             _.each(elem.querySelectorAll('.lc-array-add'), function(v) {
                                 v.addEventListener('click', addFirstEventHandler);
                             });
+                            /*
                             var injection = LC.findThemeConfig("injection", that.configs["theme"])
                             if (injection && _.isFunction(injection)) {
                                 injection.call(that, elem);
                             }
+                            */
                             lcId = that.outerEl.getAttribute("data-lcid");
                             var itemsElem = that.outerEl.querySelector("[data-lcid='" + lcId + "-items']");
                             if (itemsElem) {
                                 itemsElem.appendChild(elem.firstChild);
                             } else {
                                 that.outerEl.appendChild(elem.firstChild);
+                            }
+                            var injection = LC.findThemeConfig("injection", that.configs["theme"])
+                            if (injection && _.isFunction(injection)) {
+                                injection.call(that, that.outerEl);
                             }
                         }
                     }

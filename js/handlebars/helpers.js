@@ -60,7 +60,7 @@
     Handlebars.registerHelper('include', function (context, configs) {
         var val = this["value"] || this;
         var themeId = val["theme"];
-        var template = LittleCub.findTemplate(themeId,context);
+        var template = LittleCub.findTemplate(themeId, context);
         return template ? new Handlebars.SafeString(template(val)) : "";
     });
 
@@ -70,9 +70,9 @@
     Handlebars.registerHelper('injectControl', function (context, configs) {
         var themeId = this["theme"];
         var templateId = this["template"] || "control_" + this.type;
-        var template = LittleCub.findTemplate(themeId,templateId);
+        var template = LittleCub.findTemplate(themeId, templateId);
         if (!template && this["altTemplate"]) {
-            template = LittleCub.findTemplate(themeId,this["altTemplate"]);
+            template = LittleCub.findTemplate(themeId, this["altTemplate"]);
         }
         return template ? new Handlebars.SafeString(template(this)) : "";
     });
@@ -80,10 +80,21 @@
     /**
      *
      */
-    Handlebars.registerHelper('isContainer', function(v, options) {
+    Handlebars.registerHelper('isContainer', function(context, options) {
         if (this.isContainer) {
-            return options.fn(this);
+            return context.fn(this);
         }
-        return options.inverse(this);
+        return context.inverse(this);
+    });
+
+    /**
+     *
+     */
+    Handlebars.registerHelper('isType', function(v, context) {
+        v = v.split(' ');
+        if (_.indexOf(v, this["type"]) != -1) {
+            return context.fn(this);
+        }
+        return context.inverse(this);
     });
 })();

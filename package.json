@@ -1,6 +1,7 @@
 {
   "name": "littlecub",
   "version": "0.1.0",
+  "main" : "./dist",
   "devDependencies": {
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-nodeunit": "~0.1.0",
@@ -11,5 +12,9 @@
     "grunt-contrib-concat": "~0.1.2rc6",
     "grunt-contrib-connect": "~0.1.1rc6",
     "grunt-contrib-qunit": "~0.1.1rc6"
+  },
+  "dependencies" : {
+    "handlebars" : "*",
+    "underscore" : "*"
   }
 }

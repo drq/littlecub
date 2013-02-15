@@ -33,7 +33,8 @@ module.exports = function(grunt) {
                     "build/templates-default.js": ["build/templates/default/*.hbs"],
                     "build/templates-bootstrap.js": ["build/templates/bootstrap/*.hbs"],
                     "build/templates-foundation.js": ["build/templates/foundation/*.hbs"],
-                    "build/templates-jqueryui.js": ["build/templates/jqueryui/*.hbs"]
+                    "build/templates-jqueryui.js": ["build/templates/jqueryui/*.hbs"],
+                    "build/templates-jquerymobile.js": ["build/templates/jquerymobile/*.hbs"]
                 }
             }
         },
@@ -102,6 +103,14 @@ module.exports = function(grunt) {
                     'build/templates-jqueryui.js'
                 ],
                 dest: 'dist/<%= pkg.name %>-jqueryui.js'
+            },
+            "jquerymobile": {
+                src: [
+                    'dist/<%= pkg.name %>-core.js',
+                    'js/themes/jquerymobile.js',
+                    'build/templates-jquerymobile.js'
+                ],
+                dest: 'dist/<%= pkg.name %>-jquerymobile.js'
             }
         },
         uglify: {
@@ -128,6 +137,10 @@ module.exports = function(grunt) {
                 src: 'dist/<%= pkg.name %>-jqueryui.js',
                 dest: 'dist/<%= pkg.name %>-jqueryui.min.js'
             },
+            "jquerymobile": {
+                src: 'dist/<%= pkg.name %>-jquerymobile.js',
+                dest: 'dist/<%= pkg.name %>-jquerymobile.min.js'
+            },
             "default-templates": {
                 src: 'build/templates-default.js',
                 dest: 'dist/templates-default.min.js'
@@ -143,6 +156,10 @@ module.exports = function(grunt) {
             "jqueryui-templates": {
                 src: 'build/templates-jqueryui.js',
                 dest: 'dist/templates-jqueryui.min.js'
+            },
+            "jquerymobile-templates": {
+                src: 'build/templates-jquerymobile.js',
+                dest: 'dist/templates-jquerymobile.min.js'
             }
         },
         qunit: {
