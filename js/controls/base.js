@@ -54,10 +54,10 @@
             if (LC.isEmpty(this.configs["label"]) && this.parent && this.parent.schema["type"] != "array") {
                 this.configs["label"] = LC.prettyTitle(this.key) || "";
             }
-            this.schema["title"] = this.schema["title"] || this.configs["label"];
+            this.schema["title"] = LC.isEmpty(this.schema["title"]) ? this.configs["label"] : this.schema["title"];
 
-            this.configs["helper"] = this.configs["helper"] || this.schema["description"];
-            this.schema["description"] = this.schema["description"] || this.configs["helper"];
+            this.configs["helper"] = LC.isEmpty(this.configs["helper"]) ?  this.schema["description"] : this.configs["helper"];
+            this.schema["description"] = LC.isEmpty(this.schema["description"]) ?  this.configs["helper"] : this.schema["description"];
 
             this.configs["name"] = this.configs["name"] || this.path.substring(1).replace(/\//g, "_");
             this.configs["theme"] = this.configs["theme"] || LittleCub["defaults"]["theme"];

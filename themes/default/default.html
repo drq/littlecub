@@ -28,11 +28,11 @@
     </script>
     <script id="control_file" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="file" {{#if name}}name="{{name}}"{{/if}}
-            {{#if fieldClass}}class="{{fieldClass}}"{{/if}}
+            {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
             {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
     </script>
     <script id="control_select" type="text/x-handlebars-template">
-        <select data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if multiple}}multiple="multiple"{{/if}}
+        <select data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}  {{#if multiple}}multiple="multiple"{{/if}}
             {{#if size}}size="{{size}}"{{/if}} {{#if name}}name="{{name}}"{{/if}}>
             {{#unless required}}
                 <option value="">None</option>
@@ -56,17 +56,17 @@
     </script>
     <script id="control_checkbox" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="checkbox" {{#if name}}name="{{name}}"{{/if}}
-            {{#if data}}checked="checked"{{/if}} {{#if fieldClass}}class="{{fieldClass}}"{{/if}}/>
+            {{#if data}}checked="checked"{{/if}} {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}} />
         {{#if prompt}}<span><label {{#if name}}for="{{name}}"{{/if}}>{{prompt}}</label></span>{{/if}}
     </script>
     <script id="control_text" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
-            value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}}
+            value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
             {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
     </script>
     <script id="control_textarea" type="text/x-handlebars-template">
         <textarea data-lcid="{{id}}-field" {{#if name}}name="{{name}}"{{/if}}
-            {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
+            {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}  {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
             {{#if rows}}rows="{{rows}}"{{/if}} {{#if cols}}cols="{{cols}}"{{/if}}>{{#if data}}{{data}}{{/if}}</textarea>
     </script>
     <script id="array_toolbar" type="text/x-handlebars-template">
