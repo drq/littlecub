@@ -56,8 +56,8 @@
             }
             this.schema["title"] = LC.isEmpty(this.schema["title"]) ? this.configs["label"] : this.schema["title"];
 
-            this.configs["helper"] = LC.isEmpty(this.configs["helper"]) ?  this.schema["description"] : this.configs["helper"];
-            this.schema["description"] = LC.isEmpty(this.schema["description"]) ?  this.configs["helper"] : this.schema["description"];
+            this.configs["helper"] = LC.isEmpty(this.configs["helper"]) ? this.schema["description"] : this.configs["helper"];
+            this.schema["description"] = LC.isEmpty(this.schema["description"]) ? this.configs["helper"] : this.schema["description"];
 
             this.configs["name"] = this.configs["name"] || this.path.substring(1).replace(/\//g, "_");
             this.configs["theme"] = this.configs["theme"] || LittleCub["defaults"]["theme"];
@@ -200,7 +200,9 @@
 
         render: function(container, data, mode) {
             mode = mode || "fill";
-            this.container = container;
+            if (container) {
+                this.container = container;
+            }
             var theme = this.configs["theme"];
             var template = this.configs["template"] ? this.configs["template"] : "form";
             if (!LC.isEmpty(data)) {
@@ -217,7 +219,7 @@
             this.bindDOM();
             var injection = LC.findThemeConfig("injection", theme)
             if (injection && _.isFunction(injection)) {
-                injection.call(this,container);
+                injection.call(this, container);
             }
         }
     });

@@ -32,6 +32,15 @@
                         return this.field.checked;
                     }
                 }
+            },
+
+            bindDOM: function() {
+                this.base();
+                if (this.configs["readonly"]) {
+                    this.field.onclick = this.field.onkeydown = function() {
+                        return false;
+                    };
+                }
             }
         }, {
             TYPE : "checkbox"

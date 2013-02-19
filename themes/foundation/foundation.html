@@ -33,7 +33,7 @@
         <select data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}  {{#if multiple}}multiple="multiple"{{/if}}
             {{#if size}}size="{{size}}"{{/if}} {{#if name}}name="{{name}}"{{/if}}>
             {{#unless required}}
-                <option value="">None</option>
+                <option value="">{{#if placeholder}}{{placeholder}}{{else}}None{{/if}}</option>
             {{/unless}}
             {{#each options}}
                 <option value="{{value}}" {{#if selected}}selected="selected"{{/if}}>{{text}}</option>

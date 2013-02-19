@@ -5,7 +5,7 @@
 
     LittleCub.registerTheme({
         "id" : "bootstrap",
-        "title" : "Default Twitter Bootstrap Theme",
+        "title" : "Twitter Bootstrap",
         "description" : "Default Twitter bootstrap theme for rendering basic forms.",
         "parent" : "base",
         "errorInjection" : function(status) {
@@ -21,7 +21,7 @@
     LittleCub.registerTheme({
         "id" : "bootstrap-horizontal",
         "parent" : "bootstrap",
-        "title" : "Horizontal Twitter Bootstrap Theme",
+        "title" : "Twitter Bootstrap Horizontal",
         "description" : "Twitter bootstrap theme for rendering basic forms with horizontal styles."
     });
 

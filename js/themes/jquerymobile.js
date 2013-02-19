@@ -7,7 +7,7 @@
         "id" : "jquerymobile",
         "parent" : "base",
         "platform":["mobile"],
-        "title" : "Default jQuery Mobile Theme",
+        "title" : "jQuery Mobile",
         "description" : "Default jQuery Mobile theme for rendering basic forms.",
         "errorClass" : "mobile-state-error",
         "injection" : function(container) {
@@ -26,7 +26,7 @@
     LittleCub.registerTheme({
         "id" : "jquerymobile-horizontal",
         "parent" : "jquerymobile",
-        "title" : "Default jQuery Mobile Horizontal Style Theme",
+        "title" : "jQuery Mobile Horizontal",
         "description" : "Default jQuery Mobile theme for rendering basic forms with helpers and labels on the same line as their mapped control."
     });
 

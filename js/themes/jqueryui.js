@@ -6,7 +6,7 @@
     LittleCub.registerTheme({
         "id" : "jqueryui",
         "parent" : "base",
-        "title" : "Default jQuery UI Theme",
+        "title" : "jQuery UI",
         "description" : "Default jQuery UI theme for rendering basic forms.",
         "errorClass" : "ui-state-error",
         "injection" : function(container) {
@@ -17,7 +17,7 @@
     LittleCub.registerTheme({
         "id" : "jqueryui-horizontal",
         "parent" : "jqueryui",
-        "title" : "Default jQuery UI Horizontal Style Theme",
+        "title" : "jQuery UI Horizontal",
         "description" : "Default jQuery UI theme for rendering basic forms with helpers and labels on the same line as their mapped control."
     });
 
