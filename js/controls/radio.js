@@ -54,6 +54,17 @@
                     v.addEventListener(validationTrigger, that.validate.bind(that), false);
                 });
                 this.bindCustomEventHandlers();
+            },
+
+            bindDOM: function() {
+                this.base();
+                if (this.configs["readonly"]) {
+                    _.each(this.field.querySelectorAll('input[type=radio]'), function(v) {
+                        v.onclick = v.onkeydown = function() {
+                            return false;
+                        };
+                    });
+                }
             }
         }, {
             TYPE : "radio"

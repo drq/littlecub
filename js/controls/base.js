@@ -156,7 +156,7 @@
         controlByPath: function(path) {
             var parentControl = this;
             if (path) {
-                var pathArray = path.split('/[]\//');
+                var pathArray = _.compact(path.split(/[\[\]\/]/));
                 for (var i = 0; i < pathArray.length; i++) {
                     if (!LC.isValEmpty(pathArray[i])) {
                         if (parentControl && parentControl.children) {
@@ -194,6 +194,9 @@
                 this.bindEventListeners();
                 if (!LC.isEmpty(this.configs["form"])) {
                     this.form = container.querySelector('form[data-lcid=' + this.id + '-form]');
+                }
+                if (this.configs["hidden"] && this.outerEl) {
+                    this.outerEl.style.display = "none";
                 }
             }
         },

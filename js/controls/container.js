@@ -50,7 +50,7 @@
                     return false;
                 } else {
                     return _.every(this.children, function(v) {
-                        return !v.isValid(skipValidation);
+                        return v.isValid(skipValidation);
                     });
                 }
             }

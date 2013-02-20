@@ -10,7 +10,7 @@
                 if (this.field) {
                     var len = arguments.length;
                     if (len == 0) {
-                        return parseFloat(this.field.value);
+                        return this.field.value == "" ? null : parseFloat(this.field.value);
                     } else if (len == 1) {
                         this.field.value = arguments[0] || "";
                         return this.field.value;
@@ -30,7 +30,7 @@
             _validateNumber: function() {
                 var val = this.val();
                 var validation = {
-                    "status" : LC.isValEmpty(this.field.value) || (!_.isNaN(val) && this.field.value.match(/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/))
+                    "status" : LC.isValEmpty(this.field.value) || (!_.isNaN(val) && this.field.value.match(/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/) != null)
                 };
                 if (! validation["status"]) {
                     validation["message"] = LC.findMessage("isNumber", this.configs["theme"]);
@@ -48,7 +48,8 @@
                 if (!LC.isEmpty(this.schema["maximum"])) {
                     if (val > this.schema["maximum"]) {
                         status = false;
-                    } if (this.schema["exclusiveMaximum"] && val == this.schema["maximum"]) {
+                    }
+                    if (this.schema["exclusiveMaximum"] && val == this.schema["maximum"]) {
                         status = false;
                     }
                 }
@@ -93,10 +94,12 @@
             },
 
             validate: function() {
-                this.validation["isNumber"] = this._validateNumber();
-                if (this.validation["isNumber"]["status"]) {
-                    this.validation["maximum"] = this._validateMaximum();
-                    this.validation["minimum"] = this._validateMinimum();
+                if (! LC.isValEmpty(this.field.value) || this.configs["required"]) {
+                    this.validation["isNumber"] = this._validateNumber();
+                    if (this.validation["isNumber"]["status"]) {
+                        this.validation["maximum"] = this._validateMaximum();
+                        this.validation["minimum"] = this._validateMinimum();
+                    }
                 }
                 return this.base();
             }
