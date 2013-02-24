@@ -38,6 +38,16 @@
             {{/each}}
         </select>
     </script>
+    <script id="control_checkboxgroup" type="text/x-handlebars-template">
+        <div data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}}>
+            {{# options}}
+                <label class="checkbox">
+                    <input type="checkbox" {{#if readonly}}readonly="readonly"{{/if}} name="{{../name}}[{{@index}}]" value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>
+                    {{text}}
+                </label>
+            {{/options}}
+        </div>
+    </script>
     <script id="control_radio" type="text/x-handlebars-template">
         <div class="{{#if fieldClass}} {{fieldClass}}{{/if}}" data-lcid="{{id}}-field">
             {{#unless required}}
@@ -71,6 +81,27 @@
             {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
             {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
             {{#if rows}}rows="{{rows}}"{{/if}} {{#if cols}}cols="{{cols}}"{{/if}}>{{#if data}}{{data}}{{/if}}</textarea>
+    </script>
+    <script id="control_password" type="text/x-handlebars-template">
+        <input data-lcid="{{id}}-field" type="password" {{#if name}}name="{{name}}"{{/if}}
+            value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
+            {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
+    </script>
+    <script id="control_email" type="text/x-handlebars-template">
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-envelope"></i></span>
+            <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
+                value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
+                {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
+        </div>
+    </script>
+    <script id="control_datetime" type="text/x-handlebars-template">
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-calendar"></i></span>
+            <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
+                value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
+                {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
+        </div>
     </script>
     <script id="array_toolbar" type="text/x-handlebars-template">
         <div class="lc-array-toolbar btn-group" data-lcid="{{id}}-array-toolbar">
@@ -122,7 +153,7 @@
                 {{#if grid}}
                 <div>
                     {{#key_value grid}}
-                    <div class="row">
+                    <div class="row{{#if ../fluid}}-fluid{{/if}}">
                         {{#key_value value}}
                             <div class="span{{value.span}}" data-licid="{{../key}}-{{key}}">
                                 {{#each value.controls}}

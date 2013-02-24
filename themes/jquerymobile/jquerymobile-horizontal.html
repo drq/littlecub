@@ -42,6 +42,15 @@
             {{#if prompt}}<label for="{{id}}-field" {{#if name}}for="{{name}}"{{/if}}>{{prompt}}</label>{{/if}}
         </fieldset>
     </script>
+    <script id="control_checkboxgroup" type="text/x-handlebars-template">
+        <fieldset data-lcid="{{id}}-field" data-role="controlgroup" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} data-mini="true">
+            {{#if label}}<legend>{{label}}</legend>{{/if}}
+            {{# options}}
+                <input id="{{id}}-{{value}}" type="checkbox" class="custom" {{#if readonly}}readonly="readonly"{{/if}} name="{{../name}}[{{@index}}]" value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>
+                <label for="{{id}}-{{value}}">{{text}}</label>
+            {{/options}}
+        </fieldset>
+    </script>
     <script id="control_text" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
             value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}}

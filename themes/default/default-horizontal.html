@@ -26,5 +26,13 @@
             {{/options}}
         </span>
     </script>
+    <script id="control_checkboxgroup" type="text/x-handlebars-template">
+        <span data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}}>
+            {{# options}}
+                <input type="checkbox" {{#if readonly}}readonly="readonly"{{/if}} name="{{../name}}[{{@index}}]" value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>
+                <span>{{text}}</span>
+            {{/options}}
+        </span>
+    </script>
 </head>
 </html>

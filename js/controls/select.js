@@ -50,10 +50,6 @@
                 }
             },
 
-            /**
-             * Validates if number of items has been less than minItems.
-             * @returns {Boolean} true if number of items has been less than minItems
-             */
             _validateMinItems: function() {
                 var validation = {
                     "status" : LC.isEmpty(this.schema.minItems) || this.val().length >= this.schema.minItems
@@ -64,10 +60,6 @@
                 return validation;
             },
 
-            /**
-             * Validates if number of items has been over maxItems.
-             * @returns {Boolean} true if number of items has been over maxItems
-             */
             _validateMaxItems: function() {
                 var validation = {
                     "status" : LC.isEmpty(this.schema.maxItems) || this.val().length <= this.schema.minItems
