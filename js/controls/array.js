@@ -139,6 +139,11 @@
                         that.updateKeyPath();
                         // Trigger validation
                         that.validate();
+                        // Trigger update event
+                        var evt = document.createEvent("Events");
+                        evt.initEvent("lc-update", true, true);
+                        evt["lc-control"] = that;
+                        that.outerEl.dispatchEvent(evt);
                         // Add the array toolbar for empty array
                         if (that.children.length == 0) {
                             var elem = document.createElement("span");
