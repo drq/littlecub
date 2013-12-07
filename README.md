@@ -10,3 +10,7 @@ Little Cub Rules!!!
   npm install grunt-contrib-concat@0.1.2rc6 --save-dev
   npm install grunt-contrib-connect@0.1.1rc6 --save-dev
   npm install grunt-contrib-qunit@0.1.1rc6 --save-dev
+
+  npm install grunt@0.4.2 --save-dev
+  npm install grunt-contrib-uglify@0.2.7 --save-dev
+  npm install grunt-contrib-clean@0.5.0 --save-dev
