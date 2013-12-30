@@ -1,16 +1,25 @@
-Little Cub
-=========
+LittleCub Forms
+===============
 
-Little Cub Rules!!!
+LittleCub is a light-weight, high-performance, easily customizable forms engine for Node.js and browser. It comes with comprehensive form control library and support for various responsive and mobile UI frameworks and can be easily customized or extended for additional framework support or custom controls.
 
-  npm install grunt@0.4.0rc6 --save-dev
-  npm install grunt-contrib-uglify@0.1.1rc6 --save-dev
-  npm install grunt-contrib-clean@0.4.0rc6 --save-dev
-  npm install ../grunt-contrib-handlebars --save-dev
-  npm install grunt-contrib-concat@0.1.2rc6 --save-dev
-  npm install grunt-contrib-connect@0.1.1rc6 --save-dev
-  npm install grunt-contrib-qunit@0.1.1rc6 --save-dev
+Installing
+----------
 
-  npm install grunt@0.4.2 --save-dev
-  npm install grunt-contrib-uglify@0.2.7 --save-dev
-  npm install grunt-contrib-clean@0.5.0 --save-dev
+Usage
+-----
+
+Building
+--------
+
+To build LittleCub, you'll need have [Grunt](http://gruntjs.com/getting-started) installed.
+
+Project dependencies may be installed via `npm install`.
+
+To build LittleCub from scratch, you'll want to run `grunt`
+in the root of the project. That will build LittleCub and output the
+results to the dist/ folder.
+
+To run the unit tests, run `grunt test`.
+
+The `grunt connect` allows you to check out the documentation and samples at `http://localhost:9001/docs/`.

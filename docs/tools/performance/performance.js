@@ -9,7 +9,7 @@
 
     var formGeneratorSchema = {
         "title" : "Form Generator",
-        "description" : "Enter or select the below options and then hit the Generate button. The total number of controls will be capped at 2000.",
+        "description" : "Enter or select the below options and then hit the Generate button. The total number of controls will be capped at 1000.",
         "type" : "object",
         "properties" : {
             "depth" : {
@@ -31,7 +31,7 @@
 
     var formGeneratorControl = LittleCub({}, null, formGeneratorSchema, document.getElementById('form-generator'));
 
-    var maxControls = 2000;
+    var maxControls = 1000;
 
     document.getElementById('form-generator-button').addEventListener('click', function() {
         var formVal = formGeneratorControl.val();

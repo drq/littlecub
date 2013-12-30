@@ -113,6 +113,7 @@
                     that.updateKeyPath();
                     // Trigger validation
                     that.validate();
+                    e.preventDefault();
                     return false;
                 };
 
@@ -170,6 +171,7 @@
                             }
                         }
                     }
+                    e.preventDefault();
                     return false;
                 };
 

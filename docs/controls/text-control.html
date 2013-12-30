@@ -16,7 +16,7 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
     <script src="../lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
-    <script src="../lib/bootstrap2/js/bootstrap.min.js"></script>
+    <script src="../lib/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="../lib/underscore/underscore-min.js" type="text/javascript"></script>
     <script src="../lib/handlebars/handlebars.js" type="text/javascript"></script>
@@ -53,18 +53,19 @@
 
     <script src="../js/tools.js"></script>
 
-    <link href="../lib/bootstrap2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../lib/bootstrap2/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="../lib/bootstrap2/css/bootstrap-sidenav.css" rel="stylesheet">
+    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <link href="../lib/bootstrap/css/bootstrap-sidenav.css" rel="stylesheet">
+
     <link type="text/css" href="../css/styles.css" rel="stylesheet"/>
     <link type="text/css" href="../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" onload="prettyPrint();">
 
-<div class="container">
     <!-- Navbar
-   ================================================== -->
+   ==================================================
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
@@ -93,12 +94,12 @@
 
     <header class="jumbotron subhead" id="overview">
         <div class="row">
-            <div class="span6">
+            <div class="col-md-6">
                 <h1>LittleCub Forms</h1>
 
                 <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
             </div>
-            <div class="span6">
+            <div class="col-md-6">
                 <div class="">
                     <section id="downloads">
                         <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
@@ -110,25 +111,73 @@
             </div>
         </div>
     </header>
-    <ul class="breadcrumb">
-        <li><a href="../index.html">Home</a> <span class="divider">></span></li>
-        <li><a href="index.html">Controls</a> <span class="divider">></span></li>
+    -->
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">LittleCub</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="../get-started.html">Get started</a></li>
+                <li><a href="../api-docs.html">API</a></li>
+                <li class="active"><a href="#">Controls</a></li>
+                <li><a href="../themes/index.html">Themes</a></li>
+                <li><a href="../tools/index.html">Tools</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <li><a href="https://github.com/drq/littlecub">View on GitHub</a></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row subhead">
+        <div class="col-md-6">
+            <h1>LittleCub Forms</h1>
+
+            <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
+        </div>
+        <div class="col-md-6">
+            <div class="github-bar">
+                <section id="downloads">
+                    <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
+                        this project as a .zip file</a>
+                    <a class="tar_download_link" href="https://github.com/drq/littlecub/tarball/master">Download
+                        this project as a tar.gz file</a>
+                </section>
+            </div>
+        </div>
+    </div>
+        <ul class="breadcrumb">
+        <li><a href="../index.html">Home</a> <span class="divider"></span></li>
+        <li><a href="index.html">Controls</a> <span class="divider"></span></li>
         <li><a href="#">Text Control</a></li>
     </ul>
 </div>
+
 <div class="container">
 
 
 <div class="row">
-<div class="span3 bs-docs-sidebar">
+<div class="col-md-3 bs-docs-sidebar">
     <ul class="nav nav-list bs-docs-sidenav">
-        <li><a href="#control-overview"><i class="icon-chevron-right"></i> Overview</a></li>
-        <li><a href="#schema"><i class="icon-chevron-right"></i> Schema</a></li>
-        <li><a href="#configs"><i class="icon-chevron-right"></i> Configs</a></li>
-        <li><a href="#examples"><i class="icon-chevron-right"></i> Examples</a></li>
+        <li><a href="#control-overview"><i class="icon-chevron-right"><span class="glyphicon glyphicon-chevron-right"></span></i> Overview</a></li>
+        <li><a href="#schema"><i class="icon-chevron-right"><span class="glyphicon glyphicon-chevron-right"/></i> Schema</a></li>
+        <li><a href="#configs"><i class="icon-chevron-right"><span class="glyphicon glyphicon-chevron-right"/></i> Configs</a></li>
+        <li><a href="#examples"><i class="icon-chevron-right"><span class="glyphicon glyphicon-chevron-right"/></i> Examples</a></li>
     </ul>
 </div>
-<div class="span9">
+<div class="col-md-9">
     <section id="control-overview">
         <div class="page-header">
             <h1>Text Control</h1>

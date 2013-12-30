@@ -15,8 +15,8 @@
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
-    <link href="lib/bootstrap2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="lib/bootstrap2/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
 
     <link type="text/css" href="css/styles.css" rel="stylesheet"/>
 </head>
@@ -24,7 +24,7 @@
 <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
 
 <!-- Navbar
-================================================== -->
+==================================================
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -50,17 +50,66 @@
         </div>
     </div>
 </div>
+-->
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">LittleCub</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="get-started.html">Get started</a></li>
+                <li><a href="api-docs.html">API</a></li>
+                <li><a href="controls/index.html">Controls</a></li>
+                <li><a href="themes/index.html">Themes</a></li>
+                <li><a href="tools/index.html">Tools</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <li><a href="https://github.com/drq/littlecub">View on GitHub</a></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row subhead">
+        <div class="col-md-6">
+            <h1>LittleCub Forms</h1>
+
+            <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
+        </div>
+        <div class="col-md-6">
+            <div class="github-bar">
+                <section id="downloads">
+                    <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
+                        this project as a .zip file</a>
+                    <a class="tar_download_link" href="https://github.com/drq/littlecub/tarball/master">Download
+                        this project as a tar.gz file</a>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container">
 
+<!--
     <header class="jumbotron subhead" id="overview">
         <div class="row">
-            <div class="span6">
+            <div class="col-md-6">
                 <h1>LittleCub Forms</h1>
 
                 <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
             </div>
-            <div class="span6">
+            <div class="col-md-6">
                 <div class="">
                     <section id="downloads">
                         <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
@@ -72,13 +121,15 @@
             </div>
         </div>
     </header>
+-->
+
     <ul class="breadcrumb">
         <li><a href="#">Home</a></li>
     </ul>
 
     <section id="typography">
         <div class="row">
-            <div class="span12">
+            <div class="col-md-12">
                 <p>LittleCub is a light-weight, high-performance, easily customizable forms engine for Node.js and
                     browser. It comes with comprehensive form control library and support for various responsive and
                     mobile UI frameworks and can be easily
@@ -105,7 +156,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="span6">
+            <div class="col-md-6">
                 <h3>High Performance</h3>
                 <table class="table table-bordered table-striped">
                     <tr>
@@ -127,7 +178,7 @@
                 </table>
                 <h5><a href="tools/performance/performance.html">Test it by yourself >></a></h5>
             </div>
-            <div class="span6">
+            <div class="col-md-6">
                 <h3>Light Weight</h3>
 
                 <p>
@@ -144,7 +195,7 @@
         </div>
         <div class="row">
 
-            <div class="span6">
+            <div class="col-md-6">
                 <h3>Easy Customization</h3>
 
                 <p>
@@ -159,7 +210,7 @@
                     also provides a straightforward way of building new controls through an object-oriented framework.
                 </p>
             </div>
-            <div class="span6">
+            <div class="col-md-6">
                 <h3>UI Framework Support</h3>
 
                 <p>LittleCub supports most popular responsive and mobile UI frameworks such as</p>
@@ -207,7 +258,7 @@
 <!-- /container -->
 
 <script src="lib/jquery/jquery-1.9.0.min.js"></script>
-<script src="lib/bootstrap2/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -17,9 +17,9 @@
                 el = el.parent();
             }
             if (el != null) {
-                $(el).trigger('pagecreate');
+                $(el).trigger('create');
             }
-            $('label', el).addClass("ui-input-text");
+            //$('label', el).addClass("ui-input-text");
         }
     });
 

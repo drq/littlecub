@@ -3,31 +3,31 @@
     <!-- Partials -->
     <script id="control_label" type="text/x-handlebars-template">
         {{#if label}}
-            <label class="control-label{{#if labelClass}} {{labelClass}}{{/if}}" {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
+            <label class="col-sm-2 control-label{{#if labelClass}} {{labelClass}}{{/if}}" {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
         {{/if}}
     </script>
     <script id="control_helper" type="text/x-handlebars-template">
         {{#if helper}}
-            <span class="controls {{#if helperClass}} {{helperClass}}{{/if}}"><i class="icon-info-sign"></i> {{helper}}</span>
+            <span class="col-sm-offset-2 col-sm-10 controls help-block{{#if helperClass}} {{helperClass}}{{/if}}"><i class="glyphicon glyphicon-info-sign"></i> {{helper}}</span>
         {{/if}}
     </script>
     <script id="control_messages" type="text/x-handlebars-template">
         {{#each validation}}
             {{#if message}}
-                <div class="help-block controls">{{message}}</div>
+                <div class="col-sm-offset-2 col-sm-10 help-block controls">{{message}}</div>
             {{/if}}
         {{/each}}
     </script>
     <script id="control_radio" type="text/x-handlebars-template">
-        <div class="{{#if fieldClass}} {{fieldClass}}{{/if}}" data-lcid="{{id}}-field">
+        <div class="form-inline{{#if fieldClass}} {{fieldClass}}{{/if}}" data-lcid="{{id}}-field">
             {{#unless required}}
-                <label class="radio inline">
+                <label class="radio">
                     <input type="radio" {{#if readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} value=""/>
                     None
                 </label>
             {{/unless}}
             {{# options}}
-                <label class="radio inline">
+                <label class="radio">
                     <input type="radio" {{#if readonly}}readonly="readonly"{{/if}} {{#with ../name}}name="{{.}}"{{/with}} value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>
                     {{text}}
                 </label>
@@ -35,9 +35,9 @@
         </div>
     </script>
     <script id="control_checkboxgroup" type="text/x-handlebars-template">
-        <div class="{{#if fieldClass}} {{fieldClass}}{{/if}}" data-lcid="{{id}}-field">
+        <div class="form-inline{{#if fieldClass}} {{fieldClass}}{{/if}}" data-lcid="{{id}}-field">
             {{# options}}
-                <label class="checkbox inline">
+                <label class="checkbox">
                     <input type="checkbox" {{#if readonly}}readonly="readonly"{{/if}} name="{{../name}}[{{@index}}]" value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>
                     {{text}}
                 </label>
@@ -45,7 +45,7 @@
         </div>
     </script>
     <script id="control_array" type="text/x-handlebars-template">
-        <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+        <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}" class="col-sm-12">
             {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
             {{#if helper}}<div>{{helper}}</div>{{/if}}
             <div data-lcid="{{id}}-items">
@@ -63,11 +63,11 @@
     </script>
     <script id="control_object" type="text/x-handlebars-template">
         {{#if controls}}
-            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}" class="col-sm-12">
                 {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
                 {{#if helper}}<div>{{helper}}</div>{{/if}}
                 {{#key_value controls}}
-                    <div class="control-group">{{include 'control'}}</div>
+                    <div class="form-group row">{{include 'control'}}</div>
                 {{/key_value}}
                 <span data-lcid="{{id}}-messages" {{#if messageClass}}class="{{messageClass}}"{{/if}}></span>
             </fieldset>
@@ -75,7 +75,7 @@
     </script>
     <script id="control_object_table" type="text/x-handlebars-template">
         {{#if controls}}
-            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}" class="col-sm-12">
                 <legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>
                 <div>{{helper}}</div>
                 {{#if table}}
@@ -103,9 +103,9 @@
         {{#isContainer}}
             {{injectControl}}
         {{else}}
-            <span data-lcid="{{id}}" data-lctype="{{type}}" class="control-group form-horizontal">
+            <span data-lcid="{{id}}" data-lctype="{{type}}" class="form-horizontal">
                 {{include 'control_label'}}
-                <div class="controls">
+                <div class="controls {{#if wrapperClass}}{{wrapperClass}}{{else}}col-sm-10{{/if}}">
                 {{injectControl}}
                 </div>
                 {{include 'control_helper'}}
@@ -119,9 +119,9 @@
             {{include 'control'}}
             {{#with form}}
                 {{#if buttons}}
-                    <div data-lcid="{{../../id}}-buttons">
+                    <div data-lcid="{{../../id}}-buttons" class="form-group">
                         {{#each buttons}}
-                            <input class="btn" {{#key_value this}}{{key}}="{{value}}"{{/key_value}}/>
+                            <input class="btn btn-default" {{#key_value this}}{{key}}="{{value}}"{{/key_value}}/>
                         {{/each}}
                     </div>
                 {{/if}}

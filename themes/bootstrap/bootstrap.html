@@ -8,7 +8,7 @@
     </script>
     <script id="control_helper" type="text/x-handlebars-template">
         {{#if helper}}
-            <span class="help-block{{#if helperClass}} {{helperClass}}{{/if}}"><i class="icon-info-sign"></i> {{helper}}</span>
+            <span class="help-block{{#if helperClass}} {{helperClass}}{{/if}}"><i class="glyphicon glyphicon-info-sign"></i> {{helper}}</span>
         {{/if}}
     </script>
     <script id="control_messages" type="text/x-handlebars-template">
@@ -24,11 +24,11 @@
     </script>
     <script id="control_file" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="file" {{#if name}}name="{{name}}"{{/if}}
-            {{#if fieldClass}}class="{{fieldClass}}"{{/if}}
+            class="{{#if fieldClass}} {{fieldClass}}{{/if}}"
             {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
     </script>
     <script id="control_select" type="text/x-handlebars-template">
-        <select data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if multiple}}multiple="multiple"{{/if}}
+        <select data-lcid="{{id}}-field" class="form-control{{#if fieldClass}} {{fieldClass}}{{/if}}" {{#if multiple}}multiple="multiple"{{/if}}
             {{#if size}}size="{{size}}"{{/if}} {{#if name}}name="{{name}}"{{/if}}>
             {{#unless required}}
                 <option value="">{{#if placeholder}}{{placeholder}}{{else}}None{{/if}}</option>
@@ -73,51 +73,53 @@
     </script>
     <script id="control_text" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
-            value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
+            value="{{#if data}}{{data}}{{/if}}" class="form-control{{#if fieldClass}} {{fieldClass}}{{/if}}" {{#if readonly}}readonly="readonly"{{/if}}
             {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
     </script>
     <script id="control_textarea" type="text/x-handlebars-template">
         <textarea data-lcid="{{id}}-field" {{#if name}}name="{{name}}"{{/if}}
-            {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
+        class="form-control{{#if fieldClass}} {{fieldClass}}{{/if}}" {{#if readonly}}readonly="readonly"{{/if}}
             {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
             {{#if rows}}rows="{{rows}}"{{/if}} {{#if cols}}cols="{{cols}}"{{/if}}>{{#if data}}{{data}}{{/if}}</textarea>
     </script>
     <script id="control_password" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="password" {{#if name}}name="{{name}}"{{/if}}
-            value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
+            value="{{#if data}}{{data}}{{/if}}" class="form-control{{#if fieldClass}} {{fieldClass}}{{/if}}" {{#if readonly}}readonly="readonly"{{/if}}
             {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
     </script>
     <script id="control_email" type="text/x-handlebars-template">
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-envelope"></i></span>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
             <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
-                value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
+                value="{{#if data}}{{data}}{{/if}}" class="form-control{{#if fieldClass}} {{fieldClass}}{{/if}}" {{#if readonly}}readonly="readonly"{{/if}}
                 {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
         </div>
     </script>
     <script id="control_datetime" type="text/x-handlebars-template">
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-calendar"></i></span>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
             <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
-                value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if readonly}}readonly="readonly"{{/if}}
+                value="{{#if data}}{{data}}{{/if}}" class="form-control{{#if fieldClass}} {{fieldClass}}{{/if}}" {{#if readonly}}readonly="readonly"{{/if}}
                 {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
         </div>
     </script>
     <script id="array_toolbar" type="text/x-handlebars-template">
         <div class="lc-array-toolbar btn-group" data-lcid="{{id}}-array-toolbar">
-            <button  type="button" data-lcid="{{id}}-array-toolbar-add" class="lc-array-add btn btn-small"><i class="icon-plus"></i> Add</button>
+            <button  type="button" data-lcid="{{id}}-array-toolbar-add" class="lc-array-add btn btn-default btn-sm"><i><span class="glyphicon glyphicon-plus"/></i> Add</button>
         </div>
     </script>
     <script id="array_item_toolbar" type="text/x-handlebars-template">
-        <div class="btn-toolbar">
-            <div data-lcid="{{id}}-toolbar" class="lc-array-item-toolbar btn-group">
-                <button type="button" data-lcid="{{id}}-add" class="lc-array-item-add btn btn-small"><i class="icon-plus"></i></button>
-                <button type="button" data-lcid="{{id}}-remove" class="lc-array-item-remove btn btn-small"><i class="icon-remove"></i></button>
-            </div>
+        <div>
+            <p class="btn-toolbar">
+                <div data-lcid="{{id}}-toolbar" class="lc-array-item-toolbar btn-group">
+                    <button data-lcid="{{id}}-add" class="lc-array-item-add btn btn-default btn-sm"><i><span class="glyphicon glyphicon-plus"></span></i></button>
+                    <button data-lcid="{{id}}-remove" class="lc-array-item-remove btn btn-default btn-sm"><i><span class="glyphicon glyphicon-minus"></span></i></button>
+                </div>
+            </p>
         </div>
     </script>
     <script id="control_array" type="text/x-handlebars-template">
-        <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+        <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}" class="form-group">
             {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
             {{#if helper}}<div>{{helper}}</div>{{/if}}
             <div data-lcid="{{id}}-items">
@@ -135,11 +137,11 @@
     </script>
     <script id="control_object" type="text/x-handlebars-template">
         {{#if controls}}
-            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}">
+            <fieldset name="{{#if name}}{{name}}{{/if}}" data-lcid="{{id}}" data-lctype="{{type}}" class="form-group">
                 {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
                 {{#if helper}}<div>{{helper}}</div>{{/if}}
                 {{#key_value controls}}
-                    <div>{{include 'control'}}</div>
+                    {{include 'control'}}
                 {{/key_value}}
                 <span data-lcid="{{id}}-messages" {{#if messageClass}}class="{{messageClass}}"{{/if}}></span>
             </fieldset>
@@ -151,14 +153,14 @@
                 {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
                 <div>{{helper}}</div>
                 {{#if grid}}
-                <div>
+                <div class="container">
                     {{#key_value grid}}
-                    <div class="row{{#if ../fluid}}-fluid{{/if}}">
+                    <div class="row">
                         {{#key_value value}}
-                            <div class="span{{value.span}}" data-licid="{{../key}}-{{key}}">
+                            <div class="col-md-{{value.span}}" data-licid="{{../key}}-{{key}}">
                                 {{#each value.controls}}
                                     {{#object_with_key ../../../../controls key=this}}
-                                        <div>{{include 'control'}}</div>
+                                        {{include 'control'}}
                                     {{/object_with_key}}
                                 {{/each}}
                             </div>
@@ -175,12 +177,14 @@
         {{#isContainer}}
             {{injectControl}}
         {{else}}
-            <span data-lcid="{{id}}" data-lctype="{{type}}" class="control-group">
-                {{include 'control_label'}}
-                {{injectControl}}
-                {{include 'control_helper'}}
-                <span data-lcid="{{id}}-messages"></span>
-            </span>
+            <div data-lcid="{{id}}" data-lctype="{{type}}" class="form-group row">
+                <div class="{{#if wrapperClass}}{{wrapperClass}}{{else}}col-md-6{{/if}}">
+                    {{include 'control_label'}}
+                    {{injectControl}}
+                    {{include 'control_helper'}}
+                    <span data-lcid="{{id}}-messages"></span>
+                </div>
+            </div>
         {{/isContainer}}
     </script>
     <script id="form" type="text/x-handlebars-template">
@@ -189,9 +193,9 @@
             {{include 'control'}}
             {{#with form}}
                 {{#if buttons}}
-                    <div data-lcid="{{../../id}}-buttons">
+                    <div data-lcid="{{../../id}}-buttons" class="form-group">
                         {{#each buttons}}
-                            <input class="btn" {{#key_value this}}{{key}}="{{value}}"{{/key_value}}/>
+                            <input class="btn btn-default" {{#key_value this}}{{key}}="{{value}}"{{/key_value}}/>
                         {{/each}}
                     </div>
                 {{/if}}

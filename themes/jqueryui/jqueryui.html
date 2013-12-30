@@ -88,7 +88,7 @@
         </div>
     </script>
     <script id="array_item_toolbar" type="text/x-handlebars-template">
-        <div data-lcid="{{id}}-toolbar" class="lc-array-item-toolbar">
+        <div data-lcid="{{id}}-toolbar" class="lc-array-item-toolbar ui-widget-header ui-corner-all">
             <button type="button" data-lcid="{{id}}-add" class="lc-array-item-add">Add</button>
             <button type="button" data-lcid="{{id}}-remove" class="lc-array-item-remove">Remove</button>
         </div>
@@ -166,7 +166,7 @@
             {{include 'control'}}
             {{#with form}}
                 {{#if buttons}}
-                    <div data-lcid="{{../../id}}-buttons">
+                    <div data-lcid="{{../../id}}-buttons" class="lc-form-buttons">
                         {{#each buttons}}
                             <input {{#key_value this}}{{key}}="{{value}}"{{/key_value}}/>
                         {{/each}}

@@ -19,7 +19,7 @@
                             val = [];
                         } else {
                             var checked = this.field.querySelector('input[type=radio]:checked');
-                            if (!checked) {
+                            if (checked != null) {
                                 val = checked.value;
                             }
                         }

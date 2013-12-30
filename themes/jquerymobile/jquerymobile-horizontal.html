@@ -5,14 +5,22 @@
             <label {{#if name}}for="{{name}}"{{/if}} {{#if labelClass}}class="{{labelClass}}"{{/if}}>{{label}}</label>
         {{/if}}
     </script>
+    <script id="control_helper" type="text/x-handlebars-template">
+        {{#if helper}}
+        <div class="ui-field-contain{{#if helperClass}} {{helperClass}}{{/if}}">
+            <label> </label>
+            <span>{{helper}}</span>
+        </div>
+        {{/if}}
+    </script>
     <script id="control_file" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="file" {{#if name}}name="{{name}}"{{/if}}
             {{#if fieldClass}}class="{{fieldClass}}"{{/if}}
-            {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}} data-mini="true"/>
+            {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}} data-mini="false"/>
     </script>
     <script id="control_select" type="text/x-handlebars-template">
         <select data-lcid="{{id}}-field" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if multiple}}multiple="multiple"{{/if}}
-            {{#if size}}size="{{size}}"{{/if}} {{#if name}}name="{{name}}"{{/if}} data-native-menu="false" data-mini="true">
+            {{#if size}}size="{{size}}"{{/if}} {{#if name}}name="{{name}}"{{/if}} data-native-menu="false" data-mini="false">
             {{#unless required}}
                 <option value="">{{#if placeholder}}{{placeholder}}{{else}}Options{{/if}}</option>
             {{/unless}}
@@ -22,7 +30,7 @@
         </select>
     </script>
     <script id="control_radio" type="text/x-handlebars-template">
-        <fieldset data-lcid="{{id}}-field" data-role="controlgroup" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} data-mini="true">
+        <fieldset data-lcid="{{id}}-field" data-role="controlgroup" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} data-mini="false">
             {{#if label}}<legend>{{label}}</legend>{{/if}}
             {{#unless required}}
                 <input id="{{id}}-none" type="radio" class="custom" {{#if readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} value=""/>
@@ -35,15 +43,15 @@
         </fieldset>
     </script>
     <script id="control_checkbox" type="text/x-handlebars-template">
-        <fieldset data-role="controlgroup" data-mini="true">
+        <fieldset data-role="controlgroup" data-mini="false">
             {{#if label}}<legend>{{label}}</legend>{{/if}}
             <input id="{{id}}-field" data-lcid="{{id}}-field" type="checkbox" {{#if name}}name="{{name}}"{{/if}}
-                {{#if data}}checked="checked"{{/if}} {{#if fieldClass}}class="{{fieldClass}}"{{/if}} data-mini="true"/>
+                {{#if data}}checked="checked"{{/if}} {{#if fieldClass}}class="{{fieldClass}}"{{/if}} data-mini="false"/>
             {{#if prompt}}<label for="{{id}}-field" {{#if name}}for="{{name}}"{{/if}}>{{prompt}}</label>{{/if}}
         </fieldset>
     </script>
     <script id="control_checkboxgroup" type="text/x-handlebars-template">
-        <fieldset data-lcid="{{id}}-field" data-role="controlgroup" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} data-mini="true">
+        <fieldset data-lcid="{{id}}-field" data-role="controlgroup" {{#if fieldClass}}class="{{fieldClass}}"{{/if}} data-mini="false">
             {{#if label}}<legend>{{label}}</legend>{{/if}}
             {{# options}}
                 <input id="{{id}}-{{value}}" type="checkbox" class="custom" {{#if readonly}}readonly="readonly"{{/if}} name="{{../name}}[{{@index}}]" value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>
@@ -54,18 +62,18 @@
     <script id="control_text" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
             value="{{#if data}}{{data}}{{/if}}" {{#if fieldClass}}class="{{fieldClass}}"{{/if}}
-            {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}} data-mini="true"/>
+            {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}} data-mini="false"/>
     </script>
     <script id="control_textarea" type="text/x-handlebars-template">
         <textarea data-lcid="{{id}}-field" {{#if name}}name="{{name}}"{{/if}}
             {{#if fieldClass}}class="{{fieldClass}}"{{/if}} {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
-            {{#if rows}}rows="{{rows}}"{{/if}} {{#if cols}}cols="{{cols}}"{{/if}} data-mini="true">{{#if data}}{{data}}{{/if}}</textarea>
+            {{#if rows}}rows="{{rows}}"{{/if}} {{#if cols}}cols="{{cols}}"{{/if}} data-mini="false">{{#if data}}{{data}}{{/if}}</textarea>
     </script>
     <script id="control" type="text/x-handlebars-template">
         {{#isContainer}}
             {{injectControl}}
         {{else}}
-            <div data-lcid="{{id}}" data-lctype="{{type}}" data-role="fieldcontain">
+            <div data-lcid="{{id}}" data-lctype="{{type}}" class="ui-field-contain">
                 {{#isType 'radio checkbox'}}
                         {{injectControl}}
                 {{else}}

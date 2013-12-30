@@ -15,8 +15,8 @@
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
-    <link href="../lib/bootstrap2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../lib/bootstrap2/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
 
     <link type="text/css" href="../css/styles.css" rel="stylesheet"/>
 </head>
@@ -24,7 +24,7 @@
 <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
 
 <!-- Navbar
-================================================== -->
+==================================================
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -50,30 +50,80 @@
         </div>
     </div>
 </div>
+-->
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">LittleCub</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="../get-started.html">Get started</a></li>
+                <li><a href="../api-docs.html">API</a></li>
+                <li class="active"><a href="#">Controls</a></li>
+                <li><a href="../themes/index.html">Themes</a></li>
+                <li><a href="../tools/index.html">Tools</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <li><a href="https://github.com/drq/littlecub">View on GitHub</a></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
 <div class="container">
+    <div class="row subhead">
+        <div class="col-md-6">
+            <h1>LittleCub Forms</h1>
 
+            <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
+        </div>
+        <div class="col-md-6">
+            <div class="github-bar">
+                <section id="downloads">
+                    <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
+                        this project as a .zip file</a>
+                    <a class="tar_download_link" href="https://github.com/drq/littlecub/tarball/master">Download
+                        this project as a tar.gz file</a>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+<!--
     <header class="jumbotron subhead" id="overview">
         <div class="row">
-            <div class="span6">
+            <div class="col-md-6">
                 <h1>LittleCub Forms</h1>
 
                 <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
             </div>
-            <div class="span6 slider">
+            <div class="col-md-6 slider">
                 <div class="wmuSlider">
                 </div>
             </div>
         </div>
     </header>
+-->
     <ul class="breadcrumb">
-        <li><a href="../index.html">Home</a> <span class="divider">></span></li>
+        <li><a href="../index.html">Home</a> <span class="divider"></span></li>
         <li><a href="index.html">Controls</a></li>
     </ul>
 
     <section id="typography">
         <div class="row">
-            <div class="span12">
+            <div class="col-md-12">
                 <p>LittleCub provides a large set of controls that should cover most of your need for building forms. Each
                     control type supports its own set of JSON schema keywords and control specific configurations.</p>
 
@@ -82,7 +132,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="span6">
+            <div class="col-md-6">
                 <h3>Core Controls</h3>
                 <ul>
                     <li><a href="text-control.html">Text</a></li>
@@ -106,7 +156,7 @@
                     <li><a href="uri-control.html">Uri</a></li>
                 </ul>
             </div>
-            <div class="span6">
+            <div class="col-md-6">
                 <h3>Advanced Controls</h3>
                 <ul>
                     <li><a href="address-control.html">Address</a></li>
@@ -131,7 +181,7 @@
 <!-- /container -->
 
 <script src="../lib/jquery/jquery-1.9.0.min.js"></script>
-<script src="../lib/bootstrap2/js/bootstrap.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

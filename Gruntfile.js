@@ -32,6 +32,7 @@ module.exports = function(grunt) {
                 files: {
                     "build/templates-default.js": ["build/templates/default/*.hbs"],
                     "build/templates-bootstrap.js": ["build/templates/bootstrap/*.hbs"],
+                    "build/templates-bootstrap2.js": ["build/templates/bootstrap2/*.hbs"],
                     "build/templates-foundation.js": ["build/templates/foundation/*.hbs"],
                     "build/templates-jqueryui.js": ["build/templates/jqueryui/*.hbs"],
                     "build/templates-jquerymobile.js": ["build/templates/jquerymobile/*.hbs"]
@@ -90,6 +91,14 @@ module.exports = function(grunt) {
                 ],
                 dest: 'dist/<%= pkg.name %>-bootstrap.js'
             },
+            "bootstrap2": {
+                src: [
+                    'dist/<%= pkg.name %>-core.js',
+                    'js/themes/bootstrap2.js',
+                    'build/templates-bootstrap2.js'
+                ],
+                dest: 'dist/<%= pkg.name %>-bootstrap2.js'
+            },
             "foundation": {
                 src: [
                     'dist/<%= pkg.name %>-core.js',
@@ -131,6 +140,10 @@ module.exports = function(grunt) {
                 src: 'dist/<%= pkg.name %>-bootstrap.js',
                 dest: 'dist/<%= pkg.name %>-bootstrap.min.js'
             },
+            "bootstrap2": {
+                src: 'dist/<%= pkg.name %>-bootstrap2.js',
+                dest: 'dist/<%= pkg.name %>-bootstrap2.min.js'
+            },
             "foundation": {
                 src: 'dist/<%= pkg.name %>-foundation.js',
                 dest: 'dist/<%= pkg.name %>-foundation.min.js'
@@ -150,6 +163,10 @@ module.exports = function(grunt) {
             "bootstrap-templates": {
                 src: 'build/templates-bootstrap.js',
                 dest: 'dist/templates-bootstrap.min.js'
+            },
+            "bootstrap2-templates": {
+                src: 'build/templates-bootstrap2.js',
+                dest: 'dist/templates-bootstrap2.min.js'
             },
             "foundation-templates": {
                 src: 'build/templates-foundation.js',

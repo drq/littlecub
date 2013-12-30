@@ -9,7 +9,7 @@
         "description" : "Default Twitter bootstrap theme for rendering basic forms.",
         "parent" : "base",
         "errorInjection" : function(status) {
-            var errorClass= "control-group error";
+            var errorClass= "control-group has-error";
             if (status) {
                 $(this.outerEl).removeClass(errorClass);
             } else {
