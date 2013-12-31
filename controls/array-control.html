@@ -20,36 +20,7 @@
 
     <script src="../lib/underscore/underscore-min.js" type="text/javascript"></script>
     <script src="../lib/handlebars/handlebars.js" type="text/javascript"></script>
-    <script src="../../js/handlebars/helpers.js" type="text/javascript"></script>
-
-    <script src="../../js/base.js" type="text/javascript"></script>
-    <script src="../../js/littlecub.js" type="text/javascript"></script>
-    <script src="../../js/themes/themes.js" type="text/javascript"></script>
-    <script src="../../js/themes/bootstrap.js" type="text/javascript"></script>
-
-    <script src="../../js/controls/base.js" type="text/javascript"></script>
-    <script src="../../js/controls/container.js" type="text/javascript"></script>
-    <script src="../../js/controls/text.js" type="text/javascript"></script>
-    <script src="../../js/controls/number.js" type="text/javascript"></script>
-    <script src="../../js/controls/integer.js" type="text/javascript"></script>
-    <script src="../../js/controls/checkbox.js" type="text/javascript"></script>
-    <script src="../../js/controls/list.js" type="text/javascript"></script>
-    <script src="../../js/controls/radio.js" type="text/javascript"></script>
-    <script src="../../js/controls/select.js" type="text/javascript"></script>
-    <script src="../../js/controls/textarea.js" type="text/javascript"></script>
-    <script src="../../js/controls/file.js" type="text/javascript"></script>
-    <script src="../../js/controls/hidden.js" type="text/javascript"></script>
-    <script src="../../js/controls/object.js" type="text/javascript"></script>
-    <script src="../../js/controls/array.js" type="text/javascript"></script>
-
-    <script src="../../js/controls/format/email.js" type="text/javascript"></script>
-    <script src="../../js/controls/format/hostname.js" type="text/javascript"></script>
-    <script src="../../js/controls/format/ipv4.js" type="text/javascript"></script>
-    <script src="../../js/controls/format/ipv6.js" type="text/javascript"></script>
-    <script src="../../js/controls/format/datetime.js" type="text/javascript"></script>
-    <script src="../../js/controls/format/uri.js" type="text/javascript"></script>
-
-    <script src="../../js/controls/extras/address.js" type="text/javascript"></script>
+    <script src="../releases/trunk/littlecub-bootstrap.min.js" type="text/javascript"></script>
 
     <script src="../js/tools.js"></script>
 
@@ -351,135 +322,130 @@ var arrayControl4j = $('#array-control-4-j').lc([], {
 <script type="text/javascript">
 
     $(function() {
-        LittleCub.loadThemes({
-            "bootstrap" : "../../themes/bootstrap/bootstrap.html"
-        }, function() {
+        var arrayControl1 = LittleCub(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], null, null, document.getElementById('array-control-1'));
 
-            var arrayControl1 = LittleCub(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], null, null, document.getElementById('array-control-1'));
+        var arrayControl1j = $('#array-control-1-j').lc(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"]);
 
-            var arrayControl1j = $('#array-control-1-j').lc(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"]);
+        var arrayControl2 = LittleCub(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], null, {
+            "type" : "array",
+            "title" : "Bears",
+            "items" : {
+                "type" : "string",
+                "title" : "Your Favorite Bear"
+            }
+        }, document.getElementById('array-control-2'));
 
-            var arrayControl2 = LittleCub(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], null, {
-                "type" : "array",
-                "title" : "Bears",
-                "items" : {
-                    "type" : "string",
-                    "title" : "Your Favorite Bear"
-                }
-            }, document.getElementById('array-control-2'));
+        var arrayControl2j = $('#array-control-2-j').lc(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], null, {
+            "type" : "array",
+            "title" : "Bears",
+            "items" : {
+                "type" : "string",
+                "title" : "Your Favorite Bear"
+            }
+        });
 
-            var arrayControl2j = $('#array-control-2-j').lc(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], null, {
-                "type" : "array",
-                "title" : "Bears",
-                "items" : {
-                    "type" : "string",
-                    "title" : "Your Favorite Bear"
-                }
-            });
+        var arrayControl3 = LittleCub(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], {
+            "type" : "array",
+            "items" : {
+                "size" : 10
+            }
+        }, {
+            "type" : "array",
+            "title" : "Bears",
+            "minItems" : 2,
+            "maxItems" : 5,
+            "uniqueItems" : true,
+            "items" : {
+                "type" : "string",
+                "title" : "Your Favorite Bear"
+            }
+        }, document.getElementById('array-control-3'));
 
-            var arrayControl3 = LittleCub(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], {
-                "type" : "array",
-                "items" : {
-                    "size" : 10
-                }
-            }, {
-                "type" : "array",
-                "title" : "Bears",
-                "minItems" : 2,
-                "maxItems" : 5,
-                "uniqueItems" : true,
-                "items" : {
-                    "type" : "string",
-                    "title" : "Your Favorite Bear"
-                }
-            }, document.getElementById('array-control-3'));
+        var arrayControl3j = $('#array-control-3-j').lc(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], {
+            "type" : "array",
+            "items" : {
+                "size" : 10
+            }
+        }, {
+            "type" : "array",
+            "title" : "Bears",
+            "minItems" : 2,
+            "maxItems" : 5,
+            "uniqueItems" : true,
+            "items" : {
+                "type" : "string",
+                "title" : "Your Favorite Bear"
+            }
+        });
 
-            var arrayControl3j = $('#array-control-3-j').lc(["Giant Panda","Brown Bear","Polar Bear","Blue Bear"], {
-                "type" : "array",
-                "items" : {
-                    "size" : 10
-                }
-            }, {
-                "type" : "array",
-                "title" : "Bears",
-                "minItems" : 2,
-                "maxItems" : 5,
-                "uniqueItems" : true,
-                "items" : {
-                    "type" : "string",
-                    "title" : "Your Favorite Bear"
-                }
-            });
-
-            var arrayControl4 = LittleCub([], {
-                "type" : "array",
-                "items" : {
-                    "type" : "object",
-                    "controls" : {
-                        "name" : {
-                            "type" : "text",
-                            "size" : 30
-                        },
-                        "color" : {
-                            "type" : "select"
-                        }
+        var arrayControl4 = LittleCub([], {
+            "type" : "array",
+            "items" : {
+                "type" : "object",
+                "controls" : {
+                    "name" : {
+                        "type" : "text",
+                        "size" : 30
+                    },
+                    "color" : {
+                        "type" : "select"
                     }
                 }
-            }, {
-                "type" : "array",
-                "title" : "Bears",
-                "minItems" : 2,
-                "maxItems" : 5,
-                "uniqueItems" : true,
-                "items" : {
-                    "type" : "object",
-                    "properties" : {
-                        "name" : {
-                            "type" : "string"
-                        },
-                        "color" : {
-                            "type" : "string",
-                            "enum" : ["brown", "white", "grey","black"]
-                        }
+            }
+        }, {
+            "type" : "array",
+            "title" : "Bears",
+            "minItems" : 2,
+            "maxItems" : 5,
+            "uniqueItems" : true,
+            "items" : {
+                "type" : "object",
+                "properties" : {
+                    "name" : {
+                        "type" : "string"
                     },
-                    "required" : ["name", "color"]
-                }
-            }, document.getElementById('array-control-4'));
+                    "color" : {
+                        "type" : "string",
+                        "enum" : ["brown", "white", "grey","black"]
+                    }
+                },
+                "required" : ["name", "color"]
+            }
+        }, document.getElementById('array-control-4'));
 
-            var arrayControl4j = $('#array-control-4-j').lc([], {
-                "type" : "array",
-                "items" : {
-                    "type" : "object",
-                    "controls" : {
-                        "name" : {
-                            "type" : "text",
-                            "size" : 30
-                        },
-                        "color" : {
-                            "type" : "select"
-                        }
+        var arrayControl4j = $('#array-control-4-j').lc([], {
+            "type" : "array",
+            "items" : {
+                "type" : "object",
+                "controls" : {
+                    "name" : {
+                        "type" : "text",
+                        "size" : 30
+                    },
+                    "color" : {
+                        "type" : "select"
                     }
                 }
-            }, {
-                "type" : "array",
-                "title" : "Bears",
-                "minItems" : 2,
-                "maxItems" : 5,
-                "uniqueItems" : true,
-                "items" : {
-                    "type" : "object",
-                    "properties" : {
-                        "name" : {
-                            "type" : "string"
-                        },
-                        "color" : {
-                            "type" : "string",
-                            "enum" : ["brown", "white", "grey","black"]
-                        }
+            }
+        }, {
+            "type" : "array",
+            "title" : "Bears",
+            "minItems" : 2,
+            "maxItems" : 5,
+            "uniqueItems" : true,
+            "items" : {
+                "type" : "object",
+                "properties" : {
+                    "name" : {
+                        "type" : "string"
                     },
-                    "required" : ["name", "color"]
-                }
-            });
+                    "color" : {
+                        "type" : "string",
+                        "enum" : ["brown", "white", "grey","black"]
+                    }
+                },
+                "required" : ["name", "color"]
+            }
         });
 
         $("#control-schema").html(LCTools.schema(["type","title","description","default","items","minItems","maxItems","uniqueItems","pattern"], "array", "array"));
