@@ -307,11 +307,11 @@
                 return validation;
             },
 
-            validate: function() {
+            validate: function(validateChildren) {
                 this.validation["minItems"] = this._validateMinItems();
                 this.validation["maxItems"] = this._validateMaxItems();
                 this.validation["uniqueItems"] = this._validateUniqueItems();
-                return this.base();
+                return this.base(validateChildren);
             }
         }, {
             TYPE : "array"

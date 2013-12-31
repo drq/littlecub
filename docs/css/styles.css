@@ -446,3 +446,8 @@ body .one .bsa_it_p {
 pre.prettyprint {
     margin-top: 5px;
 }
+
+pre ol.linenums {
+    font-size: 12px;
+    margin: 0;
+}

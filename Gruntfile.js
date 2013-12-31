@@ -126,7 +126,7 @@ module.exports = function(grunt) {
         },
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %>\nCopyright 2013 NextFrontier Technologies Inc. Licensed under the Apache 2 license.\n https://github.com/drq/littlecub/blob/master/license.txt */'
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %>\nCopyright 2014 NextFrontier Technologies Inc. Licensed under the Apache 2 license.\n https://github.com/drq/littlecub/blob/master/license.txt */'
             },
             core: {
                 src: 'dist/<%= pkg.name %>-core.js',

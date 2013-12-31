@@ -53,6 +53,15 @@
                         return v.isValid(skipValidation);
                     });
                 }
+            },
+
+            validate: function(validateChildren) {
+                if (validateChildren) {
+                    _.each(this.children, function(v) {
+                        v.validate(validateChildren);
+                    });
+                }
+                return this.base();
             }
         }
     );

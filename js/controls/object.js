@@ -98,6 +98,10 @@
                     var d = LC.isEmpty(data) ? null : data[k];
                     v.bindData(d);
                 });
+            },
+
+            validate: function(validateChildren) {
+                return this.base(validateChildren);
             }
         }, {
             TYPE : "object"

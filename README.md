@@ -26,19 +26,19 @@ You may also need to add the required libraries and stylesheets for your selecte
 <script src="dist/littlecub.min.js" type="text/javascript"></script>
 
 <!-- Twitter Bootstrap 3.x -->
-<script src="dist/templates-bootstrap.min.js" type="text/javascript"></script>
+<script src="dist/littlecub-bootstrap.min.js" type="text/javascript"></script>
 
 <!-- Twitter Bootstrap 2.x -->
-<script src="dist/templates-bootstrap2.min.js" type="text/javascript"></script>
+<script src="dist/littlecub-bootstrap2.min.js" type="text/javascript"></script>
 
 <!-- jQuery Mobile Foundation -->
-<script src="dist/templates-jquerymobile.min.js" type="text/javascript"></script>
+<script src="dist/littlecub-jquerymobile.min.js" type="text/javascript"></script>
 
-<!-- jQuery UI Foundation -->
-<script src="dist/templates-jqueryui.min.js" type="text/javascript"></script>
+<!-- jQuery UI -->
+<script src="dist/littlecub-jqueryui.min.js" type="text/javascript"></script>
 
 <!-- Zurb Foundation -->
-<script src="dist/templates-foundation.min.js" type="text/javascript"></script>
+<script src="dist/littlecub-foundation.min.js" type="text/javascript"></script>
 ```
 
 Usage
