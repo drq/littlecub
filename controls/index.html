@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>LittleCub Forms - Controls</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Control library of LittleCub, a light-weight, high-performance, customizable forms engine for Node.js and browser with support for various responsive and mobile UI frameworks."/>
+    <meta name="author" content="NextFrontier Technologies Inc."/>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
+    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <link type="text/css" href="../css/styles.css" rel="stylesheet"/>
+</head>
+
+<body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+<!-- Navbar
+==================================================
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">LittleCub</a>
+
+            <div class="nav-collapse" id="main-menu">
+                <ul class="nav" id="main-menu-left">
+                    <li><a href="../getting-started.html">Getting started</a></li>
+                    <li><a href="../api-docs.html">API</a></li>
+                    <li><a href="#">Controls</a></li>
+                    <li><a href="../themes/index.html">Themes</a></li>
+                    <li><a href="../tools/index.html">Tools</a></li>
+                </ul>
+                <ul id="main-menu-right" class="nav pull-right">
+                    <li><a href="https://github.com/drq/littlecub">View on GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">LittleCub</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="../getting-started.html">Getting started</a></li>
+                <li><a href="../api-docs.html">API</a></li>
+                <li class="active"><a href="#">Controls</a></li>
+                <li><a href="../themes/index.html">Themes</a></li>
+                <li><a href="../tools/index.html">Tools</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <li><a href="https://github.com/drq/littlecub">View on GitHub</a></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row subhead">
+        <div class="col-md-6">
+            <h1>LittleCub Forms</h1>
+
+            <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
+        </div>
+        <div class="col-md-6">
+            <div class="github-bar">
+                <section id="downloads">
+                    <a class="zip_download_link" href="https://github.com/drq/littlecub/zipball/master">Download
+                        this project as a .zip file</a>
+                    <a class="tar_download_link" href="https://github.com/drq/littlecub/tarball/master">Download
+                        this project as a tar.gz file</a>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+<!--
+    <header class="jumbotron subhead" id="overview">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>LittleCub Forms</h1>
+
+                <p class="lead">Light-Weight, High-Performance & Easily Customizable</p>
+            </div>
+            <div class="col-md-6 slider">
+                <div class="wmuSlider">
+                </div>
+            </div>
+        </div>
+    </header>
+-->
+    <ul class="breadcrumb">
+        <li><a href="../index.html">Home</a> <span class="divider"></span></li>
+        <li><a href="index.html">Controls</a></li>
+    </ul>
+
+    <section id="typography">
+        <div class="row">
+            <div class="col-md-12">
+                <p>LittleCub provides a large set of controls that should cover most of your need for building forms. Each
+                    control type supports its own set of JSON schema keywords and control specific configurations.</p>
+
+                <p>You can also easily create your own control by extending an existing control through a simple
+                    object-oriented framework. To get started, check out the examples in the Advanced Controls section.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Core Controls</h3>
+                <ul>
+                    <li><a href="text-control.html">Text</a></li>
+                    <li><a href="checkbox-control.html">Checkbox</a></li>
+                    <li><a href="radio-control.html">Radio Button Group</a></li>
+                    <li><a href="select-control.html">Select</a></li>
+                    <li><a href="checkboxgroup-control.html">Checkbox Group</a></li>
+                    <li><a href="textarea-control.html">Textarea</a></li>
+                    <li><a href="number-control.html">Number</a></li>
+                    <li><a href="integer-control.html">Integer</a></li>
+                    <li><a href="file-control.html">File</a></li>
+                    <li><a href="hidden-control.html">Hidden</a></li>
+                    <li><a href="array-control.html">Array</a></li>
+                    <li><a href="object-control.html">Object</a></li>
+                    <li><a href="password-control.html">Password</a></li>
+                    <li><a href="email-control.html">Email</a></li>
+                    <li><a href="datetime-control.html">Datetime</a></li>
+                    <li><a href="ipv4-control.html">Ipv4</a></li>
+                    <li><a href="ipv6-control.html">Ipv6</a></li>
+                    <li><a href="hostname-control.html">Hostname</a></li>
+                    <li><a href="uri-control.html">Uri</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Advanced Controls</h3>
+                <ul>
+                    <li><a href="address-control.html">Address</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer
+   ================================================== -->
+    <hr>
+
+    <footer id="footer">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+
+        <div class="links">
+        </div>
+        <p class="copyright">Copyright &copy; 2014 NextFrontier Technologies Inc. | All Rights Reserved</p>
+    </footer>
+
+</div>
+<!-- /container -->
+
+<script src="../lib/jquery/jquery-1.9.0.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>
