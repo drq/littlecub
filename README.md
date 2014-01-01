@@ -23,22 +23,22 @@ You may also need to add the required libraries and stylesheets for your selecte
 
 ```
 <!-- Basic Theme with no fancy stuff -->
-<script src="dist/littlecub.min.js" type="text/javascript"></script>
+<script src="http://drq.github.io/littlecub/releases/trunk/littlecub.min.js" type="text/javascript"></script>
 
 <!-- Twitter Bootstrap 3.x -->
-<script src="dist/littlecub-bootstrap.min.js" type="text/javascript"></script>
+<script src="http://drq.github.io/littlecub/releases/trunk/littlecub-bootstrap.min.js" type="text/javascript"></script>
 
 <!-- Twitter Bootstrap 2.x -->
-<script src="dist/littlecub-bootstrap2.min.js" type="text/javascript"></script>
+<script src="http://drq.github.io/littlecub/releases/trunk/littlecub-bootstrap2.min.js" type="text/javascript"></script>
 
 <!-- jQuery Mobile Foundation -->
-<script src="dist/littlecub-jquerymobile.min.js" type="text/javascript"></script>
+<script src="http://drq.github.io/littlecub/releases/trunk/littlecub-jquerymobile.min.js" type="text/javascript"></script>
 
 <!-- jQuery UI -->
-<script src="dist/littlecub-jqueryui.min.js" type="text/javascript"></script>
+<script src="http://drq.github.io/littlecub/releases/trunk/littlecub-jqueryui.min.js" type="text/javascript"></script>
 
 <!-- Zurb Foundation -->
-<script src="dist/littlecub-foundation.min.js" type="text/javascript"></script>
+<script src="http://drq.github.io/littlecub/releases/trunk/littlecub-foundation.min.js" type="text/javascript"></script>
 ```
 
 Usage
@@ -52,32 +52,37 @@ control type, size of text field etc.
 
 Depending on your use case, you may only need to provide one of the three JSON documents or any combination of the three.
 
+```
+// Renders an array control with a dynamic list of text controls.
+var arrayControl1 = LittleCub(["Sample1","S",""], {
+    "type" : "array",
+    "items" : {
+        "type" : "text",
+        "label": "Sample",
+        "placeholder" : "Enter some text"
+    }
+}, {
+    "type" : "array",
+    "items" : {
+        "type" : "string",
+        "minLength" : 4
+    }
+},document.getElementById('array-control-1'));
+
+// Validate the new array control and its children
+arrayControl1.validate(true);
+```
+
 jQuery is not required for LittleCub although it comes with support for it.
 
 ```
-// Renders an array control with a dynamic list of text controls.
-// Each text field has length 25 and a validation error will be displayed
-// is the length of text input is less than 4.
-var arrayControl2 = LittleCub(["Sample1","Sample2"], {
-    "type" : "array",
-    "items" : {
-        "type" : "text",
-        "size" : 25
-    }
-}, {
-    "type" : "array",
-    "items" : {
-        "type" : "string",
-        "minLength" : 4
-    }
-},document.getElementById('array-control-2'));
-
 // Renders the same array control with a dynamic list of text controls using jQuery.
-var arrayControl1 = $('#array-control-1').lc(["Sample1","Sample2"], {
+$('#array-control-2').lc(["Sample1","S",""], {
     "type" : "array",
     "items" : {
         "type" : "text",
-        "size" : 25
+        "label": "Sample",
+        "placeholder" : "Enter some text"
     }
 }, {
     "type" : "array",
@@ -85,7 +90,7 @@ var arrayControl1 = $('#array-control-1').lc(["Sample1","Sample2"], {
         "type" : "string",
         "minLength" : 4
     }
-});
+}).validate(true);
 ```
 
 Building

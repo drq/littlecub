@@ -183,6 +183,26 @@ module.exports = function(grunt) {
         },
         qunit: {
             all: ['test/**/*.html']
+        },
+        compress: {
+            zip: {
+                options: {
+                    archive: 'dist/littlecub.zip',
+                    mode: 'zip'
+                },
+                files: [
+                    { src: ['dist/*.js', 'themes/**', 'js/**'] }
+                ]
+            },
+            tgz: {
+                options: {
+                    archive: 'dist/littlecub.tar.gz',
+                    mode: 'tgz'
+                },
+                files: [
+                    { src: ['dist/*.js', 'themes/**', 'js/**'] }
+                ]
+            }
         }
     });
 
@@ -254,8 +274,11 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "connect" task.
     grunt.loadNpmTasks('grunt-contrib-qunit');
 
+    // Load the plugin that provides the "compress" task.
+    grunt.loadNpmTasks('grunt-contrib-compress');
+
     // Default task(s).
-    grunt.registerTask('default', ['clean', 'splitTemplates', 'handlebars' , 'concat', 'uglify']);
+    grunt.registerTask('default', ['clean', 'splitTemplates', 'handlebars' , 'concat', 'uglify', 'compress']);
 
     grunt.registerTask('test', ['default', 'qunit']);
 };
