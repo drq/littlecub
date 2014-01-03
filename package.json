@@ -1,6 +1,6 @@
 {
   "name": "littlecub",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/littlecub.js",
   "devDependencies": {
     "grunt-contrib-jshint": "~0.1.1",
