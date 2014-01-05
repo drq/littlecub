@@ -26,7 +26,7 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
     <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../../lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
 
     <link type="text/css" href="../../css/styles.css" rel="stylesheet"/>
     <link type="text/css" href="../../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
@@ -106,200 +106,194 @@
                 <iframe src="form-standalone.html" width="960" height="1100" frameborder="0" webkitAllowFullScreen
                         mozallowfullscreen allowFullScreen></iframe>
 <pre class="prettyprint linenums">
-LittleCub.loadThemes({
-    "jqueryui" : "../../../themes/jqueryui/jqueryui.html"
-}, function() {
-
-    var objectControl1 = LittleCub({
-        "movie" : "Kung Fu Panda",
-        "storyline" : "The story is set in the Valley of Peace, a fictional land in ancient China inhabited by anthropomorphic animals. Po, a panda, is a kung fu fanatic who idolizes the Furious Five—Tigress, Monkey, Mantis, Viper, and Crane—a quintet of kung fu masters trained by the red panda Master Shifu to protect the valley.",
-        "cast" : {
-            "Jack Black" : {
-                "character" : "Po",
-                "biography" : "Thomas Jacob \"Jack\" Black (born August 28, 1969)[1] is an American actor, producer, comedian, voice artist, writer, and musician. His acting career has been extensive, starring primarily as bumbling and cocky but internally self-conscious outsiders in comedy films, though he has played dramatic roles."
+var objectControl1 = LittleCub({
+    "movie" : "Kung Fu Panda",
+    "storyline" : "The story is set in the Valley of Peace, a fictional land in ancient China inhabited by anthropomorphic animals. Po, a panda, is a kung fu fanatic who idolizes the Furious Five—Tigress, Monkey, Mantis, Viper, and Crane—a quintet of kung fu masters trained by the red panda Master Shifu to protect the valley.",
+    "cast" : {
+        "Jack Black" : {
+            "character" : "Po",
+            "biography" : "Thomas Jacob \"Jack\" Black (born August 28, 1969)[1] is an American actor, producer, comedian, voice artist, writer, and musician. His acting career has been extensive, starring primarily as bumbling and cocky but internally self-conscious outsiders in comedy films, though he has played dramatic roles."
+        }
+    },
+    "cookie" : "1234yjfkdjfkdjoiere,,mmfd",
+    "comments" : []
+}, {
+    "type" : "object",
+    "form" : {
+        "attrs" : {
+            "name" : "my-form",
+            "endpoint" : "/post"
+        },
+        "buttons" :[
+            {
+                "type" : "submit",
+                "name" : "submit",
+                "value" : "Submit"
+            },
+            {
+                "type" : "reset",
+                "name" : "reset",
+                "value" : "Reset"
             }
+        ]
+    },
+    "controls" : {
+        "movie" : {
+            "type" : "text",
+            "fieldClass" : "input-xxlarge",
+            "placeholder" : "Enter movie title",
+            "helper" : "Enter the movie title."
         },
-        "cookie" : "1234yjfkdjfkdjoiere,,mmfd",
-        "comments" : []
-    }, {
-        "type" : "object",
-        "form" : {
-            "attrs" : {
-                "name" : "my-form",
-                "endpoint" : "/post"
-            },
-            "buttons" :[
-                {
-                    "type" : "submit",
-                    "name" : "submit",
-                    "value" : "Submit"
-                },
-                {
-                    "type" : "reset",
-                    "name" : "reset",
-                    "value" : "Reset"
-                }
-            ]
+        "storyline" : {
+            "type" : "textarea",
+            "rows" : 5,
+            "cols" : 60
         },
-        "controls" : {
-            "movie" : {
-                "type" : "text",
-                "fieldClass" : "input-xxlarge",
-                "placeholder" : "Enter movie title",
-                "helper" : "Enter the movie title."
-            },
-            "storyline" : {
-                "type" : "textarea",
-                "rows" : 5,
-                "cols" : 60
-            },
-            "cast" : {
-                "type" : "object",
-                "controls" : {
-                    "Jack Black" : {
-                        "type" : "object",
-                        "controls" : {
-                            "character" : {
-                                "type" : "text",
-                                "size" : 50
-                            },
-                            "biography" : {
-                                "type" : "textarea",
-                                "rows" : 5,
-                                "cols" : 60
-                            },
-                            "age" : {
-                                "type" : "integer"
-                            },
-                            "income" : {
-                                "type" : "number"
-                            },
-                            "famous" : {
-                                "type" : "checkbox",
-                                "prompt" : "Is he famous?"
-                            },
-                            "gender" : {
-                                "type" : "radio",
-                                "options" : {
-                                    "male" : "Male",
-                                    "female" : "Female",
-                                    "unknown" : "Unknown"
-                                }
-                            },
-                            "sports" : {
-                                "type" : "select",
-                                "size" : 4,
-                                "options" : ["Soccer","Basketball","Tennis","Polo"]
-                            },
-                            "image" : {
-                                "type" : "file"
-                            }
-                        }
-                    }
-                }
-            },
-            "cookie" : {
-                "type" : "hidden"
-            },
-            "comments" : {
-                "type" : "array",
-                "items" : {
+        "cast" : {
+            "type" : "object",
+            "controls" : {
+                "Jack Black" : {
                     "type" : "object",
                     "controls" : {
-                        "body" : {
-                            "type" : "textarea"
+                        "character" : {
+                            "type" : "text",
+                            "size" : 50
                         },
-                        "rating" : {
-                            "type" : "select"
-                        }
-                    }
-                }
-            }
-        }
-    }, {
-        "type" : "object",
-        "title" : "Bear Movies",
-        "properties" : {
-            "movie" : {
-                "type" : "string",
-                "title" : "Movie Title",
-                "minLength" : 10
-            },
-            "storyline" : {
-                "type" : "string",
-                "title" : "Storyline"
-            },
-            "cast" : {
-                "type" : "object",
-                "title" : "Cast",
-                "properties" : {
-                    "Jack Black" : {
-                        "type" : "object",
-                        "title" : "Jack Black",
-                        "properties" : {
-                            "character" : {
-                                "type" : "string",
-                                "title" : "Character"
-                            },
-                            "biography" : {
-                                "type" : "string",
-                                "title" : "Biography"
-                            },
-                            "age" : {
-                                "type" : "integer",
-                                "minimum" : 18,
-                                "maximum" : 30,
-                                "multipleOf" : 2
-                            },
-                            "income" : {
-                                "type" : "number",
-                                "minimum" : 18000,
-                                "maximum" : 30000
-                            },
-                            "famous" : {
-                                "type" : "boolean"
-                            },
-                            "gender" : {
-                                "type" : "string",
-                                "enum" : ["male", "female", "unknown"]
-                            },
-                            "sports" : {
-                                "type" : "array",
-                                "enum" : ["soccer", "basketball", "tennis","polo"]
-                            },
-                            "image" : {
-                                "type" : "string"
+                        "biography" : {
+                            "type" : "textarea",
+                            "rows" : 5,
+                            "cols" : 60
+                        },
+                        "age" : {
+                            "type" : "integer"
+                        },
+                        "income" : {
+                            "type" : "number"
+                        },
+                        "famous" : {
+                            "type" : "checkbox",
+                            "prompt" : "Is he famous?"
+                        },
+                        "gender" : {
+                            "type" : "radio",
+                            "options" : {
+                                "male" : "Male",
+                                "female" : "Female",
+                                "unknown" : "Unknown"
                             }
-                        }
-                    }
-                },
-                "required" : ["character"]
-            },
-            "cookie" : {
-                "type" : "string"
-            },
-            "comments" : {
-                "type" : "array",
-                "maxItems" : 6,
-                "uniqueItems" : true,
-                "items" : {
-                    "type" : "object",
-                    "title" : "Comment",
-                    "properties" : {
-                        "body" : {
-                            "type" : "string"
                         },
-                        "rating" : {
-                            "type" : "integer",
-                            "enum" : [1,2,3,4,5]
+                        "sports" : {
+                            "type" : "select",
+                            "size" : 4,
+                            "options" : ["Soccer","Basketball","Tennis","Polo"]
+                        },
+                        "image" : {
+                            "type" : "file"
                         }
                     }
                 }
             }
+        },
+        "cookie" : {
+            "type" : "hidden"
+        },
+        "comments" : {
+            "type" : "array",
+            "items" : {
+                "type" : "object",
+                "controls" : {
+                    "body" : {
+                        "type" : "textarea"
+                    },
+                    "rating" : {
+                        "type" : "select"
+                    }
+                }
+            }
         }
-    }, document.getElementById('object-control-1'));
-
-});
+    }
+}, {
+    "type" : "object",
+    "title" : "Bear Movies",
+    "properties" : {
+        "movie" : {
+            "type" : "string",
+            "title" : "Movie Title",
+            "minLength" : 10
+        },
+        "storyline" : {
+            "type" : "string",
+            "title" : "Storyline"
+        },
+        "cast" : {
+            "type" : "object",
+            "title" : "Cast",
+            "properties" : {
+                "Jack Black" : {
+                    "type" : "object",
+                    "title" : "Jack Black",
+                    "properties" : {
+                        "character" : {
+                            "type" : "string",
+                            "title" : "Character"
+                        },
+                        "biography" : {
+                            "type" : "string",
+                            "title" : "Biography"
+                        },
+                        "age" : {
+                            "type" : "integer",
+                            "minimum" : 18,
+                            "maximum" : 30,
+                            "multipleOf" : 2
+                        },
+                        "income" : {
+                            "type" : "number",
+                            "minimum" : 18000,
+                            "maximum" : 30000
+                        },
+                        "famous" : {
+                            "type" : "boolean"
+                        },
+                        "gender" : {
+                            "type" : "string",
+                            "enum" : ["male", "female", "unknown"]
+                        },
+                        "sports" : {
+                            "type" : "array",
+                            "enum" : ["soccer", "basketball", "tennis","polo"]
+                        },
+                        "image" : {
+                            "type" : "string"
+                        }
+                    }
+                }
+            },
+            "required" : ["character"]
+        },
+        "cookie" : {
+            "type" : "string"
+        },
+        "comments" : {
+            "type" : "array",
+            "maxItems" : 6,
+            "uniqueItems" : true,
+            "items" : {
+                "type" : "object",
+                "title" : "Comment",
+                "properties" : {
+                    "body" : {
+                        "type" : "string"
+                    },
+                    "rating" : {
+                        "type" : "integer",
+                        "enum" : [1,2,3,4,5]
+                    }
+                }
+            }
+        }
+    }
+}, document.getElementById('object-control-1'));
 </pre>
             </div>
         </div>
