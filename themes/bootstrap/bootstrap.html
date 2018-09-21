@@ -105,15 +105,15 @@
     </script>
     <script id="array_toolbar" type="text/x-handlebars-template">
         <div class="lc-array-toolbar btn-group" data-lcid="{{id}}-array-toolbar">
-            <button  type="button" data-lcid="{{id}}-array-toolbar-add" class="lc-array-add btn btn-default btn-sm"><i><span class="glyphicon glyphicon-plus"/></i> Add</button>
+            <button  type="button" data-lcid="{{id}}-array-toolbar-add" class="lc-array-add btn btn-default btn-xs"><i><span class="glyphicon glyphicon-plus"/></i> Add</button>
         </div>
     </script>
     <script id="array_item_toolbar" type="text/x-handlebars-template">
         <div>
             <p class="btn-toolbar">
                 <div data-lcid="{{id}}-toolbar" class="lc-array-item-toolbar btn-group">
-                    <button data-lcid="{{id}}-add" class="lc-array-item-add btn btn-default btn-sm"><i><span class="glyphicon glyphicon-plus"></span></i></button>
-                    <button data-lcid="{{id}}-remove" class="lc-array-item-remove btn btn-default btn-sm"><i><span class="glyphicon glyphicon-minus"></span></i></button>
+                    <button data-lcid="{{id}}-add" class="lc-array-item-add btn btn-default btn-xs"><i><span class="glyphicon glyphicon-plus"></span></i></button>
+                    <button data-lcid="{{id}}-remove" class="lc-array-item-remove btn btn-default btn-xs"><i><span class="glyphicon glyphicon-minus"></span></i></button>
                 </div>
             </p>
         </div>
@@ -153,7 +153,7 @@
                 {{#if label}}<legend for="{{#if name}}{{name}}{{/if}}">{{label}}</legend>{{/if}}
                 <div>{{helper}}</div>
                 {{#if grid}}
-                <div class="container">
+                <div>
                     {{#key_value grid}}
                     <div class="row">
                         {{#key_value value}}

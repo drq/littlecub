@@ -220,7 +220,7 @@
                 this.container = this.container.parentNode;
             }
             this.bindDOM();
-            var injection = LC.findThemeConfig("injection", theme)
+            var injection = LC.findThemeConfig("injection", theme);
             if (injection && _.isFunction(injection)) {
                 injection.call(this, container);
             }

@@ -135,7 +135,7 @@
                         var outerEl = child.outerEl;
                         outerEl.parentNode.removeChild(outerEl);
                         var toolbarElem = that.outerEl.querySelector('[data-lcid="' + lcId + '-toolbar"]');
-                        toolbarElem.parentNode.removeChild(toolbarElem);
+                        toolbarElem.parentNode.parentNode.removeChild(toolbarElem.parentNode);
                         that.removeChild(removeAtIndex);
                         that.updateKeyPath();
                         // Trigger validation
@@ -165,7 +165,7 @@
                             } else {
                                 that.outerEl.appendChild(elem.firstChild);
                             }
-                            var injection = LC.findThemeConfig("injection", that.configs["theme"])
+                            var injection = LC.findThemeConfig("injection", that.configs["theme"]);
                             if (injection && _.isFunction(injection)) {
                                 injection.call(that, that.outerEl);
                             }

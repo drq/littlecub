@@ -1,7 +1,7 @@
-(function() {
+(function () {
     "use strict";
 
-    var LittleCub = function(data, configs, schema, domElem) {
+    var LittleCub = function (data, configs, schema, domElem) {
         schema = schema || {};
         configs = configs || {};
         schema["type"] = LC.schemaType(schema, configs, data);
@@ -24,7 +24,7 @@
 
         "defaults": {
             "locale": "en_US",
-            "theme" : "default",
+            "theme": "default",
             "templateEngine": "handlebars",
             "validationEvent": "blur",
             "schemaToControl": {
@@ -55,7 +55,7 @@
             methodMap: {0: 'debug', 1: 'info', 2: 'warn', 3: 'error'},
 
             // can be overridden in the host environment
-            "log": function(level, obj) {
+            "log": function (level, obj) {
                 if (LittleCub.logger.level <= level) {
                     var method = LittleCub.logger.methodMap[level];
                     if (typeof console !== 'undefined' && console[method]) {
@@ -65,17 +65,17 @@
             }
         },
 
-        "id": (function() {
+        "id": (function () {
             var _id = 0;
-            return function() {
-                _id ++;
+            return function () {
+                _id++;
                 return "lc-" + _id;
             };
         })(),
 
-        "typeControlClass": (function() {
+        "typeControlClass": (function () {
             var _typeControlClass = {};
-            return function() {
+            return function () {
                 var len = arguments.length;
                 if (len === 1) {
                     return _typeControlClass[arguments[0]];
@@ -88,9 +88,9 @@
             };
         })(),
 
-        "formatControlClass": (function() {
+        "formatControlClass": (function () {
             var _formatControlClass = {};
-            return function() {
+            return function () {
                 var len = arguments.length;
                 if (len === 1) {
                     return _formatControlClass[arguments[0]];
@@ -103,9 +103,9 @@
             };
         })(),
 
-        "controlClass": (function() {
+        "controlClass": (function () {
             var _controlClassRegistry = {};
-            return function() {
+            return function () {
                 var len = arguments.length;
                 if (len === 1) {
                     return _controlClassRegistry[arguments[0]];
@@ -121,25 +121,35 @@
             };
         })(),
 
-        "log": function(level, obj) {
+        "log": function (level, obj) {
             LittleCub.logger.log(level, obj);
         },
 
-        "cloneJSON": function(json) {
-            return JSON.parse(JSON.stringify(json));
+        "cloneJSON": function (obj) {
+            // return JSON.parse(JSON.stringify(json));
+            return (!obj || (typeof obj !== 'object')) ? obj :
+                (_.isString(obj)) ? String.prototype.slice.call(obj) :
+                    (_.isDate(obj)) ? new Date(obj.valueOf()) :
+                        (_.isFunction(obj.clone)) ? obj.clone() :
+                            (_.isArray(obj)) ? _.map(obj, function (t) {
+                                    return LC.cloneJSON(t)
+                                }) :
+                                _.mapObject(obj, function (val, key) {
+                                    return LC.cloneJSON(val)
+                                });
         },
 
-        "prettyTitle": function(str) {
-            return str ? str.replace(/\w\S*/g, function(txt) {
+        "prettyTitle": function (str) {
+            return str ? str.replace(/\w\S*/g, function (txt) {
                 return txt.charAt(0).toUpperCase() + txt.substr(1);
             }) : "";
         },
 
-        "isEmpty": function(val) {
+        "isEmpty": function (val) {
             return _.isNull(val) || _.isUndefined(val);
         },
 
-        "isValEmpty": function(val) {
+        "isValEmpty": function (val) {
             if (LittleCub.isEmpty(val)) {
                 return true;
             }
@@ -158,15 +168,15 @@
             return false;
         },
 
-        "endsWith" : function(text, suffix) {
+        "endsWith": function (text, suffix) {
             return text.indexOf(suffix, text.length - suffix.length) !== -1;
         },
 
-        "startsWith" : function(text, prefix) {
+        "startsWith": function (text, prefix) {
             return text.substr(0, prefix.length) === prefix;
         },
 
-        "replaceTokens" : function(text, args) {
+        "replaceTokens": function (text, args) {
             if (!LittleCub.isEmpty(text)) {
                 for (var i = 0, len = args.length; i < len; i++) {
                     var token = "{" + i + "}";
@@ -180,7 +190,7 @@
             return text;
         },
 
-        "compare" : function(obj1, obj2) {
+        "compare": function (obj1, obj2) {
             if (_.isObject(obj1) && _.isObject(obj2)) {
                 return _.isEqual(obj1, obj2);
             } else if (_.isArray(obj1) && _.isArray(obj2)) {
@@ -200,38 +210,38 @@
             }
         },
 
-        "regExp" : function(text) {
+        "regExp": function (text) {
             var flags = text.replace(/.*\/([gimy]*)$/, '$1');
             var pattern = text.replace(new RegExp('^/(.*?)/' + flags + '$'), '$1');
             return new RegExp(pattern, flags);
         },
 
-        "hasClass" : function(elem, className) {
-            var regexp = LC.regExp('/(?:^|\\s)' + className +'(?!\\S)/');
+        "hasClass": function (elem, className) {
+            var regexp = LC.regExp('/(?:^|\\s)' + className + '(?!\\S)/');
             return elem.className.match(regexp);
         },
 
-        "addClass" : function(elem, className) {
-            if (!LC.hasClass(elem,className)) {
+        "addClass": function (elem, className) {
+            if (!LC.hasClass(elem, className)) {
                 elem.className += " " + className;
             }
         },
 
-        "removeClass" : function(elem, className) {
+        "removeClass": function (elem, className) {
             if (LC.hasClass(elem, className)) {
-                var regexp = LC.regExp('/(?:^|\\s)' + className +'(?!\\S)/g');
+                var regexp = LC.regExp('/(?:^|\\s)' + className + '(?!\\S)/g');
                 elem.className = elem.className.replace(regexp, '');
             }
         },
 
-        "registerTheme": function(theme, themeId) {
+        "registerTheme": function (theme, themeId) {
             themeId = themeId || theme["id"];
             if (themeId) {
                 LittleCub.themes[themeId] = theme;
             }
         },
 
-        "findThemeConfig" : function(configId, themeId) {
+        "findThemeConfig": function (configId, themeId) {
             var theme = LittleCub.themes[themeId];
             var config = theme[configId];
             var parentThemeId = theme["parent"];
@@ -243,7 +253,7 @@
             return config;
         },
 
-        "findMessage" : function(messageId, themeId, locale) {
+        "findMessage": function (messageId, themeId, locale) {
             var theme = LittleCub.themes[themeId];
             locale = locale || LittleCub.defaults.locale;
             var message = theme["messages"] && theme["messages"][locale] ? theme["messages"][locale][messageId] : null;
@@ -260,7 +270,7 @@
             }
         },
 
-        "findTemplate" : function(themeId, partialId) {
+        "findTemplate": function (themeId, partialId) {
             var fullId = themeId + "__" + partialId;
             var template = Handlebars.partials[fullId] || LittleCub["templates"][fullId];
             // check parent theme
@@ -275,14 +285,14 @@
             return template;
         },
 
-        "renderTemplate": function(themeId, templateId, data) {
+        "renderTemplate": function (themeId, templateId, data) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
                 var template = this.findTemplate(themeId, templateId) || Handlebars.compile(template);
                 return template(data).trim();
             }
         },
 
-        "registerTemplate": function(id, template, isTemplate) {
+        "registerTemplate": function (id, template, isTemplate) {
             if (LittleCub["defaults"] && LittleCub["defaults"]["templateEngine"] == "handlebars" && Handlebars) {
                 if (isTemplate) {
                     LittleCub["templates"][id] = Handlebars.compile(template);
@@ -298,7 +308,7 @@
             var startTag = "<script";
             var endTag = "</script>";
 
-            _.each(themes, function(path, id) {
+            _.each(themes, function (path, id) {
                 var xmlHttpRequest = new XMLHttpRequest();
                 xmlHttpRequest.open("GET", path, true);
                 xmlHttpRequest.onreadystatechange = function () {
@@ -347,7 +357,7 @@
             });
         },
 
-        schemaType: function(schema, configs, data) {
+        schemaType: function (schema, configs, data) {
             var schema = schema || this.schema;
             var configs = configs || this.configs;
             var data = data || this.data;
@@ -355,7 +365,7 @@
                 return schema["type"];
             }
             if (configs["type"]) {
-                _.every(LittleCub["defaults"]["schemaToControl"], function(v, k) {
+                _.every(LittleCub["defaults"]["schemaToControl"], function (v, k) {
                     if (v === configs["type"]) {
                         return schema["type"] = k;
                     } else {
@@ -387,7 +397,7 @@
             return "string";
         },
 
-        controlType: function(schema, configs) {
+        controlType: function (schema, configs) {
             var schema = schema || this.schema;
             var configs = configs || this.configs;
             if (configs["type"]) {
@@ -436,7 +446,7 @@
     if (typeof jQuery != 'undefined') {
         $.littlecub = $.lc = LittleCub;
 
-        $.fn.littlecub = $.fn.lc = function() {
+        $.fn.littlecub = $.fn.lc = function () {
             var controls = [];
             for (var i = 0; i < this.length; i++) {
                 var args = _.toArray(arguments);
@@ -453,12 +463,12 @@
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = LittleCub;
     } else if (typeof define === 'function' && define.amd) {
-        define("littlecub", [], function() {
+        define("littlecub", [], function () {
             return LittleCub;
         });
     } else {
 
-        var env = function() {
+        var env = function () {
             return this || (0, eval)('this');
         };
         (env)().LittleCub = (env)().LC = LittleCub;

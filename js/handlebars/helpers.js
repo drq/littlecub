@@ -47,10 +47,18 @@
 
     Handlebars.registerHelper("object_with_key", function(context, configs) {
         var keyName = configs.hash.key;
-        if (context.hasOwnProperty(keyName)) {
-            return configs.fn(context[keyName]);
+        if (context) {
+            if (context.hasOwnProperty(keyName)) {
+                return configs.fn(context[keyName]);
+            } else {
+                return "";
+            }
         } else {
-            return "";
+            if (configs.data && configs.data.root && configs.data.root.controls && configs.data.root.controls[keyName]) {
+                return configs.fn(configs.data.root.controls[keyName]);
+            } else {
+                return "";
+            }
         }
     });
 
