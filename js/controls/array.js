@@ -1,21 +1,21 @@
-(function() {
+(function () {
     "use strict";
 
     LittleCub.ArrayControl = LittleCub.ContainerControl.extend({
-            constructor: function(data, configs, schema) {
+            constructor: function (data, configs, schema) {
                 this.base(data, configs, schema);
                 this.children = [];
             },
 
-            addChild : function(v, k) {
+            addChild: function (v, k) {
                 var configs = this.configs;
                 var schema = this.schema;
                 var itemSchema = schema["items"];
-                if (! itemSchema) {
+                if (!itemSchema) {
                     itemSchema = schema["items"] = {};
                 }
                 var itemConfigs = configs["items"];
-                if (! itemConfigs) {
+                if (!itemConfigs) {
                     itemConfigs = configs["items"] = {};
                 }
                 var _itemConfigs = LC.cloneJSON(itemConfigs);
@@ -35,12 +35,12 @@
                 return child;
             },
 
-            removeChild : function(k) {
+            removeChild: function (k) {
                 this.children.splice(k, 1);
                 this.configs["controls"].splice(k, 1);
             },
 
-            init: function() {
+            init: function () {
                 this.base();
                 var configs = this.configs;
                 var data = this.data;
@@ -53,30 +53,30 @@
 
                 configs["controls"] = [];
 
-                _.each(itemData, function(v, k) {
+                _.each(itemData, function (v, k) {
                     that.addChild(v, k);
                 });
             },
 
-            bindDOM: function() {
+            bindDOM: function () {
                 this.base();
                 this.validate();
                 var that = this;
 
-                var addElementToolbar = function(child) {
+                var addElementToolbar = function (child) {
                     // Add array item toolbar
                     var elem = document.createElement("span");
                     elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_item_toolbar", child.configs);
-                    _.each(elem.querySelectorAll('.lc-array-item-add'), function(v) {
+                    _.each(elem.querySelectorAll('.lc-array-item-add'), function (v) {
                         v.addEventListener('click', addEventHandler);
                     });
-                    _.each(elem.querySelectorAll('.lc-array-item-remove'), function(v) {
+                    _.each(elem.querySelectorAll('.lc-array-item-remove'), function (v) {
                         v.addEventListener('click', removeEventHandler);
                     });
                     return elem;
                 };
 
-                var addFirstEventHandler = function(e) {
+                var addFirstEventHandler = function (e) {
                     var child = that.addChild(null, 1);
                     // Add array item toolbar
                     var elem = addElementToolbar(child);
@@ -90,12 +90,12 @@
                     return false;
                 };
 
-                var addEventHandler = function(e) {
+                var addEventHandler = function (e) {
                     var v = this;
                     var lcId = v.getAttribute("data-lcid");
                     lcId = lcId.substring(0, lcId.length - 4);
                     var insertAtIndex = that.children.length - 1;
-                    _.every(that.children, function(v, k) {
+                    _.every(that.children, function (v, k) {
                         if (v.id == lcId) {
                             insertAtIndex = k;
                             return false;
@@ -117,12 +117,12 @@
                     return false;
                 };
 
-                var removeEventHandler = function(e) {
+                var removeEventHandler = function (e) {
                     var v = this;
                     var lcId = v.getAttribute("data-lcid");
                     lcId = lcId.substring(0, lcId.length - 7);
                     var removeAtIndex;
-                    _.every(that.children, function(v, k) {
+                    _.every(that.children, function (v, k) {
                         if (v.id == lcId) {
                             removeAtIndex = k;
                             return false;
@@ -130,7 +130,7 @@
                             return true;
                         }
                     });
-                    if (! LC.isEmpty(removeAtIndex)) {
+                    if (!LC.isEmpty(removeAtIndex)) {
                         var child = that.children[removeAtIndex];
                         var outerEl = child.outerEl;
                         outerEl.parentNode.removeChild(outerEl);
@@ -149,7 +149,7 @@
                         if (that.children.length == 0) {
                             var elem = document.createElement("span");
                             elem.innerHTML = LC.renderTemplate(child.configs["theme"], "array_toolbar", child.configs, true);
-                            _.each(elem.querySelectorAll('.lc-array-add'), function(v) {
+                            _.each(elem.querySelectorAll('.lc-array-add'), function (v) {
                                 v.addEventListener('click', addFirstEventHandler);
                             });
                             /*
@@ -175,24 +175,118 @@
                     return false;
                 };
 
-                _.each(this.outerEl.querySelectorAll('.lc-array-add'), function(v) {
+                var minimizeEventHandler = function (e) {
+                    var v = this;
+                    var lcId = v.getAttribute("data-lcid");
+                    lcId = lcId.substring(0, lcId.length - 4);
+                    var minimizeIndex;
+                    _.every(that.children, function (v, k) {
+                        if (v.id == lcId) {
+                            minimizeIndex = k;
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+                    if (!LC.isEmpty(minimizeIndex)) {
+                        var child = that.children[minimizeIndex];
+                        var outerEl = child.outerEl;
+                        outerEl.style.display = "none";
+                        _.each(outerEl.previousElementSibling.querySelectorAll('.lc-array-item-info'), function (elem) {
+                            elem.style.display = "block";
+                            var minText = child.configs.minText;
+                            if (minText) {
+                                if (_.isFunction(minText)) {
+                                    elem.innerText = minText(child.val());
+                                } else {
+                                    elem.innerText = minText;
+                                }
+                            }
+                        });
+                    }
+                    e.preventDefault();
+                    return false;
+                };
+
+                var maximizeEventHandler = function (e) {
+                    var v = this;
+                    var lcId = v.getAttribute("data-lcid");
+                    lcId = lcId.substring(0, lcId.length - 4);
+                    var maximizeIndex;
+                    _.every(that.children, function (v, k) {
+                        if (v.id == lcId) {
+                            maximizeIndex = k;
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+                    if (!LC.isEmpty(maximizeIndex)) {
+                        var child = that.children[maximizeIndex];
+                        var outerEl = child.outerEl;
+                        outerEl.style.display = "block";
+                        _.each(outerEl.previousElementSibling.querySelectorAll('.lc-array-item-info'), function (elem) {
+                            elem.style.display = "none";
+                            elem.innerText = "";
+                        });
+                    }
+                    e.preventDefault();
+                    return false;
+                };
+
+                var listEventHandler = function (e) {
+                    var v = this;
+                    var lcId = v.getAttribute("data-lcid");
+                    lcId = lcId.substring(0, lcId.length - 5);
+                    var listIndex;
+                    _.every(that.children, function (v, k) {
+                        if (v.id == lcId) {
+                            listIndex = k;
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+                    if (!LC.isEmpty(listIndex)) {
+                        _.each(that.children, function (child) {
+                            var toolbarElem = child.outerEl.previousElementSibling;
+                            toolbarElem.querySelector('.lc-array-item-minimize').click();
+                        });
+                    }
+                    e.preventDefault();
+                    return false;
+                };
+
+                _.each(this.outerEl.querySelectorAll('.lc-array-add'), function (v) {
                     v.addEventListener('click', addFirstEventHandler);
                 });
 
-                _.each(this.outerEl.querySelectorAll('.lc-array-item-add'), function(v) {
+                _.each(this.outerEl.querySelectorAll('.lc-array-item-add'), function (v) {
                     v.addEventListener('click', addEventHandler);
                 });
 
-                _.each(this.outerEl.querySelectorAll('.lc-array-item-remove'), function(v) {
+                _.each(this.outerEl.querySelectorAll('.lc-array-item-remove'), function (v) {
                     v.addEventListener('click', removeEventHandler);
+                });
+
+                _.each(this.outerEl.querySelectorAll('.lc-array-item-minimize'), function (v) {
+                    v.addEventListener('click', minimizeEventHandler);
+                });
+
+                _.each(this.outerEl.querySelectorAll('.lc-array-item-maximize'), function (v) {
+                    v.addEventListener('click', maximizeEventHandler);
+                });
+
+                _.each(this.outerEl.querySelectorAll('.lc-array-item-list'), function (v) {
+                    v.addEventListener('click', listEventHandler);
                 });
 
                 if (this.schema.uniqueItems) {
                     var that = this;
-                    this.outerEl.addEventListener("lc-update", function(e) {
+                    this.outerEl.addEventListener("lc-update", function (e) {
                         var lcControl = e["lc-control"];
                         var isParent = false, parent = lcControl.parent;
-                        while(parent && !isParent) {
+                        while (parent && !isParent) {
                             if (parent == that) {
                                 isParent = true;
                             }
@@ -205,7 +299,7 @@
                 }
             },
 
-            _updateKeyPath: function(v, k) {
+            _updateKeyPath: function (v, k) {
                 if (v.parent) {
                     v.key = v.parent.key + "[" + k + "]";
                     v.path = v.parent.path + "[" + k + "]";
@@ -214,17 +308,17 @@
                 }
             },
 
-            val: function() {
+            val: function () {
                 var len = arguments.length;
                 if (len == 0) {
                     var value = [];
-                    _.each(this.children, function(v) {
+                    _.each(this.children, function (v) {
                         value.push(v.val());
                     });
                     return value;
                 } else if (len == 1) {
                     var value = arguments[0];
-                    _.each(this.children, function(v, k) {
+                    _.each(this.children, function (v, k) {
                         var _val = LC.isEmpty(value) ? null : value[k];
                         v.val(_val);
                     });
@@ -232,7 +326,7 @@
                 }
             },
 
-            bindData: function(data) {
+            bindData: function (data) {
                 this.base(data);
 
                 var nbChildren = this.children.length;
@@ -257,9 +351,9 @@
              * Validates if number of items has been less than minItems.
              * @returns {Boolean} true if number of items has been less than minItems
              */
-            _validateMinItems: function() {
+            _validateMinItems: function () {
                 var validation = {
-                    "status" : LC.isEmpty(this.schema.minItems) || ! _.isNumber(this.schema.minItems) || _.size(this.children) >= this.schema.minItems
+                    "status": LC.isEmpty(this.schema.minItems) || !_.isNumber(this.schema.minItems) || _.size(this.children) >= this.schema.minItems
                 };
                 if (!validation["status"]) {
                     validation["message"] = LC.replaceTokens(LC.findMessage("minItems", this.configs["theme"]), [this.schema["minItems"]])
@@ -271,9 +365,9 @@
              * Validates if number of items has been over maxItems.
              * @returns {Boolean} true if number of items has been over maxItems
              */
-            _validateMaxItems: function() {
+            _validateMaxItems: function () {
                 var validation = {
-                    "status" : LC.isEmpty(this.schema.minItems) || ! _.isNumber(this.schema.maxItems) || _.size(this.children) <= this.schema.maxItems
+                    "status": LC.isEmpty(this.schema.minItems) || !_.isNumber(this.schema.maxItems) || _.size(this.children) <= this.schema.maxItems
                 };
                 if (!validation["status"]) {
                     validation["message"] = LC.replaceTokens(LC.findMessage("maxItems", this.configs["theme"]), [this.schema["maxItems"]])
@@ -285,7 +379,7 @@
              * Validates if all items are unique.
              * @returns {Boolean} true if all items are unique.
              */
-            _validateUniqueItems: function() {
+            _validateUniqueItems: function () {
                 var status = true;
                 var val = this.val();
                 if (this.schema.uniqueItems && _.isArray(val)) {
@@ -299,22 +393,22 @@
                     status = !isSame;
                 }
                 var validation = {
-                    "status" : status
+                    "status": status
                 };
-                if (! status) {
+                if (!status) {
                     validation["message"] = LC.findMessage("uniqueItems", this.configs["theme"]);
                 }
                 return validation;
             },
 
-            validate: function(validateChildren) {
+            validate: function (validateChildren) {
                 this.validation["minItems"] = this._validateMinItems();
                 this.validation["maxItems"] = this._validateMaxItems();
                 this.validation["uniqueItems"] = this._validateUniqueItems();
                 return this.base(validateChildren);
             }
         }, {
-            TYPE : "array"
+            TYPE: "array"
         }
     );
 

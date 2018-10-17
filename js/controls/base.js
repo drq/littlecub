@@ -70,6 +70,10 @@
                 this.configs["data"] = this.schema["default"];
             }
             this.data = this.data || this.configs["data"];
+
+            if (this.configs["init"] && _.isFunction(this.configs["init"])) {
+                this.configs["init"].call(this);
+            }
         },
 
         bindData: function(data) {
