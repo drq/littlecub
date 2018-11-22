@@ -73,6 +73,15 @@
                     _.each(elem.querySelectorAll('.lc-array-item-remove'), function (v) {
                         v.addEventListener('click', removeEventHandler);
                     });
+                    _.each(elem.querySelectorAll('.lc-array-item-minimize'), function (v) {
+                        v.addEventListener('click', minimizeEventHandler);
+                    });
+                    _.each(elem.querySelectorAll('.lc-array-item-maximize'), function (v) {
+                        v.addEventListener('click', maximizeEventHandler);
+                    });
+                    _.each(elem.querySelectorAll('.lc-array-item-list'), function (v) {
+                        v.addEventListener('click', listEventHandler);
+                    });
                     return elem;
                 };
 
@@ -94,7 +103,7 @@
                     var v = this;
                     var lcId = v.getAttribute("data-lcid");
                     lcId = lcId.substring(0, lcId.length - 4);
-                    var insertAtIndex = that.children.length - 1;
+                    var insertAtIndex /*= that.children.length - 1*/;
                     _.every(that.children, function (v, k) {
                         if (v.id == lcId) {
                             insertAtIndex = k;
@@ -103,16 +112,18 @@
                             return true;
                         }
                     });
-                    var insertAt = that.children[insertAtIndex];
-                    var child = that.addChild(null, insertAtIndex + 1);
-                    // Add array item toolbar
-                    var elem = addElementToolbar(child);
-                    insertAt.outerEl.parentNode.insertBefore(elem.firstChild, insertAt.outerEl.nextSibling);
-                    // Render the child
-                    child.render(insertAt.outerEl.nextSibling, null, "insertAfter");
-                    that.updateKeyPath();
-                    // Trigger validation
-                    that.validate();
+                    if (!LC.isEmpty(insertAtIndex)) {
+                        var insertAt = that.children[insertAtIndex];
+                        var child = that.addChild(null, insertAtIndex + 1);
+                        // Add array item toolbar
+                        var elem = addElementToolbar(child);
+                        insertAt.outerEl.parentNode.insertBefore(elem.firstChild, insertAt.outerEl.nextSibling);
+                        // Render the child
+                        child.render(insertAt.outerEl.nextSibling, null, "insertAfter");
+                        that.updateKeyPath();
+                        // Trigger validation
+                        that.validate();
+                    }
                     e.preventDefault();
                     return false;
                 };

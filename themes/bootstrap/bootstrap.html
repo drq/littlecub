@@ -104,15 +104,19 @@
         </div>
     </script>
     <script id="array_toolbar" type="text/x-handlebars-template">
+        {{#unless modifyOnly}}
         <div class="lc-array-toolbar btn-group" data-lcid="{{id}}-array-toolbar">
             <button  type="button" data-lcid="{{id}}-array-toolbar-add" class="lc-array-add btn btn-default btn-xs"><i><span class="glyphicon glyphicon-plus"/></i> Add</button>
         </div>
+        {{/unless}}
     </script>
     <script id="array_item_toolbar" type="text/x-handlebars-template">
         <div class="btn-toolbar" role="toolbar">
             <div data-lcid="{{id}}-toolbar" class="lc-array-item-toolbar btn-group" role="group">
+                {{#unless modifyOnly}}
                 <button data-lcid="{{id}}-add" class="lc-array-item-add btn btn-default btn-xs"><i><span class="glyphicon glyphicon-plus"></span></i></button>
                 <button data-lcid="{{id}}-remove" class="lc-array-item-remove btn btn-default btn-xs"><i><span class="glyphicon glyphicon-remove"></span></i></button>
+                {{/unless}}
                 <button data-lcid="{{id}}-min" class="lc-array-item-minimize btn btn-default btn-xs"><i><span class="glyphicon glyphicon-minus"></span></i></button>
                 <button data-lcid="{{id}}-max" class="lc-array-item-maximize btn btn-default btn-xs"><i><span class="glyphicon glyphicon-resize-full"></span></i></button>
                 <button data-lcid="{{id}}-list" class="lc-array-item-list btn btn-default btn-xs"><i><span class="glyphicon glyphicon-list"></span></i></button>
