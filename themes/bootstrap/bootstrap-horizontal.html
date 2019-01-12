@@ -3,7 +3,7 @@
     <!-- Partials -->
     <script id="control_label" type="text/x-handlebars-template">
         {{#if label}}
-            <label class="col-sm-2 control-label{{#if labelClass}} {{labelClass}}{{/if}}" {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
+            <label class="control-label {{#if labelClass}}{{labelClass}}{{else}}col-sm-2{{/if}}" {{#if name}}for="{{name}}"{{/if}}>{{label}}</label>
         {{/if}}
     </script>
     <script id="control_helper" type="text/x-handlebars-template">

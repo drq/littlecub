@@ -73,7 +73,7 @@
     </script>
     <script id="control_text" type="text/x-handlebars-template">
         <input data-lcid="{{id}}-field" type="text" {{#if name}}name="{{name}}"{{/if}}
-            value="{{#if data}}{{data}}{{/if}}" class="form-control{{#if fieldClass}} {{fieldClass}}{{/if}}" {{#if readonly}}readonly="readonly"{{/if}}
+            value="{{#if data includeZero=true}}{{data}}{{/if}}" class="form-control{{#if fieldClass}} {{fieldClass}}{{/if}}" {{#if readonly}}readonly="readonly"{{/if}}
             {{#if placeholder}}placeholder="{{placeholder}}"{{/if}} {{#if size}}size="{{size}}"{{/if}}/>
     </script>
     <script id="control_textarea" type="text/x-handlebars-template">
@@ -163,7 +163,7 @@
                     {{#key_value grid}}
                     <div class="row">
                         {{#key_value value}}
-                            <div class="col-md-{{value.span}}" data-licid="{{../key}}-{{key}}">
+                            <div class="col-md-{{value.span}} form-group" data-licid="{{../key}}-{{key}}">
                                 {{#each value.controls}}
                                     {{#object_with_key ../../../../controls key=this}}
                                         {{include 'control'}}

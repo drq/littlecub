@@ -26,6 +26,9 @@
                     _.each(configs["controls"], function(v, k) {
                         params[k] = params[k] || {};
                         params[k]["configs"] = v;
+                        if (configs.readonly) {
+                            params[k]["configs"]["readonly"] = true;
+                        }
                     });
                 }
                 if (_.isObject(data)) {
